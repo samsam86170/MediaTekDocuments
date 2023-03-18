@@ -96,5 +96,82 @@ namespace MediaTekDocuments.controller
         {
             return access.CreerExemplaire(exemplaire);
         }
+
+        /// <summary>
+        /// Crée un document dans la bdd
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="Titre"></param>
+        /// <param name="Image"></param>
+        /// <param name="IdGenre"></param>
+        /// <param name="IdPublic"></param>
+        /// <param name="IdRayon"></param>
+        /// <returns></returns>
+        public bool CreerDocument(string Id, string Titre, string Image, string IdRayon, string IdPublic, string IdGenre)
+        {
+            return access.CreerDocument(Id, Titre, Image, IdRayon, IdPublic, IdGenre);
+        }
+
+        /// <summary>
+        /// Modifie un document dans la bdd
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="Titre"></param>
+        /// <param name="Image"></param>
+        /// <param name="IdGenre"></param>
+        /// <param name="IdPublic"></param>
+        /// <param name="IdRayon"></param>
+        /// <returns></returns>
+        public bool ModifierDocument(string Id, string Titre, string Image, string IdGenre, string IdPublic, string IdRayon)
+        {
+            return access.ModifierDocument(Id, Titre, Image, IdGenre, IdPublic, IdRayon);
+        }
+
+        /// <summary>
+        /// Supprime un document dans la bdd
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public bool SupprimerDocument(string Id)
+        {
+            return access.SupprimerDocument(Id);
+        }
+
+        /// <summary>
+        /// Crée un livre dans la bdd
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="Isbn"></param>
+        /// <param name="Auteur"></param>
+        /// <param name="Collection"></param>
+        /// <returns></returns>
+        public bool CreerLivre(string Id, string Isbn, string Auteur, string Collection)
+        {
+            return access.CreerLivre(Id, Isbn, Auteur, Collection);
+        }
+
+        /// <summary>
+        /// Modifie un livre dans la bdd
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="Isbn"></param>
+        /// <param name="Auteur"></param>
+        /// <param name="Collection"></param>
+        /// <returns></returns>
+        public bool ModifierLivre(string Id, string Isbn, string Auteur, string Collection)
+        {
+            return access.ModifierLivre(Id, Isbn, Auteur, Collection);
+        }
+
+        /// <summary>
+        /// Suppression d'un livre en bdd
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public bool SupprimerLivre(string Id)
+        {
+            return access.SupprimerLivre(Id);
+        }
+
     }
 }

@@ -157,10 +157,13 @@ namespace MediaTekDocuments.view
             txbLivresImage.Text = livre.Image;
             txbLivresIsbn.Text = livre.Isbn;
             txbLivresNumero.Text = livre.Id;
+            txbLivresTitre.Text = livre.Titre;
             txbLivresGenre.Text = livre.Genre;
             txbLivresPublic.Text = livre.Public;
             txbLivresRayon.Text = livre.Rayon;
-            txbLivresTitre.Text = livre.Titre;
+            txtIdGenreLivre.Text = livre.IdGenre;
+            txtIdPublicLivre.Text = livre.IdPublic;
+            txtIdRayonLivre.Text = livre.IdRayon;
             string image = livre.Image;
             try
             {
@@ -186,7 +189,15 @@ namespace MediaTekDocuments.view
             txbLivresPublic.Text = "";
             txbLivresRayon.Text = "";
             txbLivresTitre.Text = "";
+            txtIdGenreLivre.Text = "";
+            txtIdPublicLivre.Text = "";
+            txtIdRayonLivre.Text = "";
             pcbLivresImage.Image = null;
+        }
+
+        private void btnInfosLivreVider_Click(object sender, EventArgs e)
+        {
+            VideLivresInfos();
         }
 
         /// <summary>
@@ -207,6 +218,7 @@ namespace MediaTekDocuments.view
                 cbxLivresPublics.SelectedIndex = -1;
             }
         }
+
 
         /// <summary>
         /// Filtre sur la catégorie de public
@@ -360,6 +372,137 @@ namespace MediaTekDocuments.view
             }
             RemplirLivresListe(sortedList);
         }
+
+      
+        /// <summary>
+        /// Ajout d'un document de type "livre" dans la base de données
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnReceptionLivreAjouter_Click(object sender, EventArgs e)
+        {
+            if (!txbLivresNumero.Text.Equals(""))
+            {
+                try
+                {
+                    string id = txbLivresNumero.Text;
+                    string titre = txbLivresTitre.Text;
+                    string image = txbLivresImage.Text;
+                    string isbn = txbLivresIsbn.Text;
+                    string auteur = txbLivresAuteur.Text;
+                    string collection = txbLivresCollection.Text;
+                    string idGenre = txtIdGenreLivre.Text;
+                    string genre = txbLivresGenre.Text;
+                    string idPublic = txtIdPublicLivre.Text;
+                    string Public = txbLivresPublic.Text;
+                    string idRayon = txtIdRayonLivre.Text;
+                    string rayon = txbLivresRayon.Text;
+
+
+                    Document document = new Document(id, titre, image, idGenre, genre, idPublic, Public, idRayon, rayon);
+                    Livre livre = new Livre(id, titre, image, isbn, auteur, collection, idGenre, genre, idPublic, Public, idRayon, rayon);
+                    if (controller.CreerDocument(document.Id, document.Titre, document.Image, document.IdRayon, document.IdPublic, document.IdGenre) && controller.CreerLivre(livre.Id, livre.Isbn, livre.Auteur, livre.Collection))
+                    {
+                        lesLivres = controller.GetAllLivres();
+                        RemplirComboCategorie(controller.GetAllGenres(), bdgGenres, cbxLivresGenres);
+                        RemplirComboCategorie(controller.GetAllPublics(), bdgPublics, cbxLivresPublics);
+                        RemplirComboCategorie(controller.GetAllRayons(), bdgRayons, cbxLivresRayons);
+                        RemplirLivresListeComplete();
+                        MessageBox.Show("Le livre " + titre + " a correctement été ajouté.");
+                    }
+                    else
+                    {
+                        MessageBox.Show("numéro de document déjà existant", "Erreur");
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("Une erreur s'est produite", "Erreur");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Le champ : numéro de document est obligatoire.", "Information");
+            }
+        }
+        /// <summary>
+        /// Modification d'un document de type "livre", dans la bdd
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnReceptionLivreModifier_Click(object sender, EventArgs e)
+        {
+            if (dgvLivresListe.SelectedRows.Count > 0)
+            {
+                // Récupération de l'objet Livre sélectionné dans la DataGridView
+                Livre selectedLivre = (Livre)dgvLivresListe.SelectedRows[0].DataBoundItem;
+                // Récupération des nouvelles informations saisies
+                string id = selectedLivre.Id;
+                string titre = txbLivresTitre.Text;
+                string image = txbLivresImage.Text;
+                string isbn = txbLivresIsbn.Text;
+                string auteur = txbLivresAuteur.Text;
+                string collection = txbLivresCollection.Text;
+                string idGenre = txtIdGenreLivre.Text;
+                string idPublic = txtIdPublicLivre.Text;
+                string idRayon = txtIdRayonLivre.Text;
+                if (!txbLivresNumero.Equals("") && !txbLivresTitre.Equals("") && !txtIdGenreLivre.Equals("") && !txtIdPublicLivre.Equals("") && !txtIdRayonLivre.Equals(""))
+                {
+                    // Récupération des fonctions de modification du livre et du document associé
+                    if (controller.ModifierLivre(id, isbn, auteur, collection) && controller.ModifierDocument(id, titre, image, idGenre, idPublic, idRayon))
+                    {
+                        // Mise à jour de la DataGridView avec les nouvelles informations
+                        lesLivres = controller.GetAllLivres();
+                        RemplirComboCategorie(controller.GetAllGenres(), bdgGenres, cbxLivresGenres);
+                        RemplirComboCategorie(controller.GetAllPublics(), bdgPublics, cbxLivresPublics);
+                        RemplirComboCategorie(controller.GetAllRayons(), bdgRayons, cbxLivresRayons);
+                        RemplirLivresListeComplete();
+                        MessageBox.Show("Le livre " + titre + " a correctement été modifié.");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Erreur lors de la modification du LIVRE", "Erreur");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Veuillez sélectionner un LIVRE à modifier", "Information");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Le champ : numéro de document est obligatoire.", "Information");
+            }
+        }
+
+        /// <summary>
+        /// Suppression d'un document de type "livre" en bdd
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnSupprimerLivre_Click(object sender, EventArgs e)
+        {
+            Livre livre = (Livre)bdgLivresListe.Current;
+           
+            if (MessageBox.Show("Souhaitez-vous confirmer la suppression?", "Confirmation de suppression", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                if (controller.SupprimerLivre(livre.Id))
+                {
+                    lesLivres = controller.GetAllLivres();
+                    RemplirComboCategorie(controller.GetAllGenres(), bdgGenres, cbxLivresGenres);
+                    RemplirComboCategorie(controller.GetAllPublics(), bdgPublics, cbxLivresPublics);
+                    RemplirComboCategorie(controller.GetAllRayons(), bdgRayons, cbxLivresRayons);
+                    RemplirLivresListeComplete();
+                    MessageBox.Show("Le livre " + livre.Titre + " a correctement été supprimé.");
+                }
+                else
+                {
+                    MessageBox.Show("Une erreur s'est produite.", "Erreur");
+                }
+            }
+        }
+
+
         #endregion
 
         #region Onglet Dvd
