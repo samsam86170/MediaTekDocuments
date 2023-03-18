@@ -147,6 +147,28 @@ namespace MediaTekDocuments.dal
         }
 
         /// <summary>
+        /// Retourne les suivis d'un document
+        /// </summary>
+        /// <returns>Liste d'objets Suivi</returns>
+        public List<Suivi> GetAllSuivis()
+        {
+            List<Suivi> lesSuivis = TraitementRecup<Suivi>(GET, "suivi");
+            return lesSuivis;
+        }
+
+        /// <summary>
+        /// Retourne les commandes des documents
+        /// </summary>
+        /// <param name="idDocument">id du document concerné</param>
+        /// <returns>Liste d'objets CommandeDocument</returns>
+
+        public List<CommandeDocument> GetCommandesDocument(string idDocument)
+        {
+            List<CommandeDocument> lescommandesdocument = TraitementRecup<CommandeDocument>(GET, "commandedocument/" + idDocument);
+            return lescommandesdocument;
+        }
+
+        /// <summary>
         /// ecriture d'un exemplaire en base de données
         /// </summary>
         /// <param name="exemplaire">exemplaire à insérer</param>

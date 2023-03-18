@@ -76,7 +76,6 @@ namespace MediaTekDocuments.controller
             return access.GetAllPublics();
         }
 
-
         /// <summary>
         /// récupère les exemplaires d'une revue
         /// </summary>
@@ -85,6 +84,25 @@ namespace MediaTekDocuments.controller
         public List<Exemplaire> GetExemplairesRevue(string idDocuement)
         {
             return access.GetExemplairesRevue(idDocuement);
+        }
+
+        /// <summary>
+        /// getter sur les suivis
+        /// </summary>
+        /// <returns>Liste d'objets Suivi</returns>
+        public List<Suivi> GetAllSuivis()
+        {
+            return access.GetAllSuivis();
+        }
+
+        /// <summary>
+        /// récupère les commandes d'un document
+        /// </summary>
+        /// <param name="idDocument"></param>
+        /// <returns></returns>
+        public List<CommandeDocument> GetCommandesDocument(string idDocument)
+        {
+            return access.GetCommandesDocument(idDocument);
         }
 
         /// <summary>

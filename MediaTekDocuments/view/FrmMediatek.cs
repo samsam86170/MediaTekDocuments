@@ -1653,5 +1653,230 @@ namespace MediaTekDocuments.view
             }
         }
         #endregion
+
+        #region Onglet CommandesLivres
+        private readonly BindingSource bdgCommandesLivre = new BindingSource();
+        private List<CommandeDocument> lesCommandesDocument = new List<CommandeDocument>();
+        private List<Suivi> lesSuivis = new List<Suivi>();
+
+        /// <summary>
+        /// Ouverture de l'onglet Commandes de livres :
+        /// appel des méthodes pour remplir le datagrid des commandes de livre et du combo "suivi"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TabCommandesLivres_Enter(object sender, EventArgs e)
+        {
+            lesLivres = controller.GetAllLivres();
+            lesSuivis = controller.GetAllSuivis();
+            gbxInfosCommandeLivre.Enabled = false;
+        }
+
+        private void RemplirCommandesLivresListe(List<CommandeDocument> lesCommandesDocument)
+        {
+            if (lesCommandesDocument != null)
+            {
+                bdgCommandesLivre.DataSource = lesCommandesDocument;
+                dgvCommandesLivre.DataSource = bdgCommandesLivre;
+                dgvCommandesLivre.Columns["id"].Visible = false;
+                dgvCommandesLivre.Columns["idLivreDvd"].Visible = false;
+                dgvCommandesLivre.Columns["idSuivi"].Visible = false;
+                dgvCommandesLivre.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+                dgvCommandesLivre.Columns["dateCommande"].DisplayIndex = 4;
+                dgvCommandesLivre.Columns["montant"].DisplayIndex = 1;
+                dgvCommandesLivre.Columns[5].HeaderCell.Value = "Date de commande";
+                dgvCommandesLivre.Columns[0].HeaderCell.Value = "Nombre d'exemplaires";
+                dgvCommandesLivre.Columns[3].HeaderCell.Value = "Suivi";
+            }
+            else
+            {
+                bdgCommandesLivre.DataSource = null;
+            }
+        }
+
+        /// <summary>
+        /// Mise à jour de la liste des commandes de livre
+        /// </summary>
+        private void AfficheReceptionCommandesLivre()
+        {
+            string idDocument = txbCommandesLivresNumRecherche.Text;
+            lesCommandesDocument = controller.GetCommandesDocument(idDocument);
+            RemplirCommandesLivresListe(lesCommandesDocument);
+        }
+
+        /// <summary>
+        /// Recherche et affichage du livre dont on a saisi le numéro.
+        /// Si non trouvé, affichage d'un MessageBox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnCommandesLivresNumRecherche_Click(object sender, EventArgs e)
+        {
+            if (!txbCommandesLivresNumRecherche.Text.Equals(""))
+            {
+                Livre livre = lesLivres.Find(x => x.Id.Equals(txbCommandesLivresNumRecherche.Text));
+                if (livre != null)
+                {
+                    AfficheReceptionCommandesLivre();
+                    gbxInfosCommandeLivre.Enabled = true;
+                    AfficheReceptionCommandesLivreInfos(livre);
+                }
+                else
+                {
+                    MessageBox.Show("numéro introuvable");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Le numéro de document est obligatoire", "Information");
+            }
+        }
+
+        /// <summary>
+        /// Affichage des informations du livre sélectionné
+        /// </summary>
+        /// <param name="livre">Le livre</param>
+        private void AfficheReceptionCommandesLivreInfos(Livre livre)
+        {
+            txbCommandeLivresTitre.Text = livre.Titre;
+            txbCommandeLivresAuteur.Text = livre.Auteur;
+            txbCommandeLivresIsbn.Text = livre.Isbn;
+            txbCommandeLivresCollection.Text = livre.Collection;
+            txbCommandeLivresGenre.Text = livre.Genre;
+            txbCommandeLivresPublic.Text = livre.Public;
+            txbCommandeLivresRayon.Text = livre.Rayon;
+            txbCommandeLivresCheminImage.Text = livre.Image;
+            string image = livre.Image;
+            try
+            {
+                pictureBox1.Image = Image.FromFile(image);
+            }
+            catch
+            {
+                pictureBox1.Image = null;
+            }
+            AfficheReceptionCommandesLivre();
+        }
+
+        /// <summary>
+        /// Selon le libelle dans la txbBox, affichage des étapes de suivi correspondantes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void lblEtapeSuivi_TextChanged(object sender, EventArgs e)
+        {
+            string etapeSuivi = lblEtapeSuivi.Text;
+            RemplirCbxCommandeLivreLibelleSuivi(etapeSuivi);
+        }
+
+        /// <summary>
+        /// Remplissage de la comboBox selon les étapes de suivi et le libelle correspondant
+        /// </summary>
+        /// <param name="etapeSuivi"></param>
+        private void RemplirCbxCommandeLivreLibelleSuivi(string etapeSuivi)
+        {
+            cbxCommandeLivresLibelleSuivi.Items.Clear();
+            if (etapeSuivi == "livrée")
+            {
+                cbxCommandeLivresLibelleSuivi.Text = "";
+                cbxCommandeLivresLibelleSuivi.Items.Add("réglée");
+            }
+            else if (etapeSuivi == "en cours")
+            {
+                cbxCommandeLivresLibelleSuivi.Text = "";
+                cbxCommandeLivresLibelleSuivi.Items.Add("relancée");
+                cbxCommandeLivresLibelleSuivi.Items.Add("livrée");
+            }
+            else if (etapeSuivi == "relancée")
+            {
+                cbxCommandeLivresLibelleSuivi.Text = "";
+                cbxCommandeLivresLibelleSuivi.Items.Add("en cours");
+                cbxCommandeLivresLibelleSuivi.Items.Add("livrée");
+            }
+        }
+
+        /// <summary>
+        /// Récupération de l'id de suivi d'une commande selon son libelle
+        /// </summary>
+        /// <param name="libelle"></param>
+        /// <returns></returns>
+        private string GetIdSuivi(string libelle)
+        {
+            List<Suivi> lesSuivis = controller.GetAllSuivis();
+            foreach (Suivi unSuivi in lesSuivis)
+            {
+                if (unSuivi.Libelle == libelle)
+                {
+                    return unSuivi.Id;
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Affichage des informations de la commande sélectionnée 
+        /// Masque le bouton "Modifier étape de suivi" si étape finale
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dgvCommandeslivre_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridViewRow row = dgvCommandesLivre.Rows[e.RowIndex];
+
+            string id = row.Cells["Id"].Value.ToString();
+            DateTime dateCommande = (DateTime)row.Cells["dateCommande"].Value;
+            double montant = double.Parse(row.Cells["Montant"].Value.ToString());
+            int nbExemplaire = int.Parse(row.Cells["NbExemplaire"].Value.ToString());
+            string libelle = row.Cells["Libelle"].Value.ToString();
+
+            txbCommandeLivreNumero.Text = id;
+            txbCommandeLivreNbExemplaires.Text = nbExemplaire.ToString();
+            txbCommandeLivreMontant.Text = montant.ToString();
+            dtpCommandeLivre.Value = dateCommande;
+            lblEtapeSuivi.Text = libelle;
+
+            if (GetIdSuivi(libelle) == "00003")
+            {
+                cbxCommandeLivresLibelleSuivi.Enabled = false;
+                btnReceptionCommandeLivresModifierSuivi.Enabled = false;
+            }
+            else
+            {
+                cbxCommandeLivresLibelleSuivi.Enabled = true;
+                btnReceptionCommandeLivresModifierSuivi.Enabled = true;
+            }
+        }
+
+        /// <summary>
+        /// Tri sur les colonnes par ordre inverse de la chronologie
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dgvCommandesLivre_ColumnHeaderMouseClick_1(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            string titreColonne = dgvCommandesLivre.Columns[e.ColumnIndex].HeaderText;
+            List<CommandeDocument> sortedList = new List<CommandeDocument>();
+            switch (titreColonne)
+            {
+                case "Date de commande":
+                    sortedList = lesCommandesDocument.OrderBy(o => o.DateCommande).Reverse().ToList();
+                    break;
+                case "Montant":
+                    sortedList = lesCommandesDocument.OrderBy(o => o.Montant).ToList();
+                    break;
+                case "Nombre d'exemplaires":
+                    sortedList = lesCommandesDocument.OrderBy(o => o.NbExemplaire).ToList();
+                    break;
+                case "Suivi":
+                    sortedList = lesCommandesDocument.OrderBy(o => o.Libelle).ToList();
+                    break;
+
+            }
+            RemplirCommandesLivresListe(sortedList);
+        }
+
+
+
+        #endregion
     }
 }
