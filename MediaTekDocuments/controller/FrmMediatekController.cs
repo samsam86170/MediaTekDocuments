@@ -209,6 +209,39 @@ namespace MediaTekDocuments.controller
             return access.SupprimerDvd(Id);
         }
 
+        /// <summary>
+        /// Crée une revue dans la bdd
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="Periodicite"></param>
+        /// <param name="DelaiMiseADispo"></param>
+        /// <returns></returns>
+        public bool CreerRevue(string Id, string Periodicite, int DelaiMiseADispo)
+        {
+            return access.CreerRevue(Id, Periodicite, DelaiMiseADispo);
+        }
+
+        /// <summary>
+        /// Modifie une revue dans la bdd
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="Periodicite"></param>
+        /// <param name="DelaiMiseADispo"></param>
+        /// <returns></returns>
+        public bool ModifierRevue(string Id, string Periodicite, int DelaiMiseADispo)
+        {
+            return access.ModifierRevue(Id, Periodicite, DelaiMiseADispo);
+        }
+
+        /// <summary>
+        /// Supprime une revue dans la bdd
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public bool SupprimerRevue(string Id)
+        {
+            return access.SupprimerRevue(Id);
+        }
 
 
     }

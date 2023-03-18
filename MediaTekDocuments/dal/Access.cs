@@ -389,6 +389,76 @@ namespace MediaTekDocuments.dal
         }
 
         /// <summary>
+        /// Ecriture d'une revue en base de données
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="Periodicite"></param>
+        /// <param name="DelaiMiseADispo"></param>
+        /// <returns>True si l'insertion a pu se faire</returns>
+        public bool CreerRevue(string Id, string Periodicite, int DelaiMiseADispo)
+        {
+            String jsonCreerRevue = "{ \"id\" : \"" + Id + "\", \"periodicite\" : \"" + Periodicite + "\", \"delaiMiseADispo\" : \"" + DelaiMiseADispo + "\"}";
+            Console.WriteLine("jsonCreerRevue" + jsonCreerRevue);
+            try
+            {
+                // récupération soit d'une liste vide (requête ok) soit de null (erreur)
+                List<Revue> liste = TraitementRecup<Revue>(POST, "revue/" + jsonCreerRevue);
+                return (liste != null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Modification d'une revue en base de données
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="Periodicite"></param>
+        /// <param name="DelaiMiseADispo"></param>
+        /// <returns>True si l'insertion a pu se faire</returns>
+        public bool ModifierRevue(string Id, string Periodicite, int DelaiMiseADispo)
+        {
+            String jsonModifierRevue = "{ \"id\" : \"" + Id + "\", \"periodicite\" : \"" + Periodicite + "\", \"delaiMiseADispo\" : \"" + DelaiMiseADispo + "\"}";
+            Console.WriteLine("jsonModifierRevue" + jsonModifierRevue);
+            try
+            {
+                // récupération soit d'une liste vide (requête ok) soit de null (erreur)
+                List<Revue> liste = TraitementRecup<Revue>(PUT, "revue/" + Id + "/" + jsonModifierRevue);
+                return (liste != null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Suppression d'une revue en base de données
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public bool SupprimerRevue(string Id)
+        {
+            String jsonIdRevue = "{ \"id\" : \"" + Id + "\"}";
+            Console.WriteLine("jsonIdRevue" + jsonIdRevue);
+            try
+            {
+                // récupération soit d'une liste vide (requête ok) soit de null (erreur)
+                List<Revue> liste = TraitementRecup<Revue>(DELETE, "revue/" + jsonIdRevue);
+                return (liste != null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return false;
+        }
+
+        /// <summary>
         /// Traitement de la récupération du retour de l'api, avec conversion du json en liste pour les select (GET)
         /// </summary>
         /// <typeparam name="T"></typeparam>

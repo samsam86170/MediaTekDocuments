@@ -934,7 +934,6 @@ namespace MediaTekDocuments.view
             {
                 if (controller.SupprimerDvd(dvd.Id))
                 {
-                    controller.SupprimerDocument(dvd.Id);
                     lesDvd = controller.GetAllDvd();
                     RemplirComboCategorie(controller.GetAllGenres(), bdgGenres, cbxDvdGenres);
                     RemplirComboCategorie(controller.GetAllPublics(), bdgPublics, cbxDvdPublics);
@@ -1062,6 +1061,9 @@ namespace MediaTekDocuments.view
             txbRevuesPublic.Text = revue.Public;
             txbRevuesRayon.Text = revue.Rayon;
             txbRevuesTitre.Text = revue.Titre;
+            txbIdGenreRevue.Text = revue.IdGenre;
+            txbIdPublicRevue.Text = revue.IdPublic;
+            txbIdRayonRevue.Text = revue.IdRayon;
             string image = revue.Image;
             try
             {
@@ -1086,7 +1088,15 @@ namespace MediaTekDocuments.view
             txbRevuesPublic.Text = "";
             txbRevuesRayon.Text = "";
             txbRevuesTitre.Text = "";
+            txbIdGenreRevue.Text = "";
+            txbIdPublicRevue.Text = "";
+            txbIdRayonRevue.Text = "";
             pcbRevuesImage.Image = null;
+        }
+
+        private void btnInfosRevuesVider_Click(object sender, EventArgs e)
+        {
+            VideRevuesInfos();
         }
 
         /// <summary>
@@ -1260,6 +1270,137 @@ namespace MediaTekDocuments.view
             }
             RemplirRevuesListe(sortedList);
         }
+
+        /// <summary>
+        /// Enregistrement d'un document de type "revue" en bdd
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnReceptionRevueValider_Click(object sender, EventArgs e)
+        {
+            if (!txbRevuesNumero.Text.Equals("") && !txbRevuesTitre.Equals("") && !txbIdGenreRevue.Equals("") && !txbIdPublicRevue.Equals("") && !txbIdRayonRevue.Equals(""))
+            {
+                string id = txbRevuesNumero.Text;
+                string titre = txbRevuesTitre.Text;
+                string image = txbRevuesImage.Text;
+                string idGenre = txbIdGenreRevue.Text;
+                string genre = txbRevuesGenre.Text;
+                string idPublic = txbIdPublicRevue.Text;
+                string lePublic = txbRevuesPublic.Text;
+                string idRayon = txbIdRayonRevue.Text;
+                string rayon = txbRevuesRayon.Text;
+                string periodicite = txbRevuesPeriodicite.Text;
+                int delaiMiseADispo = int.Parse(txbRevuesDateMiseADispo.Text);
+
+                Document document = new Document(id, titre, image, idGenre, genre, idPublic, lePublic, idRayon, rayon);
+                Revue revue = new Revue(id, titre, image, idGenre, genre, idPublic, lePublic, idRayon, rayon, periodicite, delaiMiseADispo);
+
+                if (controller.CreerDocument(document.Id, document.Titre, document.Image, document.IdRayon, document.IdPublic, document.IdGenre) && controller.CreerRevue(revue.Id, revue.Periodicite, revue.DelaiMiseADispo))
+                {
+                    lesRevues = controller.GetAllRevues();
+                    RemplirComboCategorie(controller.GetAllGenres(), bdgGenres, cbxRevuesGenres);
+                    RemplirComboCategorie(controller.GetAllPublics(), bdgPublics, cbxRevuesPublics);
+                    RemplirComboCategorie(controller.GetAllRayons(), bdgRayons, cbxRevuesRayons);
+                    RemplirRevuesListeComplete();
+                    MessageBox.Show("La revue " + titre + " a correctement été ajoutée.");
+                }
+                else
+                {
+                    MessageBox.Show("Une erreur s'est produite", "Erreur");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Le champ : numéro de document est obligatoire.", "Information");
+            }
+        }
+
+        /// <summary>
+        /// Modification d'un document de type "revue" en bdd
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnReceptionRevueModifier_Click(object sender, EventArgs e)
+        {
+            if (dgvRevuesListe.SelectedRows.Count > 0)
+            {
+                Revue selectedRevue = (Revue)dgvRevuesListe.SelectedRows[0].DataBoundItem;
+
+                string id = selectedRevue.Id;
+                string titre = txbRevuesTitre.Text;
+                string image = txbRevuesImage.Text;
+                string idGenre = txbIdGenreRevue.Text;
+                string idPublic = txbIdPublicRevue.Text;
+                string idRayon = txbIdRayonRevue.Text;
+                string periodicite = txbRevuesPeriodicite.Text;
+                int delaiMiseADispo = int.Parse(txbRevuesDateMiseADispo.Text);
+                if (!txbRevuesNumero.Equals("") && !txbRevuesTitre.Equals("") && !txbIdGenreRevue.Equals("") && !txbIdPublicRevue.Equals("") && !txbIdRayonRevue.Equals(""))
+                {
+                    if (controller.ModifierRevue(id, periodicite, delaiMiseADispo) && controller.ModifierDocument(id, titre, image, idGenre, idPublic, idRayon))
+                    {
+                        dgvRevuesListe.DataSource = controller.GetAllRevues();
+                        MessageBox.Show("La revue " + titre + " a correctement été modifiée.");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Erreur lors de la modification de la REVUE", "Erreur");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Veuillez sélectionner une REVUE à modifier", "Information");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Le champ : numéro de document est obligatoire.", "Information");
+            }
+        }
+
+        /// <summary>
+        /// Suppression d'un document de type "revue" en bdd
+        /// La revue ne peut être supprimée que si elle ne contient pas d'exemplaires
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnSupprimerRevue_Click(object sender, EventArgs e)
+        {
+            Revue revue = (Revue)bdgRevuesListe.Current;
+            if (MessageBox.Show("Souhaitez-vous confirmer la suppression?", "Confirmation de suppression", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                List<Exemplaire> lesExemplaires = controller.GetExemplairesRevue(revue.Id);
+                bool aucunExemplaire = true;
+                foreach (Exemplaire exemplaire in lesExemplaires)
+                {
+                    if (exemplaire.Id == revue.Id)
+                    {
+                        aucunExemplaire = false;
+                        break;
+                    }
+                }
+                if (aucunExemplaire)
+                {
+                    if (controller.SupprimerRevue(revue.Id))
+                    {
+                        lesRevues = controller.GetAllRevues();
+                        RemplirComboCategorie(controller.GetAllGenres(), bdgGenres, cbxRevuesGenres);
+                        RemplirComboCategorie(controller.GetAllPublics(), bdgPublics, cbxRevuesPublics);
+                        RemplirComboCategorie(controller.GetAllRayons(), bdgRayons, cbxRevuesRayons);
+                        RemplirRevuesListeComplete();
+                        MessageBox.Show("La revue " + revue.Titre + " a correctement été supprimée.");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Une erreur s'est produite.", "Erreur");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Impossible de supprimer la revue car elle a un ou plusieurs exemplaires associés.", "Erreur");
+                }
+            }
+        }
+
         #endregion
 
         #region Onglet Paarutions
