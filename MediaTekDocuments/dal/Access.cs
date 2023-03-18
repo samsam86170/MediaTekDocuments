@@ -317,6 +317,78 @@ namespace MediaTekDocuments.dal
         }
 
         /// <summary>
+        /// Ecriture d'un dvd en base de données
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="Synopsis"></param>
+        /// <param name="Realisateur"></param>
+        /// <param name="Duree"></param>
+        /// <returns>True si l'insertion a pu se faire</returns>
+        public bool CreerDvd(string Id, string Synopsis, string Realisateur, int Duree)
+        {
+            String jsonCreerDvd = "{ \"id\" : \"" + Id + "\", \"synopsis\" : \"" + Synopsis + "\", \"realisateur\" : \"" + Realisateur + "\", \"duree\" : \"" + Duree + "\"}";
+            Console.WriteLine("jsonCreerDvd" + jsonCreerDvd);
+            try
+            {
+                // récupération soit d'une liste vide (requête ok) soit de null (erreur)
+                List<Dvd> liste = TraitementRecup<Dvd>(POST, "dvd/" + jsonCreerDvd);
+                return (liste != null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Modification d'un dvd en base de données
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="Synopsis"></param>
+        /// <param name="Realisateur"></param>
+        /// <param name="Duree"></param>
+        /// <returns>True si l'insertion a pu se faire</returns>
+        public bool ModifierDvd(string Id, string Synopsis, string Realisateur, int Duree)
+        {
+            String jsonModifierDvd = "{ \"id\" : \"" + Id + "\", \"synopsis\" : \"" + Synopsis + "\", \"realisateur\" : \"" + Realisateur + "\", \"duree\" : \"" + Duree + "\"}";
+            Console.WriteLine("jsonModifierDvd" + jsonModifierDvd);
+            try
+            {
+                // récupération soit d'une liste vide (requête ok) soit de null (erreur)
+                List<Dvd> liste = TraitementRecup<Dvd>(PUT, "dvd/" + Id + "/" + jsonModifierDvd);
+                return (liste != null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Suppression d'un dvd en base de données
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns>True si l'insertion a pu se faire</returns>
+        public bool SupprimerDvd(string Id)
+        {
+            String jsonIdDvd = "{ \"id\" : \"" + Id + "\"}";
+            Console.WriteLine("jsonIdDvd" + jsonIdDvd);
+            try
+            {
+                // récupération soit d'une liste vide (requête ok) soit de null (erreur)
+                List<Dvd> liste = TraitementRecup<Dvd>(DELETE, "dvd/" + jsonIdDvd);
+                return (liste != null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return false;
+        }
+
+        /// <summary>
         /// Traitement de la récupération du retour de l'api, avec conversion du json en liste pour les select (GET)
         /// </summary>
         /// <typeparam name="T"></typeparam>
