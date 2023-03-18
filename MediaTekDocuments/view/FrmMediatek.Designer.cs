@@ -209,21 +209,24 @@ namespace MediaTekDocuments.view
             this.label54 = new System.Windows.Forms.Label();
             this.btnReceptionRechercher = new System.Windows.Forms.Button();
             this.tabCommandesLivres = new System.Windows.Forms.TabPage();
-            this.gbxInfosCommandeLivre = new System.Windows.Forms.GroupBox();
-            this.btnSupprimerCommandeLivres = new System.Windows.Forms.Button();
+            this.gbxEtapeSuivi = new System.Windows.Forms.GroupBox();
+            this.btnEtapeSuiviAnnuler = new System.Windows.Forms.Button();
             this.btnReceptionCommandeLivresModifierSuivi = new System.Windows.Forms.Button();
-            this.cbxCommandeLivresLibelleSuivi = new System.Windows.Forms.ComboBox();
             this.lblEtapeSuivi = new System.Windows.Forms.Label();
             this.label80 = new System.Windows.Forms.Label();
+            this.cbxCommandeLivresLibelleSuivi = new System.Windows.Forms.ComboBox();
+            this.gbxInfosCommandeLivre = new System.Windows.Forms.GroupBox();
+            this.btnInfosCommandeLivreAnnuler = new System.Windows.Forms.Button();
             this.dtpCommandeLivre = new System.Windows.Forms.DateTimePicker();
             this.txbCommandeLivreMontant = new System.Windows.Forms.TextBox();
             this.txbCommandeLivreNbExemplaires = new System.Windows.Forms.TextBox();
             this.txbCommandeLivreNumero = new System.Windows.Forms.TextBox();
+            this.btnSupprimerCommandeLivres = new System.Windows.Forms.Button();
             this.label79 = new System.Windows.Forms.Label();
             this.label68 = new System.Windows.Forms.Label();
             this.label67 = new System.Windows.Forms.Label();
-            this.label66 = new System.Windows.Forms.Label();
             this.btnReceptionCommandeLivresValider = new System.Windows.Forms.Button();
+            this.label66 = new System.Windows.Forms.Label();
             this.dgvCommandesLivre = new System.Windows.Forms.DataGridView();
             this.btnRechercheDocLivre = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -271,6 +274,7 @@ namespace MediaTekDocuments.view
             ((System.ComponentModel.ISupportInitialize)(this.dgvReceptionExemplairesListe)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pcbReceptionRevueImage)).BeginInit();
             this.tabCommandesLivres.SuspendLayout();
+            this.gbxEtapeSuivi.SuspendLayout();
             this.gbxInfosCommandeLivre.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCommandesLivre)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -2151,6 +2155,7 @@ namespace MediaTekDocuments.view
             // 
             // tabCommandesLivres
             // 
+            this.tabCommandesLivres.Controls.Add(this.gbxEtapeSuivi);
             this.tabCommandesLivres.Controls.Add(this.gbxInfosCommandeLivre);
             this.tabCommandesLivres.Controls.Add(this.dgvCommandesLivre);
             this.tabCommandesLivres.Controls.Add(this.btnRechercheDocLivre);
@@ -2165,62 +2170,48 @@ namespace MediaTekDocuments.view
             this.tabCommandesLivres.UseVisualStyleBackColor = true;
             this.tabCommandesLivres.Enter += new System.EventHandler(this.TabCommandesLivres_Enter);
             // 
-            // gbxInfosCommandeLivre
+            // gbxEtapeSuivi
             // 
-            this.gbxInfosCommandeLivre.Controls.Add(this.btnSupprimerCommandeLivres);
-            this.gbxInfosCommandeLivre.Controls.Add(this.btnReceptionCommandeLivresModifierSuivi);
-            this.gbxInfosCommandeLivre.Controls.Add(this.cbxCommandeLivresLibelleSuivi);
-            this.gbxInfosCommandeLivre.Controls.Add(this.lblEtapeSuivi);
-            this.gbxInfosCommandeLivre.Controls.Add(this.label80);
-            this.gbxInfosCommandeLivre.Controls.Add(this.dtpCommandeLivre);
-            this.gbxInfosCommandeLivre.Controls.Add(this.txbCommandeLivreMontant);
-            this.gbxInfosCommandeLivre.Controls.Add(this.txbCommandeLivreNbExemplaires);
-            this.gbxInfosCommandeLivre.Controls.Add(this.txbCommandeLivreNumero);
-            this.gbxInfosCommandeLivre.Controls.Add(this.label79);
-            this.gbxInfosCommandeLivre.Controls.Add(this.label68);
-            this.gbxInfosCommandeLivre.Controls.Add(this.label67);
-            this.gbxInfosCommandeLivre.Controls.Add(this.label66);
-            this.gbxInfosCommandeLivre.Controls.Add(this.btnReceptionCommandeLivresValider);
-            this.gbxInfosCommandeLivre.Location = new System.Drawing.Point(12, 460);
-            this.gbxInfosCommandeLivre.Name = "gbxInfosCommandeLivre";
-            this.gbxInfosCommandeLivre.Size = new System.Drawing.Size(859, 165);
-            this.gbxInfosCommandeLivre.TabIndex = 50;
-            this.gbxInfosCommandeLivre.TabStop = false;
-            this.gbxInfosCommandeLivre.Text = "Informations de commande";
+            this.gbxEtapeSuivi.Controls.Add(this.btnEtapeSuiviAnnuler);
+            this.gbxEtapeSuivi.Controls.Add(this.btnReceptionCommandeLivresModifierSuivi);
+            this.gbxEtapeSuivi.Controls.Add(this.lblEtapeSuivi);
+            this.gbxEtapeSuivi.Controls.Add(this.label80);
+            this.gbxEtapeSuivi.Controls.Add(this.cbxCommandeLivresLibelleSuivi);
+            this.gbxEtapeSuivi.Location = new System.Drawing.Point(549, 476);
+            this.gbxEtapeSuivi.Name = "gbxEtapeSuivi";
+            this.gbxEtapeSuivi.Size = new System.Drawing.Size(307, 150);
+            this.gbxEtapeSuivi.TabIndex = 51;
+            this.gbxEtapeSuivi.TabStop = false;
+            this.gbxEtapeSuivi.Text = "Suivi de la commande";
+            this.gbxEtapeSuivi.Enter += new System.EventHandler(this.GbxEtapeSuivi_Enter);
             // 
-            // btnSupprimerCommandeLivres
+            // btnEtapeSuiviAnnuler
             // 
-            this.btnSupprimerCommandeLivres.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSupprimerCommandeLivres.Location = new System.Drawing.Point(292, 126);
-            this.btnSupprimerCommandeLivres.Name = "btnSupprimerCommandeLivres";
-            this.btnSupprimerCommandeLivres.Size = new System.Drawing.Size(254, 33);
-            this.btnSupprimerCommandeLivres.TabIndex = 53;
-            this.btnSupprimerCommandeLivres.Text = "Supprimer la commande";
-            this.btnSupprimerCommandeLivres.UseVisualStyleBackColor = true;
+            this.btnEtapeSuiviAnnuler.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnEtapeSuiviAnnuler.Location = new System.Drawing.Point(157, 115);
+            this.btnEtapeSuiviAnnuler.Name = "btnEtapeSuiviAnnuler";
+            this.btnEtapeSuiviAnnuler.Size = new System.Drawing.Size(144, 29);
+            this.btnEtapeSuiviAnnuler.TabIndex = 55;
+            this.btnEtapeSuiviAnnuler.Text = "Retour";
+            this.btnEtapeSuiviAnnuler.UseVisualStyleBackColor = true;
+            this.btnEtapeSuiviAnnuler.Click += new System.EventHandler(this.BtnEtapeSuiviAnnuler_Click);
             // 
             // btnReceptionCommandeLivresModifierSuivi
             // 
             this.btnReceptionCommandeLivresModifierSuivi.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnReceptionCommandeLivresModifierSuivi.Location = new System.Drawing.Point(292, 71);
+            this.btnReceptionCommandeLivresModifierSuivi.Location = new System.Drawing.Point(9, 76);
             this.btnReceptionCommandeLivresModifierSuivi.Name = "btnReceptionCommandeLivresModifierSuivi";
             this.btnReceptionCommandeLivresModifierSuivi.Size = new System.Drawing.Size(254, 35);
             this.btnReceptionCommandeLivresModifierSuivi.TabIndex = 52;
             this.btnReceptionCommandeLivresModifierSuivi.Text = "Modifier l\'étape de suivi";
             this.btnReceptionCommandeLivresModifierSuivi.UseVisualStyleBackColor = true;
-            // 
-            // cbxCommandeLivresLibelleSuivi
-            // 
-            this.cbxCommandeLivresLibelleSuivi.FormattingEnabled = true;
-            this.cbxCommandeLivresLibelleSuivi.Location = new System.Drawing.Point(394, 39);
-            this.cbxCommandeLivresLibelleSuivi.Name = "cbxCommandeLivresLibelleSuivi";
-            this.cbxCommandeLivresLibelleSuivi.Size = new System.Drawing.Size(152, 21);
-            this.cbxCommandeLivresLibelleSuivi.TabIndex = 51;
+            this.btnReceptionCommandeLivresModifierSuivi.Click += new System.EventHandler(this.btnModifierSuiviCommandeLivre_Click);
             // 
             // lblEtapeSuivi
             // 
             this.lblEtapeSuivi.AutoSize = true;
             this.lblEtapeSuivi.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEtapeSuivi.Location = new System.Drawing.Point(392, 18);
+            this.lblEtapeSuivi.Location = new System.Drawing.Point(108, 25);
             this.lblEtapeSuivi.Name = "lblEtapeSuivi";
             this.lblEtapeSuivi.Size = new System.Drawing.Size(48, 16);
             this.lblEtapeSuivi.TabIndex = 50;
@@ -2231,11 +2222,51 @@ namespace MediaTekDocuments.view
             // 
             this.label80.AutoSize = true;
             this.label80.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label80.Location = new System.Drawing.Point(289, 20);
+            this.label80.Location = new System.Drawing.Point(6, 26);
             this.label80.Name = "label80";
             this.label80.Size = new System.Drawing.Size(96, 13);
             this.label80.TabIndex = 49;
             this.label80.Text = "Etape de suivi :";
+            // 
+            // cbxCommandeLivresLibelleSuivi
+            // 
+            this.cbxCommandeLivresLibelleSuivi.FormattingEnabled = true;
+            this.cbxCommandeLivresLibelleSuivi.Location = new System.Drawing.Point(111, 46);
+            this.cbxCommandeLivresLibelleSuivi.Name = "cbxCommandeLivresLibelleSuivi";
+            this.cbxCommandeLivresLibelleSuivi.Size = new System.Drawing.Size(152, 21);
+            this.cbxCommandeLivresLibelleSuivi.TabIndex = 51;
+            // 
+            // gbxInfosCommandeLivre
+            // 
+            this.gbxInfosCommandeLivre.Controls.Add(this.btnInfosCommandeLivreAnnuler);
+            this.gbxInfosCommandeLivre.Controls.Add(this.dtpCommandeLivre);
+            this.gbxInfosCommandeLivre.Controls.Add(this.txbCommandeLivreMontant);
+            this.gbxInfosCommandeLivre.Controls.Add(this.txbCommandeLivreNbExemplaires);
+            this.gbxInfosCommandeLivre.Controls.Add(this.txbCommandeLivreNumero);
+            this.gbxInfosCommandeLivre.Controls.Add(this.btnSupprimerCommandeLivres);
+            this.gbxInfosCommandeLivre.Controls.Add(this.label79);
+            this.gbxInfosCommandeLivre.Controls.Add(this.label68);
+            this.gbxInfosCommandeLivre.Controls.Add(this.label67);
+            this.gbxInfosCommandeLivre.Controls.Add(this.btnReceptionCommandeLivresValider);
+            this.gbxInfosCommandeLivre.Controls.Add(this.label66);
+            this.gbxInfosCommandeLivre.Location = new System.Drawing.Point(12, 475);
+            this.gbxInfosCommandeLivre.Name = "gbxInfosCommandeLivre";
+            this.gbxInfosCommandeLivre.Size = new System.Drawing.Size(531, 150);
+            this.gbxInfosCommandeLivre.TabIndex = 50;
+            this.gbxInfosCommandeLivre.TabStop = false;
+            this.gbxInfosCommandeLivre.Text = "Informations de commande";
+            this.gbxInfosCommandeLivre.Enter += new System.EventHandler(this.GbxInfosCommandeLivre_Enter);
+            // 
+            // btnInfosCommandeLivreAnnuler
+            // 
+            this.btnInfosCommandeLivreAnnuler.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnInfosCommandeLivreAnnuler.Location = new System.Drawing.Point(418, 115);
+            this.btnInfosCommandeLivreAnnuler.Name = "btnInfosCommandeLivreAnnuler";
+            this.btnInfosCommandeLivreAnnuler.Size = new System.Drawing.Size(107, 29);
+            this.btnInfosCommandeLivreAnnuler.TabIndex = 54;
+            this.btnInfosCommandeLivreAnnuler.Text = "Suivi";
+            this.btnInfosCommandeLivreAnnuler.UseVisualStyleBackColor = true;
+            this.btnInfosCommandeLivreAnnuler.Click += new System.EventHandler(this.BtnInfosCommandeLivreAnnuler_Click);
             // 
             // dtpCommandeLivre
             // 
@@ -2267,6 +2298,17 @@ namespace MediaTekDocuments.view
             this.txbCommandeLivreNumero.Size = new System.Drawing.Size(100, 20);
             this.txbCommandeLivreNumero.TabIndex = 16;
             // 
+            // btnSupprimerCommandeLivres
+            // 
+            this.btnSupprimerCommandeLivres.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSupprimerCommandeLivres.Location = new System.Drawing.Point(281, 61);
+            this.btnSupprimerCommandeLivres.Name = "btnSupprimerCommandeLivres";
+            this.btnSupprimerCommandeLivres.Size = new System.Drawing.Size(244, 33);
+            this.btnSupprimerCommandeLivres.TabIndex = 53;
+            this.btnSupprimerCommandeLivres.Text = "Supprimer la commande";
+            this.btnSupprimerCommandeLivres.UseVisualStyleBackColor = true;
+            this.btnSupprimerCommandeLivres.Click += new System.EventHandler(this.btnCommandeLivreSupprimer_Click);
+            // 
             // label79
             // 
             this.label79.AutoSize = true;
@@ -2297,6 +2339,17 @@ namespace MediaTekDocuments.view
             this.label67.TabIndex = 13;
             this.label67.Text = "Nombre d\'exemplaires :";
             // 
+            // btnReceptionCommandeLivresValider
+            // 
+            this.btnReceptionCommandeLivresValider.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnReceptionCommandeLivresValider.Location = new System.Drawing.Point(281, 20);
+            this.btnReceptionCommandeLivresValider.Name = "btnReceptionCommandeLivresValider";
+            this.btnReceptionCommandeLivresValider.Size = new System.Drawing.Size(244, 33);
+            this.btnReceptionCommandeLivresValider.TabIndex = 11;
+            this.btnReceptionCommandeLivresValider.Text = "Ajouter une nouvelle commande";
+            this.btnReceptionCommandeLivresValider.UseVisualStyleBackColor = true;
+            this.btnReceptionCommandeLivresValider.Click += new System.EventHandler(this.btnReceptionCommandeLivreValider_Click);
+            // 
             // label66
             // 
             this.label66.AutoSize = true;
@@ -2306,16 +2359,6 @@ namespace MediaTekDocuments.view
             this.label66.Size = new System.Drawing.Size(140, 13);
             this.label66.TabIndex = 12;
             this.label66.Text = "Numéro de commande :";
-            // 
-            // btnReceptionCommandeLivresValider
-            // 
-            this.btnReceptionCommandeLivresValider.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnReceptionCommandeLivresValider.Location = new System.Drawing.Point(8, 126);
-            this.btnReceptionCommandeLivresValider.Name = "btnReceptionCommandeLivresValider";
-            this.btnReceptionCommandeLivresValider.Size = new System.Drawing.Size(277, 33);
-            this.btnReceptionCommandeLivresValider.TabIndex = 11;
-            this.btnReceptionCommandeLivresValider.Text = "Ajouter une nouvelle commande";
-            this.btnReceptionCommandeLivresValider.UseVisualStyleBackColor = true;
             // 
             // dgvCommandesLivre
             // 
@@ -2599,6 +2642,8 @@ namespace MediaTekDocuments.view
             ((System.ComponentModel.ISupportInitialize)(this.pcbReceptionRevueImage)).EndInit();
             this.tabCommandesLivres.ResumeLayout(false);
             this.tabCommandesLivres.PerformLayout();
+            this.gbxEtapeSuivi.ResumeLayout(false);
+            this.gbxEtapeSuivi.PerformLayout();
             this.gbxInfosCommandeLivre.ResumeLayout(false);
             this.gbxInfosCommandeLivre.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCommandesLivre)).EndInit();
@@ -2829,6 +2874,9 @@ namespace MediaTekDocuments.view
         private System.Windows.Forms.Label label78;
         private System.Windows.Forms.Label label74;
         private System.Windows.Forms.TextBox txbCommandesLivresNumRecherche;
+        private System.Windows.Forms.GroupBox gbxEtapeSuivi;
+        private System.Windows.Forms.Button btnEtapeSuiviAnnuler;
+        private System.Windows.Forms.Button btnInfosCommandeLivreAnnuler;
     }
 }
 

@@ -1670,7 +1670,53 @@ namespace MediaTekDocuments.view
             lesLivres = controller.GetAllLivres();
             lesSuivis = controller.GetAllSuivis();
             gbxInfosCommandeLivre.Enabled = false;
+            gbxEtapeSuivi.Enabled = false;
         }
+
+        /// <summary>
+        /// Masque la groupBox des suivis
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void GbxInfosCommandeLivre_Enter(object sender, EventArgs e)
+        {
+            gbxEtapeSuivi.Enabled = false;
+        }
+
+        /// <summary>
+        /// Affiche la groupBox des suivis
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnInfosCommandeLivreAnnuler_Click(object sender, EventArgs e)
+        {
+            gbxEtapeSuivi.Enabled = true;
+            gbxInfosCommandeLivre.Enabled = false;
+        }
+
+        /// <summary>
+        /// Masque la groupBox des informations de commande et le numéro de recherche
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void GbxEtapeSuivi_Enter(object sender, EventArgs e)
+        {
+            gbxInfosCommandeLivre.Enabled = false;
+            txbCommandesLivresNumRecherche.Enabled = false;
+        }
+
+        /// <summary>
+        /// Affiche la groupBox des commandes et le numéro de recherche
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnEtapeSuiviAnnuler_Click(object sender, EventArgs e)
+        {
+            gbxEtapeSuivi.Enabled = false;
+            gbxInfosCommandeLivre.Enabled = true;
+            txbCommandesLivresNumRecherche.Enabled = true;
+        }
+
 
         private void RemplirCommandesLivresListe(List<CommandeDocument> lesCommandesDocument)
         {
@@ -1845,6 +1891,7 @@ namespace MediaTekDocuments.view
                 cbxCommandeLivresLibelleSuivi.Enabled = true;
                 btnReceptionCommandeLivresModifierSuivi.Enabled = true;
             }
+          
         }
 
         /// <summary>
@@ -1870,12 +1917,100 @@ namespace MediaTekDocuments.view
                 case "Suivi":
                     sortedList = lesCommandesDocument.OrderBy(o => o.Libelle).ToList();
                     break;
-
             }
             RemplirCommandesLivresListe(sortedList);
         }
 
+        /// <summary>
+        /// Enregistrement d'une commande de livre dans la base de données
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnReceptionCommandeLivreValider_Click(object sender, EventArgs e)
+        {
+            if (!txbCommandeLivreNumero.Text.Equals("") && !txbCommandeLivreNbExemplaires.Text.Equals("") && !txbCommandeLivreMontant.Text.Equals(""))
+            {
+                string id = txbCommandeLivreNumero.Text;
+                int nbExemplaire = int.Parse(txbCommandeLivreNbExemplaires.Text);
+                double montant = double.Parse(txbCommandeLivreMontant.Text);
+                DateTime dateCommande = dtpCommandeLivre.Value;
+                string idLivreDvd = txbCommandesLivresNumRecherche.Text;
+                string idSuivi = lesSuivis[0].Id;
+                string libelle = lesSuivis[0].Libelle;
 
+                Commande commande = new Commande(id, dateCommande, montant);
+
+                if (controller.CreerCommande(commande))
+                {
+                    controller.CreerCommandeDocument(id, nbExemplaire, idLivreDvd, idSuivi);
+                    MessageBox.Show("La commande "+ id + " a bien été enregistrée.", "Information");
+                    AfficheReceptionCommandesLivre();
+                }
+                else
+                {
+                    MessageBox.Show("numéro de commande déjà existant", "Erreur");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Tout les champs sont obligatoires.", "Information");
+            }
+        }
+
+        /// <summary>
+        /// Modification de l'étape de suivi d'une commande de livre dans la base de données
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnModifierSuiviCommandeLivre_Click(object sender, EventArgs e)
+        {
+            string id = txbCommandeLivreNumero.Text;
+            int nbExemplaire = int.Parse(txbCommandeLivreNbExemplaires.Text);
+            double montant = double.Parse(txbCommandeLivreMontant.Text);
+            DateTime dateCommande = dtpCommandeLivre.Value;
+            string idLivreDvd = txbCommandesLivresNumRecherche.Text;
+            string idSuivi = GetIdSuivi(cbxCommandeLivresLibelleSuivi.Text);
+            string libelle = cbxCommandeLivresLibelleSuivi.SelectedItem.ToString();
+            
+            CommandeDocument commandedocument = new CommandeDocument(id, dateCommande, montant, nbExemplaire, idLivreDvd, idSuivi, libelle);
+            if (MessageBox.Show("Voulez-vous modifier le suivi de la commande " + commandedocument.Id + " en " + libelle + " ?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                controller.ModifierSuiviCommandeDocument(commandedocument.Id, commandedocument.NbExemplaire, commandedocument.IdLivreDvd, commandedocument.IdSuivi);
+                MessageBox.Show("L'étape de suivi de la commande " + id + " a bien été modifiée.", "Information");
+                AfficheReceptionCommandesLivre();
+                cbxCommandeLivresLibelleSuivi.Items.Clear();
+            }
+        }
+
+        /// <summary>
+        /// Suppression d'une commande dans la base de données
+        /// Si elle n'a pas encore été livrée 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnCommandeLivreSupprimer_Click(object sender, EventArgs e)
+        {
+            if (dgvCommandesLivre.SelectedRows.Count > 0)
+            {
+                CommandeDocument commandedocument = (CommandeDocument)bdgCommandesLivre.List[bdgCommandesLivre.Position];
+                if (commandedocument.Libelle == "en cours" || commandedocument.Libelle == "relancée")
+                {
+                    if (MessageBox.Show("Voulez-vous vraiment supprimer la commande " + commandedocument.Id + " ?", "Confirmation de suppression", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        controller.SupprimerCommandeDocument(commandedocument);
+                        AfficheReceptionCommandesLivre();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("La commande sélectionnée a été livrée, elle ne peut pas être supprimée.", "Information");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Une ligne doit être sélectionnée.", "Information");
+            }
+        }
 
         #endregion
     }
