@@ -172,11 +172,21 @@ namespace MediaTekDocuments.dal
         /// </summary>
         /// <param name="idDocument">id du document concerné</param>
         /// <returns>Liste d'objets CommandeDocument</returns>
-
         public List<CommandeDocument> GetCommandesDocument(string idDocument)
         {
-            List<CommandeDocument> lescommandesdocument = TraitementRecup<CommandeDocument>(GET, "commandedocument/" + idDocument);
-            return lescommandesdocument;
+            List<CommandeDocument> lesCommandesDocument = TraitementRecup<CommandeDocument>(GET, "commandedocument/" + idDocument);
+            return lesCommandesDocument;
+        }
+
+        /// <summary>
+        /// Retourne les abonnements d'une revue
+        /// </summary>
+        /// <param name="idDocument"></param>
+        /// <returns>Liste d'objets Abonnement</returns>
+        public List<Abonnement> GetAbonnementRevue(string idDocument)
+        {
+            List<Abonnement> lesAbonnementsRevue = TraitementRecup<Abonnement>(GET, "abonnement/" + idDocument);
+            return lesAbonnementsRevue;
         }
 
         /// <summary>
@@ -576,6 +586,53 @@ namespace MediaTekDocuments.dal
             {
                 // récupération soit d'une liste vide (requête ok) soit de null (erreur)
                 List<CommandeDocument> liste = TraitementRecup<CommandeDocument>(DELETE, "commandedocument/" + jsonSupprimerCommandeDocument);
+                return (liste != null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Ecriture d'un abonnement à une revue en base de données
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="dateFinAbonnement"></param>
+        /// <param name="idRevue"></param>
+        /// <returns>True si l'insertion a pu se faire</returns>
+        public bool CreerAbonnementRevue(string id, DateTime dateFinAbonnement, string idRevue)
+        {
+            String jsonDateCommande = JsonConvert.SerializeObject(dateFinAbonnement, new CustomDateTimeConverter());
+            String jsonCreerAbonnementRevue = "{\"id\":\"" + id + "\", \"dateFinAbonnement\" : " + jsonDateCommande + ", \"idRevue\" :  \"" + idRevue + "\"}";
+            Console.WriteLine("jsonCreerAbonnementRevue" + jsonCreerAbonnementRevue);
+            try
+            {
+                // récupération soit d'une liste vide (requête ok) soit de null (erreur)
+                List<Abonnement> liste = TraitementRecup<Abonnement>(POST, "abonnement/" + jsonCreerAbonnementRevue);
+                return (liste != null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Suppression d'un abonnement de revue en base de données
+        /// </summary>
+        /// <param name="abonnement"></param>
+        /// <returns>True si la suppression a pu se faire</returns>
+        public bool SupprimerAbonnementRevue(Abonnement abonnement)
+        {
+            String jsonSupprimerAbonnementRevue = "{\"id\":\"" + abonnement.Id + "\"}";
+            Console.WriteLine("jsonSupprimerAbonnementRevue=" + jsonSupprimerAbonnementRevue);
+            try
+            {
+                // récupération soit d'une liste vide (requête ok) soit de null (erreur)
+                List<Abonnement> liste = TraitementRecup<Abonnement>(DELETE, "abonnement/" + jsonSupprimerAbonnementRevue);
                 return (liste != null);
             }
             catch (Exception ex)

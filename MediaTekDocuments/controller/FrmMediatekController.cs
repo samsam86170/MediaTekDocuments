@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using MediaTekDocuments.model;
 using MediaTekDocuments.dal;
+using System;
 
 namespace MediaTekDocuments.controller
 {
@@ -103,6 +104,16 @@ namespace MediaTekDocuments.controller
         public List<CommandeDocument> GetCommandesDocument(string idDocument)
         {
             return access.GetCommandesDocument(idDocument);
+        }
+
+        /// <summary>
+        /// récupère les abonnements d'une revue
+        /// </summary>
+        /// <param name="idDocument"></param>
+        /// <returns>Liste d'objets Abonnement</returns>
+        public List<Abonnement> GetAbonnementRevue(string idDocument)
+        {
+            return access.GetAbonnementRevue(idDocument);
         }
 
         /// <summary>
@@ -300,13 +311,34 @@ namespace MediaTekDocuments.controller
         /// <summary>
         /// Supprimme une commande de livre dans la bdd
         /// </summary>
-        /// <param name="commandesdocument"></param>
+        /// <param name="commandesDocument"></param>
         /// <returns>True si la suppression a pu se faire</returns>
         public bool SupprimerCommandeDocument(CommandeDocument commandesDocument)
         {
             return access.SupprimerCommandeDocument(commandesDocument);
         }
 
+        /// <summary>
+        /// Crée un abonnement de revue dans la bdd
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="dateFinAbonnement"></param>
+        /// <param name="idRevue"></param>
+        /// <returns>True si l'insertion pu se faire</returns>
+        public bool CreerAbonnementRevue(string id, DateTime dateFinAbonnement, string idRevue)
+        {
+            return access.CreerAbonnementRevue(id, dateFinAbonnement, idRevue);
+        }
+
+        /// <summary>
+        /// Supprimme un abonnement de revue dans la bdd
+        /// </summary>
+        /// <param name="abonnement"></param>
+        /// <returns></returns>
+        public bool SupprimerAbonnementRevue(Abonnement abonnement)
+        {
+            return access.SupprimerAbonnementRevue(abonnement);
+        }
 
     }
 }
