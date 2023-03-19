@@ -8,7 +8,7 @@ namespace MediaTekDocuments.controller
     /// <summary>
     /// Contrôleur lié à FrmMediatek
     /// </summary>
-    class FrmMediatekController
+    public class FrmMediatekController
     {
         /// <summary>
         /// Objet d'accès aux données
@@ -115,6 +115,15 @@ namespace MediaTekDocuments.controller
         {
             return access.GetAbonnementRevue(idDocument);
         }
+        /// <summary>
+        /// récupère les abonnements qui prennent fin dans 30 jours
+        /// </summary>
+        /// <returns></returns>
+        public List<Abonnement> GetAbonnementsEcheance()
+        {
+            return access.GetAbonnementsEcheance();
+        }
+
 
         /// <summary>
         /// Crée un exemplaire d'une revue dans la bdd
@@ -339,6 +348,8 @@ namespace MediaTekDocuments.controller
         {
             return access.SupprimerAbonnementRevue(abonnement);
         }
+
+
 
     }
 }

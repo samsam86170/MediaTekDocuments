@@ -28,6 +28,8 @@ namespace MediaTekDocuments.view
         {
             InitializeComponent();
             this.controller = new FrmMediatekController();
+            FrmAlerteFinAbonnement frmAlerteFinAbonnement = new FrmAlerteFinAbonnement(controller);
+            frmAlerteFinAbonnement.ShowDialog();
         }
 
         /// <summary>

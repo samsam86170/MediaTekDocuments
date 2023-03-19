@@ -188,6 +188,15 @@ namespace MediaTekDocuments.dal
             List<Abonnement> lesAbonnementsRevue = TraitementRecup<Abonnement>(GET, "abonnement/" + idDocument);
             return lesAbonnementsRevue;
         }
+        /// <summary>
+        /// Retourne les abonnements arrivants à échéance dans 30 jours
+        /// </summary>
+        /// <returns></returns>
+        public List<Abonnement> GetAbonnementsEcheance()
+        {
+            List<Abonnement> lesAbonnementsAEcheance = TraitementRecup<Abonnement>(GET, "abonnementsecheance");
+            return lesAbonnementsAEcheance;
+        }
 
         /// <summary>
         /// ecriture d'un exemplaire en base de données
