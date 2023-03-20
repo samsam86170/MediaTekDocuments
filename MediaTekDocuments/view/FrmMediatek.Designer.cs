@@ -353,8 +353,8 @@ namespace MediaTekDocuments.view
             this.cbxEtatLibelleExemplaireDvd = new System.Windows.Forms.ComboBox();
             this.gbxEtatExemplaireRevue = new System.Windows.Forms.GroupBox();
             this.label115 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnExemplaireRevueSupprimer = new System.Windows.Forms.Button();
+            this.btnEtatExemplaireRevueModifier = new System.Windows.Forms.Button();
             this.lblEtatExemplaireRevue = new System.Windows.Forms.Label();
             this.cbxEtatLibelleExemplaireRevue = new System.Windows.Forms.ComboBox();
             this.label117 = new System.Windows.Forms.Label();
@@ -436,7 +436,7 @@ namespace MediaTekDocuments.view
             this.tabLivres.Controls.Add(this.grpLivresRecherche);
             this.tabLivres.Location = new System.Drawing.Point(4, 22);
             this.tabLivres.Name = "tabLivres";
-            this.tabLivres.Size = new System.Drawing.Size(875, 625);
+            this.tabLivres.Size = new System.Drawing.Size(875, 835);
             this.tabLivres.TabIndex = 2;
             this.tabLivres.Text = "Livres";
             this.tabLivres.UseVisualStyleBackColor = true;
@@ -3827,8 +3827,8 @@ namespace MediaTekDocuments.view
             this.gbxEtatExemplaireRevue.Controls.Add(this.lblNumeroExemplaireRevue);
             this.gbxEtatExemplaireRevue.Controls.Add(this.label117);
             this.gbxEtatExemplaireRevue.Controls.Add(this.label115);
-            this.gbxEtatExemplaireRevue.Controls.Add(this.button1);
-            this.gbxEtatExemplaireRevue.Controls.Add(this.button2);
+            this.gbxEtatExemplaireRevue.Controls.Add(this.btnExemplaireRevueSupprimer);
+            this.gbxEtatExemplaireRevue.Controls.Add(this.btnEtatExemplaireRevueModifier);
             this.gbxEtatExemplaireRevue.Controls.Add(this.lblEtatExemplaireRevue);
             this.gbxEtatExemplaireRevue.Controls.Add(this.cbxEtatLibelleExemplaireRevue);
             this.gbxEtatExemplaireRevue.Location = new System.Drawing.Point(8, 512);
@@ -3848,27 +3848,27 @@ namespace MediaTekDocuments.view
             this.label115.TabIndex = 50;
             this.label115.Text = "Etat  :";
             // 
-            // button1
+            // btnExemplaireRevueSupprimer
             // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(6, 74);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(250, 31);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "Supprimer l\'exemplaire";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.btnExemplaireRevueSupprimer_Click);
+            this.btnExemplaireRevueSupprimer.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnExemplaireRevueSupprimer.Location = new System.Drawing.Point(6, 74);
+            this.btnExemplaireRevueSupprimer.Name = "btnExemplaireRevueSupprimer";
+            this.btnExemplaireRevueSupprimer.Size = new System.Drawing.Size(250, 31);
+            this.btnExemplaireRevueSupprimer.TabIndex = 4;
+            this.btnExemplaireRevueSupprimer.Text = "Supprimer l\'exemplaire";
+            this.btnExemplaireRevueSupprimer.UseVisualStyleBackColor = true;
+            this.btnExemplaireRevueSupprimer.Click += new System.EventHandler(this.btnExemplaireRevueSupprimer_Click);
             // 
-            // button2
+            // btnEtatExemplaireRevueModifier
             // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(291, 74);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(261, 31);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "Modifier l\'état de l\'exemplaire";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.btnEtatExemplaireRevueModifier_Click);
+            this.btnEtatExemplaireRevueModifier.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnEtatExemplaireRevueModifier.Location = new System.Drawing.Point(291, 74);
+            this.btnEtatExemplaireRevueModifier.Name = "btnEtatExemplaireRevueModifier";
+            this.btnEtatExemplaireRevueModifier.Size = new System.Drawing.Size(261, 31);
+            this.btnEtatExemplaireRevueModifier.TabIndex = 3;
+            this.btnEtatExemplaireRevueModifier.Text = "Modifier l\'état de l\'exemplaire";
+            this.btnEtatExemplaireRevueModifier.UseVisualStyleBackColor = true;
+            this.btnEtatExemplaireRevueModifier.Click += new System.EventHandler(this.btnEtatExemplaireRevueModifier_Click);
             // 
             // lblEtatExemplaireRevue
             // 
@@ -4341,8 +4341,8 @@ namespace MediaTekDocuments.view
         private System.Windows.Forms.DataGridView dgvExemplairesDvd;
         private System.Windows.Forms.GroupBox gbxEtatExemplaireRevue;
         private System.Windows.Forms.Label label115;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnExemplaireRevueSupprimer;
+        private System.Windows.Forms.Button btnEtatExemplaireRevueModifier;
         private System.Windows.Forms.Label lblEtatExemplaireRevue;
         private System.Windows.Forms.ComboBox cbxEtatLibelleExemplaireRevue;
         private System.Windows.Forms.Label lblNumeroExemplaireRevue;

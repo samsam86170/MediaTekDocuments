@@ -28,9 +28,46 @@ namespace MediaTekDocuments.view
         {
             InitializeComponent();
             this.controller = new FrmMediatekController();
-            FrmAlerteFinAbonnement frmAlerteFinAbonnement = new FrmAlerteFinAbonnement(controller);
-            frmAlerteFinAbonnement.ShowDialog();
+            if (Service.Libelle == "administratif" || Service.Libelle == "administrateur")
+            {
+                FrmAlerteFinAbonnement frmAlerteFinAbonnement = new FrmAlerteFinAbonnement(controller);
+                frmAlerteFinAbonnement.ShowDialog();
+            }
+            else if (Service.Libelle == "prêts")
+            {
+                tabOngletsApplication.TabPages.Remove(tabCommandesLivres);
+                tabOngletsApplication.TabPages.Remove(tabCommandesDvd);
+                tabOngletsApplication.TabPages.Remove(tabCommandesRevues);
+
+                grpLivresInfos.Enabled = false;
+                txbExemplaireLivresNumero.Enabled = false;
+                dtpDateAchatExemplaireLivre.Enabled = false;
+                cbxEtatLibelleExemplaireLivre.Enabled = false;
+                btnEtatExemplaireLivreModifier.Enabled = false;
+                btnExemplaireLivreSupprimer.Enabled = false;
+
+                grpDvdInfos.Enabled = false;
+                txbExemplaireDvdNumero.Enabled = false;
+                dtpDateAchatExemplaireDvd.Enabled = false;
+                cbxEtatLibelleExemplaireDvd.Enabled = false;
+                btnEtatExemplaireDvdModifier.Enabled = false;
+                btnExemplaireDvdSupprimer.Enabled = false;
+
+                grpRevuesInfos.Enabled = false;
+
+                txbReceptionExemplaireNumero.Enabled = false;
+                dtpReceptionExemplaireDate.Enabled = false;
+                txbReceptionExemplaireImage.Enabled = false;
+                btnReceptionExemplaireImage.Enabled = false;
+                btnReceptionExemplaireValider.Enabled = false;
+                dtpDateAchatExemplaireRevue.Enabled = false;
+                btnExemplaireRevueSupprimer.Enabled = false;
+                cbxEtatLibelleExemplaireRevue.Enabled = false;
+                btnEtatExemplaireRevueModifier.Enabled = false;
+            }
         }
+
+        
 
         /// <summary>
         /// Rempli un des 3 combo (genre, public, rayon)
