@@ -485,23 +485,59 @@ namespace MediaTekDocuments.view
         private void btnSupprimerLivre_Click(object sender, EventArgs e)
         {
             Livre livre = (Livre)bdgLivresListe.Current;
-           
+
+
             if (MessageBox.Show("Souhaitez-vous confirmer la suppression?", "Confirmation de suppression", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-                if (controller.SupprimerLivre(livre.Id))
+                List<Exemplaire> lesExemplaires = controller.GetExemplairesDocument(livre.Id);
+                bool aucunExemplaire = true;
+                List<CommandeDocument> lesCommandesDocument = controller.GetCommandesDocument(livre.Id);
+                bool aucuneCommande = true;
+                foreach (Exemplaire exemplaire in lesExemplaires) 
                 {
-                    lesLivres = controller.GetAllLivres();
-                    RemplirComboCategorie(controller.GetAllGenres(), bdgGenres, cbxLivresGenres);
-                    RemplirComboCategorie(controller.GetAllPublics(), bdgPublics, cbxLivresPublics);
-                    RemplirComboCategorie(controller.GetAllRayons(), bdgRayons, cbxLivresRayons);
-                    RemplirLivresListeComplete();
-                    MessageBox.Show("Le livre " + livre.Titre + " a correctement été supprimé.");
+                    if (exemplaire.Id == livre.Id)
+                    {
+                        aucunExemplaire = false;
+                        break;
+                    }
+                }
+                foreach (CommandeDocument commandedocument in lesCommandesDocument)
+                {
+                    if (commandedocument.IdLivreDvd == livre.Id)
+                    {
+                        aucuneCommande = false;
+                        break;
+                    }
+                }
+                if (aucunExemplaire)
+                {
+                    if (aucuneCommande)
+                    {
+                        if (controller.SupprimerLivre(livre.Id))
+                        {
+                            lesLivres = controller.GetAllLivres();
+                            RemplirComboCategorie(controller.GetAllGenres(), bdgGenres, cbxLivresGenres);
+                            RemplirComboCategorie(controller.GetAllPublics(), bdgPublics, cbxLivresPublics);
+                            RemplirComboCategorie(controller.GetAllRayons(), bdgRayons, cbxLivresRayons);
+                            RemplirLivresListeComplete();
+                            MessageBox.Show("Le livre " + livre.Titre + " a correctement été supprimé.");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Une erreur s'est produite.", "Erreur");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Impossible de supprimer le livre car il possède une ou plusieurs commande(s).", "Erreur");
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Une erreur s'est produite.", "Erreur");
+                    MessageBox.Show("Impossible de supprimer le livre car il possède un ou plusieurs exemplaire(s).", "Erreur");
                 }
             }
+                
         }
 
         private readonly BindingSource bdgExemplairesLivre = new BindingSource();
@@ -1130,7 +1166,7 @@ namespace MediaTekDocuments.view
         }
 
         /// <summary>
-        /// Suppression d'un document de type "dvd" en bdd
+        /// Suppression d'un document de type "dvd" en bdd si il ne contient aucun exemplaire
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1139,19 +1175,56 @@ namespace MediaTekDocuments.view
             Dvd dvd = (Dvd)bdgDvdListe.Current;
             if (MessageBox.Show("Souhaitez-vous confirmer la suppression?", "Confirmation de suppression", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-                if (controller.SupprimerDvd(dvd.Id))
+
+                List<Exemplaire> lesExemplaires = controller.GetExemplairesDocument(dvd.Id);
+                bool aucunExemplaire = true;
+                List<CommandeDocument> lesCommandesDocument = controller.GetCommandesDocument(dvd.Id);
+                bool aucuneCommande = true;
+                foreach (Exemplaire exemplaire in lesExemplaires)
                 {
-                    lesDvd = controller.GetAllDvd();
-                    RemplirComboCategorie(controller.GetAllGenres(), bdgGenres, cbxDvdGenres);
-                    RemplirComboCategorie(controller.GetAllPublics(), bdgPublics, cbxDvdPublics);
-                    RemplirComboCategorie(controller.GetAllRayons(), bdgRayons, cbxDvdRayons);
-                    RemplirDvdListeComplete();
-                    MessageBox.Show("Le dvd " + dvd.Titre + " a correctement été supprimé.");
+                    if (exemplaire.Id == dvd.Id)
+                    {
+                        aucunExemplaire = false;
+                        break;
+                    }
+                }
+                foreach (CommandeDocument commandedocument in lesCommandesDocument)
+                {
+                    if (commandedocument.IdLivreDvd == dvd.Id)
+                    {
+                        aucuneCommande = false;
+                        break;
+                    }
+                }
+                if (aucunExemplaire)
+                {
+                    if (aucuneCommande)
+                    {
+                        if (controller.SupprimerDvd(dvd.Id))
+                        {
+                            lesDvd = controller.GetAllDvd();
+                            RemplirComboCategorie(controller.GetAllGenres(), bdgGenres, cbxDvdGenres);
+                            RemplirComboCategorie(controller.GetAllPublics(), bdgPublics, cbxDvdPublics);
+                            RemplirComboCategorie(controller.GetAllRayons(), bdgRayons, cbxDvdRayons);
+                            RemplirDvdListeComplete();
+                            MessageBox.Show("Le dvd " + dvd.Titre + " a correctement été supprimé.");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Une erreur s'est produite.", "Erreur");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Impossible de supprimer le dvd car il possède une ou plusieurs commande(s).", "Erreur");
+                    }
+
                 }
                 else
                 {
-                    MessageBox.Show("Une erreur s'est produite.", "Erreur");
+                    MessageBox.Show("Impossible de supprimer le dvd car il possède un ou plusieurs exemplaire(s).", "Erreur");
                 }
+
             }
         }
 
@@ -1806,6 +1879,7 @@ namespace MediaTekDocuments.view
             lesRevues = controller.GetAllRevues();
             txbReceptionRevueNumero.Text = "";
             gbxEtatExemplaireRevue.Enabled = false;
+            dtpDateAchatExemplaireRevue.Value = DateTime.Now;
         }
 
         /// <summary>
