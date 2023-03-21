@@ -38,7 +38,7 @@ namespace MediaTekDocuments.view
                 else if(Service.Libelle == "culture")
                 {
                     MessageBox.Show("Vous n'avez pas les droits d'accès à l'application.", "Alerte");
-                    this.Close();
+                    Application.Exit();
                 }
                 else
                 {
