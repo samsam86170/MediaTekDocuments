@@ -326,13 +326,11 @@ namespace MediaTekDocuments.controller
         /// Modifie l'étape de suivi d'une commande dans la bdd
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="nbExemplaire"></param>
-        /// <param name="idLivreDvd"></param>
         /// <param name="idSuivi"></param>
         /// <returns>True si la modification a pu se faire</returns>
-        internal bool ModifierSuiviCommandeDocument(string id, int nbExemplaire, string idLivreDvd, string idSuivi)
+        internal bool ModifierSuiviCommandeDocument(string id, string idSuivi)
         {
-            return access.ModifierSuiviCommandeDocument(id, nbExemplaire, idLivreDvd, idSuivi);
+            return access.ModifierSuiviCommandeDocument(id, idSuivi);
         }
 
         /// <summary>

@@ -645,11 +645,9 @@ namespace MediaTekDocuments.dal
         /// Modification de l'étape de suivi d'une commande de document en base de données
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="nbExemplaire"></param>
-        /// <param name="idLivreDvd"></param>
         /// <param name="idSuivi"></param>
         /// <returns>True si la modification a pu se faire</returns>
-        public bool ModifierSuiviCommandeDocument(string id, int nbExemplaire, string idLivreDvd, string idSuivi)
+        public bool ModifierSuiviCommandeDocument(string id, string idSuivi)
         {
             String jsonModifierSuiviCommandeDocument = "{ \"id\" : \"" + id + "\", \"idSuivi\" : \"" + idSuivi + "\"}";
             Console.WriteLine("jsonModifierSuiviCommandeDocument" + jsonModifierSuiviCommandeDocument);

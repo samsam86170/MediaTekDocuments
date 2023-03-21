@@ -440,7 +440,7 @@ namespace MediaTekDocuments.view
             this.tabLivres.TabIndex = 2;
             this.tabLivres.Text = "Livres";
             this.tabLivres.UseVisualStyleBackColor = true;
-            this.tabLivres.Enter += new System.EventHandler(this.TabLivres_Enter);
+            this.tabLivres.Enter += new System.EventHandler(this.tabLivres_Enter);
             // 
             // dtpDateAchatExemplaireLivre
             // 
@@ -898,7 +898,7 @@ namespace MediaTekDocuments.view
             this.btnLivresAnnulRayons.TabIndex = 16;
             this.btnLivresAnnulRayons.Text = "X";
             this.btnLivresAnnulRayons.UseVisualStyleBackColor = true;
-            this.btnLivresAnnulRayons.Click += new System.EventHandler(this.BtnLivresAnnulRayons_Click);
+            this.btnLivresAnnulRayons.Click += new System.EventHandler(this.btnLivresAnnulRayons_Click);
             // 
             // btnlivresAnnulPublics
             // 
@@ -908,7 +908,7 @@ namespace MediaTekDocuments.view
             this.btnlivresAnnulPublics.TabIndex = 15;
             this.btnlivresAnnulPublics.Text = "X";
             this.btnlivresAnnulPublics.UseVisualStyleBackColor = true;
-            this.btnlivresAnnulPublics.Click += new System.EventHandler(this.BtnLivresAnnulPublics_Click);
+            this.btnlivresAnnulPublics.Click += new System.EventHandler(this.btnLivresAnnulPublics_Click);
             // 
             // btnLivresNumRecherche
             // 
@@ -919,7 +919,7 @@ namespace MediaTekDocuments.view
             this.btnLivresNumRecherche.TabIndex = 14;
             this.btnLivresNumRecherche.Text = "Rechercher";
             this.btnLivresNumRecherche.UseVisualStyleBackColor = true;
-            this.btnLivresNumRecherche.Click += new System.EventHandler(this.BtnLivresNumRecherche_Click);
+            this.btnLivresNumRecherche.Click += new System.EventHandler(this.btnLivresNumRecherche_Click);
             // 
             // label5
             // 
@@ -946,7 +946,7 @@ namespace MediaTekDocuments.view
             this.btnLivresAnnulGenres.TabIndex = 11;
             this.btnLivresAnnulGenres.Text = "X";
             this.btnLivresAnnulGenres.UseVisualStyleBackColor = true;
-            this.btnLivresAnnulGenres.Click += new System.EventHandler(this.BtnLivresAnnulGenres_Click);
+            this.btnLivresAnnulGenres.Click += new System.EventHandler(this.btnLivresAnnulGenres_Click);
             // 
             // cbxLivresRayons
             // 
@@ -955,7 +955,7 @@ namespace MediaTekDocuments.view
             this.cbxLivresRayons.Name = "cbxLivresRayons";
             this.cbxLivresRayons.Size = new System.Drawing.Size(207, 21);
             this.cbxLivresRayons.TabIndex = 10;
-            this.cbxLivresRayons.SelectedIndexChanged += new System.EventHandler(this.CbxLivresRayons_SelectedIndexChanged);
+            this.cbxLivresRayons.SelectedIndexChanged += new System.EventHandler(this.cbxLivresRayons_SelectedIndexChanged);
             // 
             // label21
             // 
@@ -974,7 +974,7 @@ namespace MediaTekDocuments.view
             this.cbxLivresPublics.Name = "cbxLivresPublics";
             this.cbxLivresPublics.Size = new System.Drawing.Size(207, 21);
             this.cbxLivresPublics.TabIndex = 8;
-            this.cbxLivresPublics.SelectedIndexChanged += new System.EventHandler(this.CbxLivresPublics_SelectedIndexChanged);
+            this.cbxLivresPublics.SelectedIndexChanged += new System.EventHandler(this.cbxLivresPublics_SelectedIndexChanged);
             // 
             // label20
             // 
@@ -993,7 +993,7 @@ namespace MediaTekDocuments.view
             this.cbxLivresGenres.Name = "cbxLivresGenres";
             this.cbxLivresGenres.Size = new System.Drawing.Size(207, 21);
             this.cbxLivresGenres.TabIndex = 6;
-            this.cbxLivresGenres.SelectedIndexChanged += new System.EventHandler(this.CbxLivresGenres_SelectedIndexChanged);
+            this.cbxLivresGenres.SelectedIndexChanged += new System.EventHandler(this.cbxLivresGenres_SelectedIndexChanged);
             // 
             // label14
             // 
@@ -1020,8 +1020,8 @@ namespace MediaTekDocuments.view
             this.dgvLivresListe.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvLivresListe.Size = new System.Drawing.Size(844, 200);
             this.dgvLivresListe.TabIndex = 4;
-            this.dgvLivresListe.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DgvLivresListe_ColumnHeaderMouseClick);
-            this.dgvLivresListe.SelectionChanged += new System.EventHandler(this.DgvLivresListe_SelectionChanged);
+            this.dgvLivresListe.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvLivresListe_ColumnHeaderMouseClick);
+            this.dgvLivresListe.SelectionChanged += new System.EventHandler(this.dgvLivresListe_SelectionChanged);
             // 
             // label6
             // 
@@ -1039,7 +1039,7 @@ namespace MediaTekDocuments.view
             this.txbLivresTitreRecherche.Name = "txbLivresTitreRecherche";
             this.txbLivresTitreRecherche.Size = new System.Drawing.Size(190, 20);
             this.txbLivresTitreRecherche.TabIndex = 3;
-            this.txbLivresTitreRecherche.TextChanged += new System.EventHandler(this.TxbLivresTitreRecherche_TextChanged);
+            this.txbLivresTitreRecherche.TextChanged += new System.EventHandler(this.txbLivresTitreRecherche_TextChanged);
             // 
             // tabDvd
             // 
@@ -2420,7 +2420,7 @@ namespace MediaTekDocuments.view
             this.tabCommandesLivres.TabIndex = 5;
             this.tabCommandesLivres.Text = "Commandes de livres";
             this.tabCommandesLivres.UseVisualStyleBackColor = true;
-            this.tabCommandesLivres.Enter += new System.EventHandler(this.TabCommandesLivres_Enter);
+            this.tabCommandesLivres.Enter += new System.EventHandler(this.tabCommandesLivres_Enter);
             // 
             // gbxEtapeSuivi
             // 
@@ -2435,7 +2435,7 @@ namespace MediaTekDocuments.view
             this.gbxEtapeSuivi.TabIndex = 51;
             this.gbxEtapeSuivi.TabStop = false;
             this.gbxEtapeSuivi.Text = "Suivi de la commande";
-            this.gbxEtapeSuivi.Enter += new System.EventHandler(this.GbxEtapeSuivi_Enter);
+            this.gbxEtapeSuivi.Enter += new System.EventHandler(this.gbxEtapeSuivi_Enter);
             // 
             // btnEtapeSuiviAnnuler
             // 
@@ -2446,7 +2446,7 @@ namespace MediaTekDocuments.view
             this.btnEtapeSuiviAnnuler.TabIndex = 55;
             this.btnEtapeSuiviAnnuler.Text = "Retour";
             this.btnEtapeSuiviAnnuler.UseVisualStyleBackColor = true;
-            this.btnEtapeSuiviAnnuler.Click += new System.EventHandler(this.BtnEtapeSuiviAnnuler_Click);
+            this.btnEtapeSuiviAnnuler.Click += new System.EventHandler(this.btnEtapeSuiviAnnuler_Click);
             // 
             // btnReceptionCommandeLivresModifierSuivi
             // 
@@ -2507,7 +2507,7 @@ namespace MediaTekDocuments.view
             this.gbxInfosCommandeLivre.TabIndex = 50;
             this.gbxInfosCommandeLivre.TabStop = false;
             this.gbxInfosCommandeLivre.Text = "Informations de commande";
-            this.gbxInfosCommandeLivre.Enter += new System.EventHandler(this.GbxInfosCommandeLivre_Enter);
+            this.gbxInfosCommandeLivre.Enter += new System.EventHandler(this.gbxInfosCommandeLivre_Enter);
             // 
             // btnInfosCommandeLivreAnnuler
             // 
@@ -2518,7 +2518,7 @@ namespace MediaTekDocuments.view
             this.btnInfosCommandeLivreAnnuler.TabIndex = 54;
             this.btnInfosCommandeLivreAnnuler.Text = "Suivi";
             this.btnInfosCommandeLivreAnnuler.UseVisualStyleBackColor = true;
-            this.btnInfosCommandeLivreAnnuler.Click += new System.EventHandler(this.BtnInfosCommandeLivreAnnuler_Click);
+            this.btnInfosCommandeLivreAnnuler.Click += new System.EventHandler(this.btnInfosCommandeLivreAnnuler_Click);
             // 
             // dtpCommandeLivre
             // 
@@ -2864,7 +2864,7 @@ namespace MediaTekDocuments.view
             this.tabCommandesDvd.TabIndex = 6;
             this.tabCommandesDvd.Text = "Commandes de dvd";
             this.tabCommandesDvd.UseVisualStyleBackColor = true;
-            this.tabCommandesDvd.Enter += new System.EventHandler(this.TabCommandesDvd_Enter);
+            this.tabCommandesDvd.Enter += new System.EventHandler(this.tabCommandesDvd_Enter);
             // 
             // gbxEtapeSuiviDvd
             // 
@@ -2879,7 +2879,7 @@ namespace MediaTekDocuments.view
             this.gbxEtapeSuiviDvd.TabIndex = 53;
             this.gbxEtapeSuiviDvd.TabStop = false;
             this.gbxEtapeSuiviDvd.Text = "Suivi de la commande";
-            this.gbxEtapeSuiviDvd.Enter += new System.EventHandler(this.GbxEtapeSuiviDvd_Enter);
+            this.gbxEtapeSuiviDvd.Enter += new System.EventHandler(this.gbxEtapeSuiviDvd_Enter);
             // 
             // btnEtapeSuiviAnnulerDvd
             // 
@@ -2890,7 +2890,7 @@ namespace MediaTekDocuments.view
             this.btnEtapeSuiviAnnulerDvd.TabIndex = 55;
             this.btnEtapeSuiviAnnulerDvd.Text = "Retour";
             this.btnEtapeSuiviAnnulerDvd.UseVisualStyleBackColor = true;
-            this.btnEtapeSuiviAnnulerDvd.Click += new System.EventHandler(this.BtnEtapeSuiviAnnulerDvd_Click);
+            this.btnEtapeSuiviAnnulerDvd.Click += new System.EventHandler(this.btnEtapeSuiviAnnulerDvd_Click);
             // 
             // btnReceptionCommandeDvdModifierSuivi
             // 
@@ -2951,7 +2951,7 @@ namespace MediaTekDocuments.view
             this.gbxInfosCommandeDvd.TabIndex = 52;
             this.gbxInfosCommandeDvd.TabStop = false;
             this.gbxInfosCommandeDvd.Text = "Informations de commande";
-            this.gbxInfosCommandeDvd.Enter += new System.EventHandler(this.GbxInfosCommandeDvd_Enter);
+            this.gbxInfosCommandeDvd.Enter += new System.EventHandler(this.gbxInfosCommandeDvd_Enter);
             // 
             // btnInfosCommandeDvdAnnuler
             // 
@@ -2962,7 +2962,7 @@ namespace MediaTekDocuments.view
             this.btnInfosCommandeDvdAnnuler.TabIndex = 54;
             this.btnInfosCommandeDvdAnnuler.Text = "Suivi";
             this.btnInfosCommandeDvdAnnuler.UseVisualStyleBackColor = true;
-            this.btnInfosCommandeDvdAnnuler.Click += new System.EventHandler(this.BtnInfosCommandeDvdAnnuler_Click);
+            this.btnInfosCommandeDvdAnnuler.Click += new System.EventHandler(this.btnInfosCommandeDvdAnnuler_Click);
             // 
             // dtpCommandeDvd
             // 
@@ -3312,7 +3312,7 @@ namespace MediaTekDocuments.view
             this.tabCommandesRevues.TabIndex = 7;
             this.tabCommandesRevues.Text = "Commandes de revues";
             this.tabCommandesRevues.UseVisualStyleBackColor = true;
-            this.tabCommandesRevues.Enter += new System.EventHandler(this.TabCommandesRevues_Enter);
+            this.tabCommandesRevues.Enter += new System.EventHandler(this.tabCommandesRevues_Enter);
             // 
             // gbxInfosCommandeRevue
             // 

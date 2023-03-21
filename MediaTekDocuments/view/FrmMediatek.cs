@@ -96,7 +96,7 @@ namespace MediaTekDocuments.view
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void TabLivres_Enter(object sender, EventArgs e)
+        private void tabLivres_Enter(object sender, EventArgs e)
         {
             lesLivres = controller.GetAllLivres();
             RemplirComboCategorie(controller.GetAllGenres(), bdgGenres, cbxLivresGenres);
@@ -131,7 +131,7 @@ namespace MediaTekDocuments.view
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BtnLivresNumRecherche_Click(object sender, EventArgs e)
+        private void btnLivresNumRecherche_Click(object sender, EventArgs e)
         {
             if (!txbLivresNumRecherche.Text.Equals(""))
             {
@@ -166,7 +166,7 @@ namespace MediaTekDocuments.view
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void TxbLivresTitreRecherche_TextChanged(object sender, EventArgs e)
+        private void txbLivresTitreRecherche_TextChanged(object sender, EventArgs e)
         {
             if (!txbLivresTitreRecherche.Text.Equals(""))
             {
@@ -248,7 +248,7 @@ namespace MediaTekDocuments.view
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CbxLivresGenres_SelectedIndexChanged(object sender, EventArgs e)
+        private void cbxLivresGenres_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cbxLivresGenres.SelectedIndex >= 0)
             {
@@ -268,7 +268,7 @@ namespace MediaTekDocuments.view
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CbxLivresPublics_SelectedIndexChanged(object sender, EventArgs e)
+        private void cbxLivresPublics_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cbxLivresPublics.SelectedIndex >= 0)
             {
@@ -287,7 +287,7 @@ namespace MediaTekDocuments.view
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CbxLivresRayons_SelectedIndexChanged(object sender, EventArgs e)
+        private void cbxLivresRayons_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cbxLivresRayons.SelectedIndex >= 0)
             {
@@ -307,7 +307,7 @@ namespace MediaTekDocuments.view
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void DgvLivresListe_SelectionChanged(object sender, EventArgs e)
+        private void dgvLivresListe_SelectionChanged(object sender, EventArgs e)
         {
             if (dgvLivresListe.CurrentCell != null)
             {
@@ -332,7 +332,7 @@ namespace MediaTekDocuments.view
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BtnLivresAnnulPublics_Click(object sender, EventArgs e)
+        private void btnLivresAnnulPublics_Click(object sender, EventArgs e)
         {
             RemplirLivresListeComplete();
         }
@@ -342,7 +342,7 @@ namespace MediaTekDocuments.view
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BtnLivresAnnulRayons_Click(object sender, EventArgs e)
+        private void btnLivresAnnulRayons_Click(object sender, EventArgs e)
         {
             RemplirLivresListeComplete();
         }
@@ -352,7 +352,7 @@ namespace MediaTekDocuments.view
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BtnLivresAnnulGenres_Click(object sender, EventArgs e)
+        private void btnLivresAnnulGenres_Click(object sender, EventArgs e)
         {
             RemplirLivresListeComplete();
         }
@@ -384,7 +384,7 @@ namespace MediaTekDocuments.view
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void DgvLivresListe_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        private void dgvLivresListe_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             VideLivresZones();
             string titreColonne = dgvLivresListe.Columns[e.ColumnIndex].HeaderText;
@@ -522,59 +522,36 @@ namespace MediaTekDocuments.view
         private void btnSupprimerLivre_Click(object sender, EventArgs e)
         {
             Livre livre = (Livre)bdgLivresListe.Current;
-
-
             if (MessageBox.Show("Souhaitez-vous confirmer la suppression?", "Confirmation de suppression", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-                List<Exemplaire> lesExemplaires = controller.GetExemplairesDocument(livre.Id);
-                bool aucunExemplaire = true;
-                List<CommandeDocument> lesCommandesDocument = controller.GetCommandesDocument(livre.Id);
-                bool aucuneCommande = true;
-                foreach (Exemplaire exemplaire in lesExemplaires) 
+                var exemplairesLivre = controller.GetExemplairesDocument(livre.Id);
+                var aucunExemplaire = !exemplairesLivre.Any();
+
+                var commandesLivre = controller.GetCommandesDocument(livre.Id);
+                var aucuneCommande = !commandesLivre.Any();
+
+                if (aucunExemplaire && aucuneCommande)
                 {
-                    if (exemplaire.Id == livre.Id)
+                    if (controller.SupprimerLivre(livre.Id))
                     {
-                        aucunExemplaire = false;
-                        break;
-                    }
-                }
-                foreach (CommandeDocument commandedocument in lesCommandesDocument)
-                {
-                    if (commandedocument.IdLivreDvd == livre.Id)
-                    {
-                        aucuneCommande = false;
-                        break;
-                    }
-                }
-                if (aucunExemplaire)
-                {
-                    if (aucuneCommande)
-                    {
-                        if (controller.SupprimerLivre(livre.Id))
-                        {
-                            lesLivres = controller.GetAllLivres();
-                            RemplirComboCategorie(controller.GetAllGenres(), bdgGenres, cbxLivresGenres);
-                            RemplirComboCategorie(controller.GetAllPublics(), bdgPublics, cbxLivresPublics);
-                            RemplirComboCategorie(controller.GetAllRayons(), bdgRayons, cbxLivresRayons);
-                            RemplirLivresListeComplete();
-                            MessageBox.Show("Le livre " + livre.Titre + " a correctement été supprimé.");
-                        }
-                        else
-                        {
-                            MessageBox.Show("Une erreur s'est produite.", "Erreur");
-                        }
+                        lesLivres = controller.GetAllLivres();
+                        RemplirComboCategorie(controller.GetAllGenres(), bdgGenres, cbxLivresGenres);
+                        RemplirComboCategorie(controller.GetAllPublics(), bdgPublics, cbxLivresPublics);
+                        RemplirComboCategorie(controller.GetAllRayons(), bdgRayons, cbxLivresRayons);
+                        RemplirLivresListeComplete();
+                        MessageBox.Show($"Le livre {livre.Titre} a correctement été supprimé.");
                     }
                     else
                     {
-                        MessageBox.Show("Impossible de supprimer le livre car il possède une ou plusieurs commande(s).", "Erreur");
+                        MessageBox.Show("Une erreur s'est produite.", "Erreur");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Impossible de supprimer le livre car il possède un ou plusieurs exemplaire(s).", "Erreur");
+                    MessageBox.Show($"Impossible de supprimer le livre car il possède {(aucunExemplaire ? "une ou plusieurs commande(s)" : "un ou plusieurs exemplaire(s)")}.", "Erreur");
                 }
             }
-                
+
         }
 
         private readonly BindingSource bdgExemplairesLivre = new BindingSource();
@@ -1209,58 +1186,35 @@ namespace MediaTekDocuments.view
         private void btnSupprimerDvd_Click(object sender, EventArgs e)
         {
             Dvd dvd = (Dvd)bdgDvdListe.Current;
+
             if (MessageBox.Show("Souhaitez-vous confirmer la suppression?", "Confirmation de suppression", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
+                var exemplairesDvd = controller.GetExemplairesDocument(dvd.Id);
+                var aucunExemplaireDvd = !exemplairesDvd.Any();
 
-                List<Exemplaire> lesExemplaires = controller.GetExemplairesDocument(dvd.Id);
-                bool aucunExemplaire = true;
-                List<CommandeDocument> lesCommandesDocument = controller.GetCommandesDocument(dvd.Id);
-                bool aucuneCommande = true;
-                foreach (Exemplaire exemplaire in lesExemplaires)
+                var commandesDvd = controller.GetCommandesDocument(dvd.Id);
+                var aucuneCommandeDvd = !commandesDvd.Any();
+
+                if (aucunExemplaireDvd && aucuneCommandeDvd)
                 {
-                    if (exemplaire.Id == dvd.Id)
+                    if (controller.SupprimerDvd(dvd.Id))
                     {
-                        aucunExemplaire = false;
-                        break;
-                    }
-                }
-                foreach (CommandeDocument commandedocument in lesCommandesDocument)
-                {
-                    if (commandedocument.IdLivreDvd == dvd.Id)
-                    {
-                        aucuneCommande = false;
-                        break;
-                    }
-                }
-                if (aucunExemplaire)
-                {
-                    if (aucuneCommande)
-                    {
-                        if (controller.SupprimerDvd(dvd.Id))
-                        {
-                            lesDvd = controller.GetAllDvd();
-                            RemplirComboCategorie(controller.GetAllGenres(), bdgGenres, cbxDvdGenres);
-                            RemplirComboCategorie(controller.GetAllPublics(), bdgPublics, cbxDvdPublics);
-                            RemplirComboCategorie(controller.GetAllRayons(), bdgRayons, cbxDvdRayons);
-                            RemplirDvdListeComplete();
-                            MessageBox.Show("Le dvd " + dvd.Titre + " a correctement été supprimé.");
-                        }
-                        else
-                        {
-                            MessageBox.Show("Une erreur s'est produite.", "Erreur");
-                        }
+                        lesDvd = controller.GetAllDvd();
+                        RemplirComboCategorie(controller.GetAllGenres(), bdgGenres, cbxDvdGenres);
+                        RemplirComboCategorie(controller.GetAllPublics(), bdgPublics, cbxDvdPublics);
+                        RemplirComboCategorie(controller.GetAllRayons(), bdgRayons, cbxDvdRayons);
+                        RemplirDvdListeComplete();
+                        MessageBox.Show("Le dvd " + dvd.Titre + " a correctement été supprimé.");
                     }
                     else
                     {
-                        MessageBox.Show("Impossible de supprimer le dvd car il possède une ou plusieurs commande(s).", "Erreur");
+                        MessageBox.Show("Une erreur s'est produite.", "Erreur");
                     }
-
                 }
                 else
                 {
-                    MessageBox.Show("Impossible de supprimer le dvd car il possède un ou plusieurs exemplaire(s).", "Erreur");
+                    MessageBox.Show($"Impossible de supprimer le dvd car il possède {(aucunExemplaireDvd ? "une ou plusieurs commande(s)" : "un ou plusieurs exemplaire(s)")}.", "Erreur");
                 }
-
             }
         }
 
@@ -1864,9 +1818,9 @@ namespace MediaTekDocuments.view
             Revue revue = (Revue)bdgRevuesListe.Current;
             if (MessageBox.Show("Souhaitez-vous confirmer la suppression?", "Confirmation de suppression", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-                List<Exemplaire> lesExemplaires = controller.GetExemplairesRevue(revue.Id);
+                List<Exemplaire> lesExemplairesRevue = controller.GetExemplairesRevue(revue.Id);
                 bool aucunExemplaire = true;
-                foreach (Exemplaire exemplaire in lesExemplaires)
+                foreach (Exemplaire exemplaire in lesExemplairesRevue)
                 {
                     if (exemplaire.Id == revue.Id)
                     {
@@ -2287,7 +2241,7 @@ namespace MediaTekDocuments.view
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void TabCommandesLivres_Enter(object sender, EventArgs e)
+        private void tabCommandesLivres_Enter(object sender, EventArgs e)
         {
             lesLivres = controller.GetAllLivres();
             lesSuivis = controller.GetAllSuivis();
@@ -2300,7 +2254,7 @@ namespace MediaTekDocuments.view
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void GbxInfosCommandeLivre_Enter(object sender, EventArgs e)
+        private void gbxInfosCommandeLivre_Enter(object sender, EventArgs e)
         {
             gbxEtapeSuivi.Enabled = false;
         }
@@ -2310,7 +2264,7 @@ namespace MediaTekDocuments.view
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BtnInfosCommandeLivreAnnuler_Click(object sender, EventArgs e)
+        private void btnInfosCommandeLivreAnnuler_Click(object sender, EventArgs e)
         {
             gbxEtapeSuivi.Enabled = true;
             gbxInfosCommandeLivre.Enabled = false;
@@ -2321,7 +2275,7 @@ namespace MediaTekDocuments.view
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void GbxEtapeSuivi_Enter(object sender, EventArgs e)
+        private void gbxEtapeSuivi_Enter(object sender, EventArgs e)
         {
             gbxInfosCommandeLivre.Enabled = false;
             txbCommandesLivresNumRecherche.Enabled = false;
@@ -2332,7 +2286,7 @@ namespace MediaTekDocuments.view
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BtnEtapeSuiviAnnuler_Click(object sender, EventArgs e)
+        private void btnEtapeSuiviAnnuler_Click(object sender, EventArgs e)
         {
             gbxEtapeSuivi.Enabled = false;
             gbxInfosCommandeLivre.Enabled = true;
@@ -2473,8 +2427,8 @@ namespace MediaTekDocuments.view
         /// <returns></returns>
         private string GetIdSuivi(string libelle)
         {
-            List<Suivi> lesSuivis = controller.GetAllSuivis();
-            foreach (Suivi unSuivi in lesSuivis)
+            List<Suivi> lesSuivisCommande = controller.GetAllSuivis();
+            foreach (Suivi unSuivi in lesSuivisCommande)
             {
                 if (unSuivi.Libelle == libelle)
                 {
@@ -2602,7 +2556,7 @@ namespace MediaTekDocuments.view
                 CommandeDocument commandedocument = new CommandeDocument(id, dateCommande, montant, nbExemplaire, idLivreDvd, idSuivi, libelle);
                 if (MessageBox.Show("Voulez-vous modifier le suivi de la commande " + commandedocument.Id + " en " + libelle + " ?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    controller.ModifierSuiviCommandeDocument(commandedocument.Id, commandedocument.NbExemplaire, commandedocument.IdLivreDvd, commandedocument.IdSuivi);
+                    controller.ModifierSuiviCommandeDocument(commandedocument.Id, commandedocument.IdSuivi);
                     MessageBox.Show("L'étape de suivi de la commande " + id + " a bien été modifiée.", "Information");
                     AfficheReceptionCommandesLivre();
                     cbxCommandeLivresLibelleSuivi.Items.Clear();
@@ -2655,7 +2609,7 @@ namespace MediaTekDocuments.view
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void TabCommandesDvd_Enter(object sender, EventArgs e)
+        private void tabCommandesDvd_Enter(object sender, EventArgs e)
         {
             lesDvd = controller.GetAllDvd();
             lesSuivis = controller.GetAllSuivis();
@@ -2669,7 +2623,7 @@ namespace MediaTekDocuments.view
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void GbxInfosCommandeDvd_Enter(object sender, EventArgs e)
+        private void gbxInfosCommandeDvd_Enter(object sender, EventArgs e)
         {
             gbxEtapeSuiviDvd.Enabled = false;
         }
@@ -2679,7 +2633,7 @@ namespace MediaTekDocuments.view
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BtnInfosCommandeDvdAnnuler_Click(object sender, EventArgs e)
+        private void btnInfosCommandeDvdAnnuler_Click(object sender, EventArgs e)
         {
             gbxEtapeSuiviDvd.Enabled = true;
             gbxInfosCommandeDvd.Enabled = false;
@@ -2690,7 +2644,7 @@ namespace MediaTekDocuments.view
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void GbxEtapeSuiviDvd_Enter(object sender, EventArgs e)
+        private void gbxEtapeSuiviDvd_Enter(object sender, EventArgs e)
         {
             gbxInfosCommandeDvd.Enabled = false;
             txbCommandesDvdNumRecherche.Enabled = false;
@@ -2701,7 +2655,7 @@ namespace MediaTekDocuments.view
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BtnEtapeSuiviAnnulerDvd_Click(object sender, EventArgs e)
+        private void btnEtapeSuiviAnnulerDvd_Click(object sender, EventArgs e)
         {
             gbxEtapeSuiviDvd.Enabled = false;
             gbxInfosCommandeDvd.Enabled = true;
@@ -2951,7 +2905,7 @@ namespace MediaTekDocuments.view
                 CommandeDocument commandedocument = new CommandeDocument(id, dateCommande, montant, nbExemplaire, idLivreDvd, idSuivi, libelle);
                 if (MessageBox.Show("Voulez-vous modifier le suivi de la commande " + commandedocument.Id + " en " + libelle + " ?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    controller.ModifierSuiviCommandeDocument(commandedocument.Id, commandedocument.NbExemplaire, commandedocument.IdLivreDvd, commandedocument.IdSuivi);
+                    controller.ModifierSuiviCommandeDocument(commandedocument.Id, commandedocument.IdSuivi);
                     AfficheReceptionCommandesDvd();
                     cbxCommandeDvdLibelleSuivi.Items.Clear();
                 }
@@ -3005,7 +2959,7 @@ namespace MediaTekDocuments.view
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void TabCommandesRevues_Enter(object sender, EventArgs e)
+        private void tabCommandesRevues_Enter(object sender, EventArgs e)
         {
             lesRevues = controller.GetAllRevues();
             gbxInfosCommandeRevue.Enabled = false;
@@ -3195,9 +3149,9 @@ namespace MediaTekDocuments.view
         /// <returns></returns>
         public bool VerificationExemplaire(Abonnement abonnement)
         {
-            List<Exemplaire> lesExemplaires = controller.GetExemplairesRevue(abonnement.IdRevue);
+            List<Exemplaire> lesExemplairesAbonnement = controller.GetExemplairesRevue(abonnement.IdRevue);
             bool datedeparution = false;
-            foreach (Exemplaire exemplaire in lesExemplaires.Where(exemplaires => ParutionDansAbonnement(abonnement.DateCommande, abonnement.DateFinAbonnement, exemplaires.DateAchat)))
+            foreach (Exemplaire exemplaire in lesExemplairesAbonnement.Where(exemplaires => ParutionDansAbonnement(abonnement.DateCommande, abonnement.DateFinAbonnement, exemplaires.DateAchat)))
             {
                 datedeparution = true;
 
