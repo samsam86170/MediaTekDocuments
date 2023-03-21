@@ -5,7 +5,6 @@ using MediaTekDocuments.manager;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using System.Configuration;
 
 namespace MediaTekDocuments.dal
 {

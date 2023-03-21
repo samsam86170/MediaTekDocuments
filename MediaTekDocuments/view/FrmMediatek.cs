@@ -713,7 +713,6 @@ namespace MediaTekDocuments.view
         {
             DataGridViewRow row = dgvExemplairesLivre.Rows[e.RowIndex];
 
-            string id = row.Cells["Id"].Value.ToString();
             string numero = row.Cells["Numero"].Value.ToString();
             DateTime dateAchat = (DateTime)row.Cells["dateAchat"].Value;
             string libelle = row.Cells["Libelle"].Value.ToString();
@@ -1382,7 +1381,6 @@ namespace MediaTekDocuments.view
         {
             DataGridViewRow row = dgvExemplairesDvd.Rows[e.RowIndex];
 
-            string id = row.Cells["Id"].Value.ToString();
             string numero = row.Cells["Numero"].Value.ToString();
             DateTime dateAchat = (DateTime)row.Cells["dateAchat"].Value;
             string libelle = row.Cells["Libelle"].Value.ToString();
@@ -2213,7 +2211,6 @@ namespace MediaTekDocuments.view
         {
             DataGridViewRow row = dgvReceptionExemplairesListe.Rows[e.RowIndex];
 
-            string id = row.Cells["Id"].Value.ToString();
             string numero = row.Cells["Numero"].Value.ToString();
             DateTime dateAchat = (DateTime)row.Cells["dateAchat"].Value;
             string libelle = row.Cells["Libelle"].Value.ToString();
@@ -2564,7 +2561,6 @@ namespace MediaTekDocuments.view
                 DateTime dateCommande = dtpCommandeLivre.Value;
                 string idLivreDvd = txbCommandesLivresNumRecherche.Text;
                 string idSuivi = lesSuivis[0].Id;
-                string libelle = lesSuivis[0].Libelle;
 
                 Commande commande = new Commande(id, dateCommande, montant);
 
@@ -2952,7 +2948,6 @@ namespace MediaTekDocuments.view
                 double montant = double.Parse(txbCommandeDvdMontant.Text);
                 DateTime dateCommande = dtpCommandeDvd.Value;
 
-                Commande commande = new Commande(id, dateCommande, montant);
                 CommandeDocument commandedocument = new CommandeDocument(id, dateCommande, montant, nbExemplaire, idLivreDvd, idSuivi, libelle);
                 if (MessageBox.Show("Voulez-vous modifier le suivi de la commande " + commandedocument.Id + " en " + libelle + " ?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
@@ -3157,14 +3152,12 @@ namespace MediaTekDocuments.view
             if (!txbCommandeRevueNumero.Text.Equals("") && !txbCommandeRevueMontant.Text.Equals(""))
             {
                 string idRevue = txbCommandesRevueNumRecherche.Text;
-                string titre = txbCommandeRevueTitre.Text;
                 string id = txbCommandeRevueNumero.Text;
                 double montant = double.Parse(txbCommandeRevueMontant.Text);
                 DateTime dateCommande = dtpCommandeRevue.Value;
                 DateTime dateFinAbonnement = dtpCommandeRevueAbonnementFin.Value;
                 
                 Commande commande = new Commande(id, dateCommande, montant);
-                Abonnement abonnement = new Abonnement(id, dateCommande, montant, dateFinAbonnement, idRevue, titre);
 
                 if (controller.CreerCommande(commande))
                 {

@@ -1,0 +1,9 @@
+﻿C:\Users\samsam\Documents\projetexam\MediaTekDocuments\MediaTekDocuments\SupprimerAbonnementRevueTest\TestParution.cs
+C:\Users\samsam\Documents\projetexam\MediaTekDocuments\MediaTekDocuments\SupprimerAbonnementRevueTest\Properties\AssemblyInfo.cs
+C:\Users\samsam\Documents\projetexam\MediaTekDocuments\MediaTekDocuments\packages\MSTest.TestAdapter.2.1.2\build\_common\fr\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.resources.dll
+C:\Users\samsam\Documents\projetexam\MediaTekDocuments\MediaTekDocuments\packages\MSTest.TestAdapter.2.1.2\build\_common\fr\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.resources.dll
+C:\Users\samsam\Documents\projetexam\MediaTekDocuments\MediaTekDocuments\packages\MSTest.TestAdapter.2.1.2\build\_common\fr\Microsoft.VisualStudio.TestPlatform.TestFramework.resources.dll
+C:\Users\samsam\Documents\projetexam\MediaTekDocuments\MediaTekDocuments\packages\MSTest.TestAdapter.2.1.2\build\_common\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+C:\Users\samsam\Documents\projetexam\MediaTekDocuments\MediaTekDocuments\packages\MSTest.TestAdapter.2.1.2\build\_common\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+C:\Users\samsam\Documents\projetexam\MediaTekDocuments\MediaTekDocuments\packages\MSTest.TestAdapter.2.1.2\build\_common\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+C:\Users\samsam\Documents\projetexam\MediaTekDocuments\MediaTekDocuments\SupprimerAbonnementRevueTest\packages.config
