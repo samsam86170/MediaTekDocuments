@@ -2,18 +2,18 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("SupprimerAbonnementRevueTest")]
+[assembly: AssemblyTitle("Controller-ParutionTest")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SupprimerAbonnementRevueTest")]
+[assembly: AssemblyProduct("Controller-ParutionTest")]
 [assembly: AssemblyCopyright("Copyright ©  2023")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 [assembly: ComVisible(false)]
 
-[assembly: Guid("1dd2d56c-8b29-497d-af22-0ecca7b1e921")]
+[assembly: Guid("2cc1c99f-b7e1-42dd-b104-d6ff7d63ff0a")]
 
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]

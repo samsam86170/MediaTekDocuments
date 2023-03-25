@@ -25,20 +25,22 @@ namespace MediaTekDocuments.controller
         /// <param name="login"></param>
         /// <param name="password"></param>
         /// <returns>True si utilisateur et mot de passe trouvés</returns>
-        public bool GetUtilisateur(string login, string password)
+        public Service GetUtilisateur(string login, string password)
         {
             Utilisateur utilisateur = access.GetUtilisateur(login);
+
             if (utilisateur == null)
             {
-                return false;
+                return null;
             }
-            if (utilisateur.Password.Equals(password))
+            if (utilisateur.Password.Equals(utilisateur.Password))
             {
-                Service.Id = utilisateur.IdService;
-                Service.Libelle = utilisateur.Libelle;
-                return true;
+                Service service = new Service(utilisateur.IdService, utilisateur.Libelle);
+                service.Id = utilisateur.IdService;
+                service.Libelle = utilisateur.Libelle;
+                return service;
             }
-            return false;
+            return null;
         }
 
     }

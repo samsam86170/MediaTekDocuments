@@ -6,6 +6,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using System.Configuration;
+using Serilog;
+using Serilog.Formatting.Json;
 
 namespace MediaTekDocuments.dal
 {
@@ -70,14 +72,23 @@ namespace MediaTekDocuments.dal
             String authenticationString;
             try
             {
-                authenticationString = GetConnectionStringByName(connectionName); 
+                authenticationString = GetConnectionStringByName(connectionName);
+
+                Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Information()
+                .WriteTo.Console()
+                .WriteTo.File(new JsonFormatter(), "logs/log.txt",
+                rollingInterval: RollingInterval.Day)
+                .CreateLogger();
+
                 api = ApiRest.GetInstance(uriApi, authenticationString);
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                Log.Fatal("Access.Access catch connectionString={0} erreur={1}", connectionName, e.Message);
                 Environment.Exit(0);
             }
+
         }
 
         /// <summary>
@@ -86,7 +97,7 @@ namespace MediaTekDocuments.dal
         /// <returns>instance unique de la classe</returns>
         public static Access GetInstance()
         {
-            if(instance == null)
+            if (instance == null)
             {
                 instance = new Access();
             }
@@ -166,6 +177,17 @@ namespace MediaTekDocuments.dal
         }
 
         /// <summary>
+        /// Retourne les exemplaires d'un document
+        /// </summary>
+        /// <param name="idDocument"></param>
+        /// <returns>Liste d'objets Exemplaire</returns>
+        public List<Exemplaire> GetExemplairesDocument(string idDocument)
+        {
+            List<Exemplaire> lesExemplairesDocument = TraitementRecup<Exemplaire>(GET, "exemplairesdocument/" + idDocument);
+            return lesExemplairesDocument;
+        }
+
+        /// <summary>
         /// Retourne les suivis d'un document
         /// </summary>
         /// <returns>Liste d'objets Suivi</returns>
@@ -173,6 +195,18 @@ namespace MediaTekDocuments.dal
         {
             List<Suivi> lesSuivis = TraitementRecup<Suivi>(GET, "suivi");
             return lesSuivis;
+        }
+
+        /// <summary>
+        /// Retourne les commandes des documents
+        /// </summary>
+        /// <param name="idDocument">id du document concerné</param>
+        /// <returns>Liste d'objets CommandeDocument</returns>
+
+        public List<CommandeDocument> GetCommandesDocument(string idDocument)
+        {
+            List<CommandeDocument> lesCommandesDocument = TraitementRecup<CommandeDocument>(GET, "commandedocument/" + idDocument);
+            return lesCommandesDocument;
         }
 
         /// <summary>
@@ -187,17 +221,6 @@ namespace MediaTekDocuments.dal
         }
 
         /// <summary>
-        /// Retourne les commandes des documents
-        /// </summary>
-        /// <param name="idDocument">id du document concerné</param>
-        /// <returns>Liste d'objets CommandeDocument</returns>
-        public List<CommandeDocument> GetCommandesDocument(string idDocument)
-        {
-            List<CommandeDocument> lesCommandesDocument = TraitementRecup<CommandeDocument>(GET, "commandedocument/" + idDocument);
-            return lesCommandesDocument;
-        }
-
-        /// <summary>
         /// Retourne les abonnements d'une revue
         /// </summary>
         /// <param name="idDocument"></param>
@@ -207,6 +230,7 @@ namespace MediaTekDocuments.dal
             List<Abonnement> lesAbonnementsRevue = TraitementRecup<Abonnement>(GET, "abonnement/" + idDocument);
             return lesAbonnementsRevue;
         }
+
         /// <summary>
         /// Retourne les abonnements arrivants à échéance dans 30 jours
         /// </summary>
@@ -215,17 +239,6 @@ namespace MediaTekDocuments.dal
         {
             List<Abonnement> lesAbonnementsAEcheance = TraitementRecup<Abonnement>(GET, "abonnementsecheance");
             return lesAbonnementsAEcheance;
-        }
-
-        /// <summary>
-        /// Retourne les exemplaires d'un document
-        /// </summary>
-        /// <param name="idDocument"></param>
-        /// <returns>Liste d'objets Exemplaire</returns>
-        public List<Exemplaire> GetExemplairesDocument(string idDocument)
-        {
-            List<Exemplaire> lesExemplairesDocument = TraitementRecup<Exemplaire>(GET, "exemplairesdocument/" + idDocument);
-            return lesExemplairesDocument;
         }
 
         /// <summary>
@@ -246,7 +259,8 @@ namespace MediaTekDocuments.dal
         public bool CreerExemplaire(Exemplaire exemplaire)
         {
             String jsonExemplaire = JsonConvert.SerializeObject(exemplaire, new CustomDateTimeConverter());
-            try {
+            try
+            {
                 // récupération soit d'une liste vide (requête ok) soit de null (erreur)
                 List<Exemplaire> liste = TraitementRecup<Exemplaire>(POST, "exemplaire/" + jsonExemplaire);
                 return (liste != null);
@@ -254,50 +268,7 @@ namespace MediaTekDocuments.dal
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-            }
-            return false; 
-        }
-
-        /// <summary>
-        /// modification de l'état d'un exemplaire en base de données
-        /// </summary>
-        /// <param name="exemplaire"></param>
-        /// <returns>true si la modification a pu se faire </returns>
-        public bool ModifierEtatExemplaireDocument(Exemplaire exemplaire)
-        {
-            String jsonModifierEtatExemplaireDocument = JsonConvert.SerializeObject(exemplaire, new CustomDateTimeConverter());
-            Console.WriteLine("jsonModifierEtatExemplaireDocument" + jsonModifierEtatExemplaireDocument);
-            try
-            {
-                // récupération soit d'une liste vide (requête ok) soit de null (erreur)
-                List<Exemplaire> liste = TraitementRecup<Exemplaire>(PUT, "exemplairesdocument/"+ exemplaire.Numero + "/" + jsonModifierEtatExemplaireDocument); // Modification de la requête
-                return (liste != null);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            return false;
-        }
-
-        /// <summary>
-        /// suppression d'un exemplaire de document en base de données
-        /// </summary>
-        /// <param name="exemplaire"></param>
-        /// <returns>True si la suppression a pu se faire</returns>
-        public bool SupprimerExemplaireDocument(Exemplaire exemplaire)
-        {
-            String jsonSupprimerExemplaireDocument = "{\"id\":\"" + exemplaire.Id + "\",\"numero\":\"" + exemplaire.Numero + "\"}";
-            Console.WriteLine("jsonSupprimerExemplaireDocument" + jsonSupprimerExemplaireDocument);
-            try
-            {
-                // récupération soit d'une liste vide (requête ok) soit de null (erreur)
-                List<Exemplaire> liste = TraitementRecup<Exemplaire>(DELETE, "exemplaire/" + jsonSupprimerExemplaireDocument);
-                return (liste != null);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
+                Log.Error("Access.CreerExemplaire catch jsonExemplaire={0} erreur={1} ", jsonExemplaire, ex.Message);
             }
             return false;
         }
@@ -325,6 +296,7 @@ namespace MediaTekDocuments.dal
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                Log.Error("Access.CreerDocument catch jsonCreerDocument={0} erreur={1} ", jsonCreerDocument, ex.Message);
             }
             return false;
         }
@@ -352,6 +324,7 @@ namespace MediaTekDocuments.dal
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                Log.Error("Access.ModifierDocument catch jsonModifierDocument={0} erreur={1} ", jsonModifierDocument, ex.Message);
             }
             return false;
         }
@@ -374,6 +347,7 @@ namespace MediaTekDocuments.dal
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                Log.Error("Access.SupprimerDocument catch jsonIdDocument={0} erreur={1} ", jsonIdDocument, ex.Message);
             }
             return false;
         }
@@ -399,6 +373,7 @@ namespace MediaTekDocuments.dal
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                Log.Error("Access.CreerLivre catch jsonCreerLivre={0} erreur={1} ", jsonCreerLivre, ex.Message);
             }
             return false;
         }
@@ -425,6 +400,7 @@ namespace MediaTekDocuments.dal
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                Log.Error("Access.ModifierLivre catch jsonModifierLivre={0} erreur={1} ", jsonModifierLivre, ex.Message);
             }
             return false;
         }
@@ -438,7 +414,7 @@ namespace MediaTekDocuments.dal
         public bool SupprimerLivre(string Id)
         {
             String jsonIdLivre = "{ \"id\" : \"" + Id + "\"}";
-            Console.WriteLine("jsonIdLivre" + jsonIdLivre);
+            Log.Error("jsonIdLivre" + jsonIdLivre);
             try
             {
                 // récupération soit d'une liste vide (requête ok) soit de null (erreur)
@@ -448,6 +424,7 @@ namespace MediaTekDocuments.dal
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                Log.Error("Access.SupprimerLivre catch jsonIdLivre={0} erreur={1} ", jsonIdLivre, ex.Message);
             }
             return false;
         }
@@ -473,6 +450,7 @@ namespace MediaTekDocuments.dal
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                Log.Error("Access.CreerDvd catch jsonCreerDvd={0} erreur={1} ", jsonCreerDvd, ex.Message);
             }
             return false;
         }
@@ -498,6 +476,7 @@ namespace MediaTekDocuments.dal
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                Log.Error("Access.ModifierDvd catch jsonModifierDvd={0} erreur={1} ", jsonModifierDvd, ex.Message);
             }
             return false;
         }
@@ -520,6 +499,7 @@ namespace MediaTekDocuments.dal
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                Log.Error("Access.SupprimerDvd catch jsonIdDvd={0} erreur={1} ", jsonIdDvd, ex.Message);
             }
             return false;
         }
@@ -544,6 +524,7 @@ namespace MediaTekDocuments.dal
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                Log.Error("Access.CreerRevue catch jsonCreerRevue={0} erreur={1} ", jsonCreerRevue, ex.Message);
             }
             return false;
         }
@@ -568,6 +549,7 @@ namespace MediaTekDocuments.dal
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                Log.Error("Access.ModifierRevue catch jsonModifierRevue={0} erreur={1} ", jsonModifierRevue, ex.Message);
             }
             return false;
         }
@@ -590,6 +572,7 @@ namespace MediaTekDocuments.dal
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                Log.Error("Access.SupprimerRevue catch jsonIdRevue={0} erreur={1} ", jsonIdRevue, ex.Message);
             }
             return false;
         }
@@ -612,6 +595,7 @@ namespace MediaTekDocuments.dal
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                Log.Error("Access.CreerCommande catch jsonCreerCommande={0} erreur={1} ", jsonCreerCommande, ex.Message);
             }
             return false;
         }
@@ -637,6 +621,7 @@ namespace MediaTekDocuments.dal
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                Log.Error("Access.CreerCommandeDocument catch jsonCreerCommandeDocument={0} erreur={1} ", jsonCreerCommandeDocument, ex.Message);
             }
             return false;
         }
@@ -645,6 +630,8 @@ namespace MediaTekDocuments.dal
         /// Modification de l'étape de suivi d'une commande de document en base de données
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="nbExemplaire"></param>
+        /// <param name="idLivreDvd"></param>
         /// <param name="idSuivi"></param>
         /// <returns>True si la modification a pu se faire</returns>
         public bool ModifierSuiviCommandeDocument(string id, string idSuivi)
@@ -660,6 +647,8 @@ namespace MediaTekDocuments.dal
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                Log.Error("Access.ModifierSuiviCommandeDocument catch jsonModifierSuiviCommandeDocument={0} erreur={1} ", jsonModifierSuiviCommandeDocument, ex.Message);
+
             }
             return false;
         }
@@ -682,6 +671,7 @@ namespace MediaTekDocuments.dal
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                Log.Error("Access.SupprimerCommandeDocument catch jsonSupprimerCommandeDocument={0} erreur={1} ", jsonSupprimerCommandeDocument, ex.Message);
             }
             return false;
         }
@@ -707,6 +697,7 @@ namespace MediaTekDocuments.dal
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                Log.Error("Access.CreerAbonnementRevue catch jsonCreerAbonnementRevue={0} erreur={1} ", jsonCreerAbonnementRevue, ex.Message);
             }
             return false;
         }
@@ -729,6 +720,53 @@ namespace MediaTekDocuments.dal
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                Log.Error("Access.SupprimerAbonnementRevue catch jsonSupprimerAbonnementRevue={0} erreur={1} ", jsonSupprimerAbonnementRevue, ex.Message);
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// modification de l'état d'un exemplaire en base de données
+        /// </summary>
+        /// <param name="exemplaire"></param>
+        /// <returns>true si la modification a pu se faire </returns>
+        public bool ModifierEtatExemplaireDocument(Exemplaire exemplaire)
+        {
+            String jsonModifierEtatExemplaireDocument = JsonConvert.SerializeObject(exemplaire, new CustomDateTimeConverter());
+            Console.WriteLine("jsonModifierEtatExemplaireDocument" + jsonModifierEtatExemplaireDocument);
+            try
+            {
+                // récupération soit d'une liste vide (requête ok) soit de null (erreur)
+                List<Exemplaire> liste = TraitementRecup<Exemplaire>(PUT, "exemplairesdocument/" + exemplaire.Numero + "/" + jsonModifierEtatExemplaireDocument); // Modification de la requête
+                return (liste != null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Log.Error("Access.ModifierEtatExemplaireDocument catch jsonModifierEtatExemplaireDocument={0} erreur={1} ", jsonModifierEtatExemplaireDocument, ex.Message);
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// suppression d'un exemplaire de document en base de données
+        /// </summary>
+        /// <param name="exemplaire"></param>
+        /// <returns>True si la suppression a pu se faire</returns>
+        public bool SupprimerExemplaireDocument(Exemplaire exemplaire)
+        {
+            String jsonSupprimerExemplaireDocument = "{\"id\":\"" + exemplaire.Id + "\",\"numero\":\"" + exemplaire.Numero + "\"}";
+            Console.WriteLine("jsonSupprimerExemplaireDocument" + jsonSupprimerExemplaireDocument);
+            try
+            {
+                // récupération soit d'une liste vide (requête ok) soit de null (erreur)
+                List<Exemplaire> liste = TraitementRecup<Exemplaire>(DELETE, "exemplaire/" + jsonSupprimerExemplaireDocument);
+                return (liste != null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Log.Error("Access.SupprimerExemplaireDocument catch jsonSupprimerExemplaireDocument={0} erreur={1} ", jsonSupprimerExemplaireDocument, ex.Message);
             }
             return false;
         }
@@ -745,7 +783,7 @@ namespace MediaTekDocuments.dal
         public bool CreerExemplaireRevue(string id, int numero, DateTime dateAchat, string photo, string idEtat)
         {
             String jsonDateAchat = JsonConvert.SerializeObject(dateAchat, new CustomDateTimeConverter());
-            String jsonCreerExemplaireRevue = "{\"id\":\"" + id + "\", \"numero\":\"" + numero + "\", \"dateAchat\" : " + jsonDateAchat + ", \"photo\" :  \"" + photo + "\" , \"idEtat\" :  \"" + idEtat+ "\"}";
+            String jsonCreerExemplaireRevue = "{\"id\":\"" + id + "\", \"numero\":\"" + numero + "\", \"dateAchat\" : " + jsonDateAchat + ", \"photo\" :  \"" + photo + "\" , \"idEtat\" :  \"" + idEtat + "\"}";
             Console.WriteLine("jsonCreerExemplaireRevue" + jsonCreerExemplaireRevue);
             try
             {
@@ -756,6 +794,7 @@ namespace MediaTekDocuments.dal
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                Log.Error("Access.CreerExemplaireRevue catch jsonCreerExemplaireRevue={0} erreur={1} ", jsonCreerExemplaireRevue, ex.Message);
             }
             return false;
         }
@@ -767,13 +806,23 @@ namespace MediaTekDocuments.dal
         /// <returns>True si l'utilisateur est trouvé</returns>
         public Utilisateur GetUtilisateur(string login)
         {
-            List<Utilisateur> liste = TraitementRecup<Utilisateur>(GET, "utilisateur/" + login);
-            if (liste == null || liste.Count == 0)
+            try
             {
-                return null;
+                List<Utilisateur> liste = TraitementRecup<Utilisateur>(GET, "utilisateur/" + login);
+                if (liste == null || liste.Count == 0)
+                {
+                    return null;
+                }
+                return (liste[0]);
             }
-            return (liste[0]);
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Log.Error("Access.GetUtilisateur catch login={0} erreur={1}", login, ex.Message);
+            }
+            return null;
         }
+
 
         /// <summary>
         /// Traitement de la récupération du retour de l'api, avec conversion du json en liste pour les select (GET)
@@ -782,7 +831,7 @@ namespace MediaTekDocuments.dal
         /// <param name="methode">verbe HTTP (GET, POST, PUT, DELETE)</param>
         /// <param name="message">information envoyée</param>
         /// <returns>liste d'objets récupérés (ou liste vide)</returns>
-        private List<T> TraitementRecup<T> (String methode, String message)
+        private List<T> TraitementRecup<T>(String methode, String message)
         {
             List<T> liste = new List<T>();
             try
@@ -802,11 +851,13 @@ namespace MediaTekDocuments.dal
                 }
                 else
                 {
-                    Console.WriteLine("code erreur = " + code + " message = " + (String)retour["message"]);
+                    Console.WriteLine("code erreur = " + code + ", message = " + (String)retour["message"]);
+                    Log.Error("Access.TraitementRecup catch code={0} erreur={1} ", code);
                 }
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
-                Console.WriteLine("Erreur lors de l'accès à l'API : "+e.Message);
+                Log.Error("Access.TraitementRecup catch liste={0} erreur={1}", liste, e.Message);
                 Environment.Exit(0);
             }
             return liste;

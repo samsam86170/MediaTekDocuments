@@ -1,8 +1,14 @@
 ﻿namespace MediaTekDocuments.model
 {
-    public static class Service
+    public class Service
     {
-        public static int Id { get; set; }
-        public static string Libelle { get; set; }
+        public string Id { get; set; }
+        public string Libelle { get; set; }
+
+        public Service(string id, string libelle)
+        {
+            Id = id;
+            Libelle = libelle;
+        }
     }
 }

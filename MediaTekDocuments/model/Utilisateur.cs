@@ -4,10 +4,10 @@
     {
         public string Login { get; set; }
         public string Password { get; set; }
-        public int IdService { get; set; }
+        public string IdService { get; set; }
         public string Libelle { get; set; }
 
-        public Utilisateur(string login, string password, int idService, string libelle)
+        public Utilisateur(string login, string password, string idService, string libelle)
         {
             this.Login = login;
             this.Password = password;

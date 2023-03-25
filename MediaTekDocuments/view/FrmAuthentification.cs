@@ -25,17 +25,19 @@ namespace MediaTekDocuments.view
         /// <param name="e"></param>
         private void btnConnexion_Click(object sender, EventArgs e)
         {
-            string utilisateur = txbLogin.Text;
+            string login = txbLogin.Text;
             string password = txbPassword.Text;
 
             if (!txbLogin.Text.Equals("") && !txbPassword.Text.Equals(""))
             {
-                if (!controller.GetUtilisateur(utilisateur, password))
+                Service service = controller.GetUtilisateur(login, password);
+
+                if (service == null)
                 {
                     MessageBox.Show("Erreur d'authentification", "Alerte");
                     txbPassword.Text = "";
                 }
-                else if(Service.Libelle == "culture")
+                else if(service.Libelle == "culture")
                 {
                     MessageBox.Show("Vous n'avez pas les droits d'accès à l'application.", "Alerte");
                     Application.Exit();
@@ -43,7 +45,7 @@ namespace MediaTekDocuments.view
                 else
                 {
                     MessageBox.Show("Vous êtes connecté", "Information");
-                    FrmMediatek frmMediatek = new FrmMediatek();
+                    FrmMediatek frmMediatek = new FrmMediatek(service);
                     frmMediatek.ShowDialog();
                 }
             }

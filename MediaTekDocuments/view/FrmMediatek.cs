@@ -21,19 +21,40 @@ namespace MediaTekDocuments.view
         private readonly BindingSource bdgPublics = new BindingSource();
         private readonly BindingSource bdgRayons = new BindingSource();
 
+        private readonly Service service = null;
+
         /// <summary>
         /// Constructeur : création du contrôleur lié à ce formulaire
         /// </summary>
-        internal FrmMediatek()
+        public FrmMediatek(Service service)
         {
             InitializeComponent();
             this.controller = new FrmMediatekController();
-            if (Service.Libelle == "administratif" || Service.Libelle == "administrateur")
+            this.service = service;
+        }
+
+        /// <summary>
+        /// Affichage de l'alerte si le service de l'utilisateur est "administratif" ou "administrateur"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void FrmAlerteFinAbonnement_Shown(object sender, EventArgs e)
+        {
+            if (service.Libelle == "administratif" || service.Libelle == "administrateur")
             {
                 FrmAlerteFinAbonnement frmAlerteFinAbonnement = new FrmAlerteFinAbonnement(controller);
                 frmAlerteFinAbonnement.ShowDialog();
             }
-            else if (Service.Libelle == "prêts")
+            AutorisationsAcces(service);
+        }
+
+        /// <summary>
+        /// Désactive les champs selon les habilitations du service de prêts
+        /// </summary>
+        /// <param name="service"></param>
+        private void AutorisationsAcces(Service service)
+        {
+            if (service.Libelle == "prêts")
             {
                 tabOngletsApplication.TabPages.Remove(tabCommandesLivres);
                 tabOngletsApplication.TabPages.Remove(tabCommandesDvd);
@@ -66,8 +87,6 @@ namespace MediaTekDocuments.view
                 btnEtatExemplaireRevueModifier.Enabled = false;
             }
         }
-
-        
 
         /// <summary>
         /// Rempli un des 3 combo (genre, public, rayon)
@@ -1788,7 +1807,11 @@ namespace MediaTekDocuments.view
                 {
                     if (controller.ModifierRevue(id, periodicite, delaiMiseADispo) && controller.ModifierDocument(id, titre, image, idGenre, idPublic, idRayon))
                     {
-                        dgvRevuesListe.DataSource = controller.GetAllRevues();
+                        lesRevues = controller.GetAllRevues();
+                        RemplirComboCategorie(controller.GetAllGenres(), bdgGenres, cbxLivresGenres);
+                        RemplirComboCategorie(controller.GetAllPublics(), bdgPublics, cbxLivresPublics);
+                        RemplirComboCategorie(controller.GetAllRayons(), bdgRayons, cbxLivresRayons);
+                        RemplirRevuesListeComplete();
                         MessageBox.Show("La revue " + titre + " a correctement été modifiée.");
                     }
                     else
@@ -2578,12 +2601,12 @@ namespace MediaTekDocuments.view
         {
             if (dgvCommandesLivre.SelectedRows.Count > 0)
             {
-                CommandeDocument commandedocument = (CommandeDocument)bdgCommandesLivre.List[bdgCommandesLivre.Position];
-                if (commandedocument.Libelle == "en cours" || commandedocument.Libelle == "relancée")
+                CommandeDocument commandeDocument = (CommandeDocument)bdgCommandesLivre.List[bdgCommandesLivre.Position];
+                if (commandeDocument.Libelle == "en cours" || commandeDocument.Libelle == "relancée")
                 {
-                    if (MessageBox.Show("Voulez-vous vraiment supprimer la commande " + commandedocument.Id + " ?", "Confirmation de suppression", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    if (MessageBox.Show("Voulez-vous vraiment supprimer la commande " + commandeDocument.Id + " ?", "Confirmation de suppression", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
-                        controller.SupprimerCommandeDocument(commandedocument);
+                        controller.SupprimerCommandeDocument(commandeDocument);
                         AfficheReceptionCommandesLivre();
                     }
                 }

@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace SupprimerAbonnementRevueTest
+namespace ParutionTest
 {
     [TestClass]
     public class TestParution

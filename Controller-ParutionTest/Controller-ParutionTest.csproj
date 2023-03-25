@@ -5,11 +5,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1DD2D56C-8B29-497D-AF22-0ECCA7B1E921}</ProjectGuid>
+    <ProjectGuid>{2CC1C99F-B7E1-42DD-B104-D6FF7D63FF0A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SupprimerAbonnementRevueTest</RootNamespace>
-    <AssemblyName>SupprimerAbonnementRevueTest</AssemblyName>
+    <RootNamespace>Controller_ParutionTest</RootNamespace>
+    <AssemblyName>Controller-ParutionTest</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -49,7 +49,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TestParution.cs" />
+    <Compile Include="ParutionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
