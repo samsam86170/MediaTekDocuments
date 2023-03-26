@@ -4,6 +4,9 @@ using MediaTekDocuments.model;
 
 namespace MediaTekDocuments_ModelTests
 {
+    /// <summary>
+    /// Classe de test unitaire pour la classe métier Genre
+    /// </summary>
     [TestClass]
     public class GenreTests
     {
@@ -12,6 +15,9 @@ namespace MediaTekDocuments_ModelTests
 
         private static readonly Genre genre = new Genre(id, libelle);
 
+        /// <summary>
+        /// Teste le constructeur de la classe Genre
+        /// </summary>
         [TestMethod()]
         public void GenreTest()
         {

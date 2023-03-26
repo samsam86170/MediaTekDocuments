@@ -3,9 +3,15 @@ using System;
 
 namespace ParutionTest
 {
+    /// <summary>
+    /// Classe de test unitaire
+    /// </summary>
     [TestClass]
     public class TestParution
     {
+        /// <summary>
+        /// Test la méthode ParutionDansAbonnement()
+        /// </summary>
         [TestMethod]
         public void TestParutionDansAbonnement()
         {

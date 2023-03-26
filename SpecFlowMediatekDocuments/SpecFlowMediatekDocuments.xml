@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SpecFlowMediatekDocuments</name>
+    </assembly>
+    <members>
+        <member name="T:SpecFlowMediatekDocuments.Steps.SpecFlowMediatekDocumentsSteps">
+            <summary>
+            Classe de tests fonctionnels SpecFlow
+            </summary>
+        </member>
+        <member name="M:SpecFlowMediatekDocuments.Steps.SpecFlowMediatekDocumentsSteps.GivenJeSaisisLaValeurDansTxbLivresNumRecherche(System.String)">
+            <summary>
+            Récupère la valeur de l'id du livre saisi
+            </summary>
+            <param name="valeur"></param>
+        </member>
+        <member name="M:SpecFlowMediatekDocuments.Steps.SpecFlowMediatekDocumentsSteps.GivenJeSelectionneLaValeurDansCbxLivresGenres(System.String)">
+            <summary>
+            Récupère le nombre de lignes affichées dans la liste des livres
+            Selon la valeur sélectionnée dans la comboBox du Genre
+            </summary>
+            <param name="listeAttendue">Nombre de lignes attendues dans la datagrid</param>
+        </member>
+        <member name="M:SpecFlowMediatekDocuments.Steps.SpecFlowMediatekDocumentsSteps.GivenJeSelectionneLaValeurDansCbxLivresPublics(System.String)">
+            <summary>
+            Récupère le nombre de lignes affichées dans la liste des livres
+            Selon la valeur sélectionnée dans la comboBox du Public
+            </summary>
+            <param name="listeAttendue">Nombre de lignes attendues dans la datagrid</param>
+        </member>
+        <member name="M:SpecFlowMediatekDocuments.Steps.SpecFlowMediatekDocumentsSteps.GivenJeSelectionneLaValeurDansCbxLivresRayons(System.String)">
+            <summary>
+            Récupère le nombre de lignes affichées dans la liste des livres
+            Selon la valeur sélectionnée dans la comboBox du Rayon
+            </summary>
+            <param name="listeAttendue">Nombre de lignes attendues dans la datagrid</param>
+        </member>
+        <member name="M:SpecFlowMediatekDocuments.Steps.SpecFlowMediatekDocumentsSteps.GivenJeSaisisLaValeurDansTxbLivresTitreRecherche(System.String)">
+            <summary>
+            Récupère le titre du livre saisi
+            </summary>
+            <param name="titreAttendu">Récupère le titre attendu</param>
+        </member>
+        <member name="M:SpecFlowMediatekDocuments.Steps.SpecFlowMediatekDocumentsSteps.WhenJeClicSurLeBoutonRechercher">
+            <summary>
+            Evènement du clic sur le bouton de recherche
+            </summary>
+        </member>
+        <member name="M:SpecFlowMediatekDocuments.Steps.SpecFlowMediatekDocumentsSteps.ThenLesInformationsDetailleesAffichentLeTitre(System.String)">
+            <summary>
+            Affichage du titre dans les informations détaillées 
+            </summary>
+            <param name="titreAttendu">Récupère le titre attendu</param>
+        </member>
+        <member name="M:SpecFlowMediatekDocuments.Steps.SpecFlowMediatekDocumentsSteps.ThenLeResultatEstLivresDansDgvLivresListe(System.Int32)">
+            <summary>
+            Récupère le nombre de lignes attendues 
+            </summary>
+            <param name="listeAttendue">Nombre de lignes attendues dans la datagrid</param>
+        </member>
+        <member name="M:SpecFlowMediatekDocuments.Steps.SpecFlowMediatekDocumentsSteps.ThenLeResultatEstLivre(System.Int32)">
+            <summary>
+            Récupère le nombre de lignes attendues 
+            </summary>
+            <param name="listeAttendue">Nombre de lignes attendues dans la datagrid</param>
+        </member>
+    </members>
+</doc>

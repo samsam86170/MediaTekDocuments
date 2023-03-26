@@ -4,6 +4,9 @@ using MediaTekDocuments.model;
 
 namespace MediaTekDocuments_ModelTests
 {
+    /// <summary>
+    /// Classe de test unitaire pour la classe métier Utilisateur
+    /// </summary>
     [TestClass]
     public class UtilisateurTests
     {
@@ -14,6 +17,9 @@ namespace MediaTekDocuments_ModelTests
 
         private static readonly Utilisateur utilisateur = new Utilisateur(login, password, idService, libelle);
 
+        /// <summary>
+        /// Teste le constructeur de la classe Utilisateur
+        /// </summary>
         [TestMethod()]
         public void UtilisateurTest()
         {

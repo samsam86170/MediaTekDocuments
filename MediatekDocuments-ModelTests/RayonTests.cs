@@ -4,6 +4,9 @@ using MediaTekDocuments.model;
 
 namespace MediaTekDocuments_ModelTests
 {
+    /// <summary>
+    /// Classe de test unitaire pour la classe métier Rayon
+    /// </summary>
     [TestClass]
     public class RayonTests
     {
@@ -12,6 +15,9 @@ namespace MediaTekDocuments_ModelTests
 
         private static readonly Rayon rayon = new Rayon(id, libelle);
 
+        /// <summary>
+        /// Teste le constructeur de la classe Rayon
+        /// </summary>
         [TestMethod()]
         public void RayonTest()
         {

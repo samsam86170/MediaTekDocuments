@@ -51,7 +51,7 @@ namespace MediaTekDocuments.view
         /// <summary>
         /// Désactive les champs selon les habilitations du service de prêts
         /// </summary>
-        /// <param name="service"></param>
+        /// <param name="service">Service associé à l'utilisateur</param>
         private void AutorisationsAcces(Service service)
         {
             if (service.Libelle == "prêts")
@@ -579,7 +579,7 @@ namespace MediaTekDocuments.view
         /// <summary>
         /// Remplit la datagrid avec la liste passée en paramètre
         /// </summary>
-        /// <param name="lesExemplaires"></param>
+        /// <param name="lesExemplaires">Liste des exemplaires</param>
         private void RemplirExemplairesLivre(List<Exemplaire> lesExemplaires)
         {
             if (lesExemplaires != null)
@@ -637,7 +637,7 @@ namespace MediaTekDocuments.view
         /// <summary>
         /// Remplissage de la comboBox selon les états de l'exemplaire et le libelle correspondant
         /// </summary>
-        /// <param name="etatExemplaireLivre"></param>
+        /// <param name="etatExemplaireLivre">Etats possibles de l'exemplaire d'un livre</param>
         private void RemplirCbxEtatLibelleExemplaireLivre(string etatExemplaireLivre)
         {
             cbxEtatLibelleExemplaireLivre.Items.Clear();
@@ -685,7 +685,7 @@ namespace MediaTekDocuments.view
         /// <summary>
         /// Récupère l'id d'un état selon son libelle
         /// </summary>
-        /// <param name="libelle"></param>
+        /// <param name="libelle">Libelle de l'état d'usure d'un exemplaire</param>
         /// <returns></returns>
         private string GetIdEtat(string libelle)
         {
@@ -1242,7 +1242,7 @@ namespace MediaTekDocuments.view
         /// <summary>
         /// Remplit la datagrid avec la liste passée en paramètre
         /// </summary>
-        /// <param name="lesExemplaires"></param>
+        /// <param name="lesExemplaires">Liste des exemplaires</param>
         private void RemplirExemplairesDvd(List<Exemplaire> lesExemplaires)
         {
             if (lesExemplaires != null)
@@ -1300,7 +1300,7 @@ namespace MediaTekDocuments.view
         /// <summary>
         /// Remplissage de la comboBox selon les états de l'exemplaire et le libelle correspondant
         /// </summary>
-        /// <param name="etatExemplaireDvd"></param>
+        /// <param name="etatExemplaireDvd">Etats possibles d'un exemplaire du dvd</param>
         private void RemplirCbxEtatLibelleExemplaireDvd(string etatExemplaireDvd)
         {
             cbxEtatLibelleExemplaireDvd.Items.Clear();
@@ -1440,7 +1440,7 @@ namespace MediaTekDocuments.view
         /// <summary>
         /// Remplit le dategrid avec la liste reçue en paramètre
         /// </summary>
-        /// <param name="revues"></param>
+        /// <param name="revues">Liste des revues</param>
         private void RemplirRevuesListe(List<Revue> revues)
         {
             bdgRevuesListe.DataSource = revues;
@@ -2134,7 +2134,7 @@ namespace MediaTekDocuments.view
         /// <summary>
         /// Remplissage de la comboBox selon les états de l'exemplaire et le libelle correspondant
         /// </summary>
-        /// <param name="etatExemplaireRevue"></param>
+        /// <param name="etatExemplaireRevue">Etats possibles d'un exemplaire d'une revue</param>
         private void RemplirCbxEtatLibelleExemplaireRevue(string etatExemplaireRevue)
         {
             cbxEtatLibelleExemplaireRevue.Items.Clear();
@@ -2319,7 +2319,7 @@ namespace MediaTekDocuments.view
         /// <summary>
         /// Remplit la datagrid avec la liste reçue en paramètre
         /// </summary>
-        /// <param name="lesCommandesDocument"></param>
+        /// <param name="lesCommandesDocument">Liste des commandes d'un document</param>
         private void RemplirCommandesLivresListe(List<CommandeDocument> lesCommandesDocument)
         {
             if (lesCommandesDocument != null)
@@ -2420,7 +2420,7 @@ namespace MediaTekDocuments.view
         /// <summary>
         /// Remplissage de la comboBox selon les étapes de suivi et le libelle correspondant
         /// </summary>
-        /// <param name="etapeSuivi"></param>
+        /// <param name="etapeSuivi">Etapes de suivi possibles d'une commande de livre</param>
         private void RemplirCbxCommandeLivreLibelleSuivi(string etapeSuivi)
         {
             cbxCommandeLivresLibelleSuivi.Items.Clear();
@@ -2446,7 +2446,7 @@ namespace MediaTekDocuments.view
         /// <summary>
         /// Récupération de l'id de suivi d'une commande selon son libelle
         /// </summary>
-        /// <param name="libelle"></param>
+        /// <param name="libelle">Libelle de l'étape de suivi d'une commande</param>
         /// <returns></returns>
         private string GetIdSuivi(string libelle)
         {
@@ -2689,7 +2689,7 @@ namespace MediaTekDocuments.view
         /// <summary>
         /// Remplit la datagrid avec la liste reçue en paramètre
         /// </summary>
-        /// <param name="lesCommandesDocument"></param>
+        /// <param name="lesCommandesDocument">Liste des commandes d'un document</param>
         private void RemplirCommandesDvdListe(List<CommandeDocument> lesCommandesDocument)
         {
             if (lesCommandesDocument != null)
@@ -2752,7 +2752,7 @@ namespace MediaTekDocuments.view
         /// <summary>
         /// Affichage des informations du dvd
         /// </summary>
-        /// <param name="dvd"></param>
+        /// <param name="dvd">Le dvd</param>
         private void AfficheReceptionCommandesDvdInfos(Dvd dvd)
         {
             txbCommandeDvdTitre.Text = dvd.Titre;
@@ -2789,7 +2789,7 @@ namespace MediaTekDocuments.view
         /// <summary>
         /// Remplissage de la liste de suivi des commandes de dvd
         /// </summary>
-        /// <param name="etapeSuivi"></param>
+        /// <param name="etapeSuivi">Etapes de suivi possibles d'une commande de Dvd</param>
         private void RemplirCbxCommandeDvdLibelleSuivi(string etapeSuivi)
         {
             cbxCommandeDvdLibelleSuivi.Items.Clear();
@@ -2992,7 +2992,7 @@ namespace MediaTekDocuments.view
         /// <summary>
         /// Remplit la datagrid avec la liste reçue en paramètre
         /// </summary>
-        /// <param name="lesAbonnements"></param>
+        /// <param name="lesAbonnementsRevue">Liste des abonnements d'une revue</param>
         private void RemplirAbonnementsRevueListe(List<Abonnement> lesAbonnementsRevue)
         {
             if (lesAbonnementsRevue != null)
@@ -3054,7 +3054,7 @@ namespace MediaTekDocuments.view
         /// <summary>
         /// Affichage des informations d'une revue
         /// </summary>
-        /// <param name="revue"></param>
+        /// <param name="revue">La revue</param>
         private void AfficheReceptionAbonnementsRevueInfos(Revue revue)
         {
             txbCommandeRevueTitre.Text = revue.Titre;
@@ -3156,9 +3156,9 @@ namespace MediaTekDocuments.view
         /// <summary>
         /// Retourne vrai si la date de parution est entre les 2 autres dates
         /// </summary>
-        /// <param name="dateCommande"></param>
-        /// <param name="dateFinAbonnement"></param>
-        /// <param name="dateParution"></param>
+        /// <param name="dateCommande">Date de la commande d'un abonnement à une revue</param>
+        /// <param name="dateFinAbonnement">Date de fin d'abonnement à une revue</param>
+        /// <param name="dateParution">Date de parution d'un exemplaire</param>
         /// <returns></returns>
         public bool ParutionDansAbonnement(DateTime dateCommande, DateTime dateFinAbonnement, DateTime dateParution)
         {
@@ -3168,7 +3168,7 @@ namespace MediaTekDocuments.view
         /// <summary>
         /// Vérifie si aucun exemplaire n'est rattaché à un abonnement de revue
         /// </summary>
-        /// <param name="abonnement"></param>
+        /// <param name="abonnement">L'abonnement</param>
         /// <returns></returns>
         public bool VerificationExemplaire(Abonnement abonnement)
         {

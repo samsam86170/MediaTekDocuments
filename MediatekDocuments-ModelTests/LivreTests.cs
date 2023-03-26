@@ -4,6 +4,9 @@ using MediaTekDocuments.model;
 
 namespace MediaTekDocuments_ModelTests
 {
+    /// <summary>
+    /// Classe de test unitaire pour la classe métier Livre
+    /// </summary>
     [TestClass]
     public class LivreTests
     {
@@ -22,6 +25,9 @@ namespace MediaTekDocuments_ModelTests
 
         private static readonly Livre livre = new Livre(id, titre, image, isbn, auteur, collection, idGenre, genre, idPublic, lePublic, idRayon, rayon);
 
+        /// <summary>
+        /// Teste le constructeur de la classe Livre
+        /// </summary>
         [TestMethod()]
         public void LivreTest()
         {

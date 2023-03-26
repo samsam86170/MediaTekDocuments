@@ -4,6 +4,9 @@ using MediaTekDocuments.model;
 
 namespace MediaTekDocuments_ModelTests
 {
+    /// <summary>
+    /// Classe de test unitaire pour la classe métier Service
+    /// </summary>
     [TestClass]
     public class ServiceTests
     {
@@ -12,6 +15,9 @@ namespace MediaTekDocuments_ModelTests
 
         private static readonly Service service = new Service(id, libelle);
 
+        /// <summary>
+        ///  Teste le constructeur de la classe Service
+        /// </summary>
         [TestMethod()]
         public void ServiceTest()
         {

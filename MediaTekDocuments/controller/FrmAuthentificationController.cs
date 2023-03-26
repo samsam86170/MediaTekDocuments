@@ -3,7 +3,12 @@ using MediaTekDocuments.dal;
 
 namespace MediaTekDocuments.controller
 {
-   
+
+    /// <summary>
+    /// Controleur pour la fenêtre d'authentification
+    /// Gère les interactions entre la vue et le modèle
+    /// Récupère les identifiants d'un utilisateur et vérifie son mot de passe pour l'authentification.
+    /// </summary>
     public class FrmAuthentificationController
     {
         /// <summary>
@@ -22,12 +27,12 @@ namespace MediaTekDocuments.controller
         /// <summary>
         /// récupere les identifiants d'un utilisateur
         /// </summary>
-        /// <param name="login"></param>
-        /// <param name="password"></param>
+        /// <param name="login">Identifiant de l'utilisateur</param>
+        /// <param name="password">Mot de passe de l'utilisateur</param>
         /// <returns>True si utilisateur et mot de passe trouvés</returns>
         public Service GetUtilisateur(string login, string password)
         {
-            Utilisateur utilisateur = access.GetUtilisateur(login);
+            Utilisateur utilisateur = access.GetUtilisateur(login, password);
 
             if (utilisateur == null)
             {

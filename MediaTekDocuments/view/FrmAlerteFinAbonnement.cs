@@ -8,10 +8,18 @@ using System.Windows.Forms;
 
 namespace MediaTekDocuments.view
 {
+    /// <summary>
+    /// Classe d'affichage de l'alerte de fin d'abonnement
+    /// </summary>
     public partial class FrmAlerteFinAbonnement : Form
     {
         private readonly BindingSource bdgAbonnementsAEcheance = new BindingSource();
         private readonly List<Abonnement> lesAbonnementsAEcheance = new List<Abonnement>();
+
+        /// <summary>
+        /// Constructeur : création du contrôleur lié à ce formulaire
+        /// </summary>
+        /// <param name="controller">Controller</param>
         public FrmAlerteFinAbonnement(FrmMediatekController controller)
         {
             InitializeComponent();
@@ -22,7 +30,7 @@ namespace MediaTekDocuments.view
         /// <summary>
         /// Remplissage de la grille des abonnements qui se terminent
         /// </summary>
-        /// <param name="lesAbonnementsAEcheance"></param>
+        /// <param name="lesAbonnementsAEcheance">Liste des abonnements à échéance</param>
         private void RemplirAbonnementsAEcheance(List<Abonnement> lesAbonnementsAEcheance)
         {
             bdgAbonnementsAEcheance.DataSource = lesAbonnementsAEcheance;

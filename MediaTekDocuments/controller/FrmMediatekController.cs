@@ -6,7 +6,8 @@ using System;
 namespace MediaTekDocuments.controller
 {
     /// <summary>
-    /// Contrôleur lié à FrmMediatek
+    /// Controleur pour la fenêtre FrmMediatek
+    /// Gère les interactions entre la vue et le modèle
     /// </summary>
     public class FrmMediatekController
     {
@@ -99,7 +100,7 @@ namespace MediaTekDocuments.controller
         /// <summary>
         /// récupère les commandes d'un document
         /// </summary>
-        /// <param name="idDocument"></param>
+        /// <param name="idDocument">id du document concerné</param>
         /// <returns>Liste d'objets CommandeDocument</returns>
         public List<CommandeDocument> GetCommandesDocument(string idDocument)
         {
@@ -109,7 +110,7 @@ namespace MediaTekDocuments.controller
         /// <summary>
         /// récupère les abonnements d'une revue
         /// </summary>
-        /// <param name="idDocument"></param>
+        /// <param name="idDocument">id du document concerné</param>
         /// <returns>Liste d'objets Abonnement</returns>
         public List<Abonnement> GetAbonnementRevue(string idDocument)
         {
@@ -127,7 +128,7 @@ namespace MediaTekDocuments.controller
         /// <summary>
         /// récupère les exemplaires d'un document
         /// </summary>
-        /// <param name="idDocument"></param>
+        /// <param name="idDocument">id du document concerné</param>
         /// <returns>Liste d'objets Exemplaire</returns>
         public List<Exemplaire> GetExemplairesDocument(string idDocument)
         {
@@ -146,8 +147,12 @@ namespace MediaTekDocuments.controller
         /// <summary>
         /// Crée un exemplaire d'une revue dans la bdd
         /// </summary>
-        /// <param name="exemplaire">L'objet Exemplaire concerné</param>
-        /// <returns>True si la création a pu se faire</returns>
+        /// <param name="id">Id du document correspondant à l'exemplaire d'une revue à insérer</param>
+        /// <param name="numero">Numéro de l'exemplaire d'une revue à insérer</param>
+        /// <param name="dateAchat">Date d'achat de l'exemplaire d'une revue</param>
+        /// <param name="photo">Photo de l'exemplaire de la revue</param>
+        /// <param name="idEtat">Id de l'état d'usure de l'exemplaire d'une revue</param>
+        /// <returns>True si l'insertion a pu se faire</returns>
         public bool CreerExemplaireRevue(string id, int numero, DateTime dateAchat, string photo, string idEtat)
         {
             return access.CreerExemplaireRevue(id, numero, dateAchat, photo, idEtat);
@@ -156,13 +161,13 @@ namespace MediaTekDocuments.controller
         /// <summary>
         /// Crée un document dans la bdd
         /// </summary>
-        /// <param name="Id"></param>
-        /// <param name="Titre"></param>
-        /// <param name="Image"></param>
-        /// <param name="IdGenre"></param>
-        /// <param name="IdPublic"></param>
-        /// <param name="IdRayon"></param>
-        /// <returns>True si la création a pu se faire</returns>
+        /// <param name="Id">Id du document à insérer</param>
+        /// <param name="Titre">Titre du document</param>
+        /// <param name="Image">Image du document</param>
+        /// <param name="IdGenre">Id du genre du document</param>
+        /// <param name="IdPublic">Id du public du document</param>
+        /// <param name="IdRayon">Id du rayon du document</param>
+        /// <returns>True si l'insertion a pu se faire</returns>
         public bool CreerDocument(string Id, string Titre, string Image, string IdRayon, string IdPublic, string IdGenre)
         {
             return access.CreerDocument(Id, Titre, Image, IdRayon, IdPublic, IdGenre);
@@ -171,12 +176,12 @@ namespace MediaTekDocuments.controller
         /// <summary>
         /// Modifie un document dans la bdd
         /// </summary>
-        /// <param name="Id"></param>
-        /// <param name="Titre"></param>
-        /// <param name="Image"></param>
-        /// <param name="IdGenre"></param>
-        /// <param name="IdPublic"></param>
-        /// <param name="IdRayon"></param>
+        /// <param name="Id">Id du document à modifier</param>
+        /// <param name="Titre">Titre du document</param>
+        /// <param name="Image">Image du document</param>
+        /// <param name="IdGenre">Id du genre du document</param>
+        /// <param name="IdPublic">Id du public du document</param>
+        /// <param name="IdRayon">Id du rayon du document</param>
         /// <returns>True si la modification a pu se faire</returns>
         public bool ModifierDocument(string Id, string Titre, string Image, string IdGenre, string IdPublic, string IdRayon)
         {
@@ -186,7 +191,7 @@ namespace MediaTekDocuments.controller
         /// <summary>
         /// Supprime un document dans la bdd
         /// </summary>
-        /// <param name="Id"></param>
+        /// <param name="Id">Id du document à supprimer</param>
         /// <returns>True si la suppression a pu se faire</returns>
         public bool SupprimerDocument(string Id)
         {
@@ -196,11 +201,11 @@ namespace MediaTekDocuments.controller
         /// <summary>
         /// Crée un livre dans la bdd
         /// </summary>
-        /// <param name="Id"></param>
-        /// <param name="Isbn"></param>
-        /// <param name="Auteur"></param>
-        /// <param name="Collection"></param>
-        /// <returns>True si la création a pu se faire</returns>
+        /// <param name="Id">Id du livre à insérer</param>
+        /// <param name="Isbn">Code Isbn du livre</param>
+        /// <param name="Auteur">Auteur du livre</param>
+        /// <param name="Collection">Collection du livre</param>
+        /// <returns>True si l'insertion a pu se faire</returns>
         public bool CreerLivre(string Id, string Isbn, string Auteur, string Collection)
         {
             return access.CreerLivre(Id, Isbn, Auteur, Collection);
@@ -209,10 +214,10 @@ namespace MediaTekDocuments.controller
         /// <summary>
         /// Modifie un livre dans la bdd
         /// </summary>
-        /// <param name="Id"></param>
-        /// <param name="Isbn"></param>
-        /// <param name="Auteur"></param>
-        /// <param name="Collection"></param>
+        /// <param name="Id">Id du livre à modifier</param>
+        /// <param name="Isbn">Code Isbn du livre</param>
+        /// <param name="Auteur">Auteur du livre</param>
+        /// <param name="Collection">Collection du livre</param>
         /// <returns>True si la modification a pu se faire</returns>
         public bool ModifierLivre(string Id, string Isbn, string Auteur, string Collection)
         {
@@ -222,7 +227,7 @@ namespace MediaTekDocuments.controller
         /// <summary>
         /// Suppression d'un livre en bdd
         /// </summary>
-        /// <param name="Id"></param>
+        /// <param name="Id">Id du livre à supprimer</param>
         /// <returns>True si la suppression a pu se faire</returns>
         public bool SupprimerLivre(string Id)
         {
@@ -232,11 +237,11 @@ namespace MediaTekDocuments.controller
         /// <summary>
         /// Créé un Dvd dans la bdd
         /// </summary>
-        /// <param name="Id"></param>
-        /// <param name="Synopsis"></param>
-        /// <param name="Realisateur"></param>
-        /// <param name="Duree"></param>
-        /// <returns>True si la création a pu se faire</returns>
+        /// <param name="Id">Id du dvd à insérer</param>
+        /// <param name="Synopsis">Synopsis du dvd</param>
+        /// <param name="Realisateur">Réalisateur du dvd</param>
+        /// <param name="Duree">Durée du dvd</param>
+        /// <returns>True si l'insertion a pu se faire</returns>
         public bool CreerDvd(string Id, string Synopsis, string Realisateur, int Duree)
         {
             return access.CreerDvd(Id, Synopsis, Realisateur, Duree);
@@ -245,10 +250,10 @@ namespace MediaTekDocuments.controller
         /// <summary>
         /// Modifie un dvd dans la bdd
         /// </summary>
-        /// <param name="Id"></param>
-        /// <param name="Synopsis"></param>
-        /// <param name="Realisateur"></param>
-        /// <param name="Duree"></param>
+        /// <param name="Id">Id du dvd à modifier</param>
+        /// <param name="Synopsis">Synopsis du dvd</param>
+        /// <param name="Realisateur">Réalisateur du dvd</param>
+        /// <param name="Duree">Durée du dvd</param>
         /// <returns>True si la modification a pu se faire</returns>
         public bool ModifierDvd(string Id, string Synopsis, string Realisateur, int Duree)
         {
@@ -258,7 +263,7 @@ namespace MediaTekDocuments.controller
         /// <summary>
         /// Supprimme un dvd dans la bdd
         /// </summary>
-        /// <param name="Id"></param>
+        /// <param name="Id">Id du dvd à supprimer</param>
         /// <returns>True si la suppression a pu se faire</returns>
         public bool SupprimerDvd(string Id)
         {
@@ -268,10 +273,10 @@ namespace MediaTekDocuments.controller
         /// <summary>
         /// Crée une revue dans la bdd
         /// </summary>
-        /// <param name="Id"></param>
-        /// <param name="Periodicite"></param>
-        /// <param name="DelaiMiseADispo"></param>
-        /// <returns>True si la création a pu se faire</returns>
+        /// <param name="Id">Id de la revue à insérer</param>
+        /// <param name="Periodicite">Périodicité de la revue</param>
+        /// <param name="DelaiMiseADispo">Délai de mise à disposition de la revue</param>
+        /// <returns>True si l'insertion a pu se faire</returns>
         public bool CreerRevue(string Id, string Periodicite, int DelaiMiseADispo)
         {
             return access.CreerRevue(Id, Periodicite, DelaiMiseADispo);
@@ -280,9 +285,9 @@ namespace MediaTekDocuments.controller
         /// <summary>
         /// Modifie une revue dans la bdd
         /// </summary>
-        /// <param name="Id"></param>
-        /// <param name="Periodicite"></param>
-        /// <param name="DelaiMiseADispo"></param>
+        /// <param name="Id">Id de la revue à modifier</param>
+        /// <param name="Periodicite">Périodicité de la revue</param>
+        /// <param name="DelaiMiseADispo">Délai de mise à disposition de la revue</param>
         /// <returns>True si la modification a pu se faire</returns>
         public bool ModifierRevue(string Id, string Periodicite, int DelaiMiseADispo)
         {
@@ -292,7 +297,7 @@ namespace MediaTekDocuments.controller
         /// <summary>
         /// Supprime une revue dans la bdd
         /// </summary>
-        /// <param name="Id"></param>
+        /// <param name="Id">Id de la revue à supprimer</param>
         /// <returns>True si la suppression a pu se faire</returns>
         public bool SupprimerRevue(string Id)
         {
@@ -302,8 +307,8 @@ namespace MediaTekDocuments.controller
         /// <summary>
         /// Créé une commande dans la bdd
         /// </summary>
-        /// <param name="commande"></param>
-        /// <returns>True si la création a pu se faire</returns>
+        /// <param name="commande">Objet de type Commande à insérer</param>
+        /// <returns>True si l'insertion a pu se faire</returns>
         public bool CreerCommande(Commande commande)
         {
             return access.CreerCommande(commande);
@@ -312,11 +317,11 @@ namespace MediaTekDocuments.controller
         /// <summary>
         /// Créé une commande de document dans la bdd
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="nbExemplaire"></param>
-        /// <param name="idLivreDvd"></param>
-        /// <param name="idSuivi"></param>
-        /// <returns>True si la création a pu se faire</returns>
+        /// <param name="id">Id de la commande de document à insérer</param>
+        /// <param name="nbExemplaire">Nombre d'exemplaires de la commande de document</param>
+        /// <param name="idLivreDvd">Id du livreDvd correspondant à la commande de document</param>
+        /// <param name="idSuivi">Id de l'étape de suivi de la commande de document</param>
+        /// <returns>True si l'insertion a pu se faire</returns>
         public bool CreerCommandeDocument(string id, int nbExemplaire, string idLivreDvd, string idSuivi)
         {
             return access.CreerCommandeDocument(id, nbExemplaire, idLivreDvd, idSuivi);
@@ -325,8 +330,8 @@ namespace MediaTekDocuments.controller
         /// <summary>
         /// Modifie l'étape de suivi d'une commande dans la bdd
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="idSuivi"></param>
+        /// <param name="id">Id de la commande de document à modifier</param>
+        /// <param name="idSuivi">Id de l'étape de suivi</param>
         /// <returns>True si la modification a pu se faire</returns>
         internal bool ModifierSuiviCommandeDocument(string id, string idSuivi)
         {
@@ -334,9 +339,9 @@ namespace MediaTekDocuments.controller
         }
 
         /// <summary>
-        /// Supprimme une commande de livre dans la bdd
+        /// Supprimme une commande de document dans la bdd
         /// </summary>
-        /// <param name="commandesDocument"></param>
+        /// <param name="commandesDocument">Objet de type CommandeDocument à supprimer</param>
         /// <returns>True si la suppression a pu se faire</returns>
         public bool SupprimerCommandeDocument(CommandeDocument commandesDocument)
         {
@@ -346,9 +351,9 @@ namespace MediaTekDocuments.controller
         /// <summary>
         /// Crée un abonnement de revue dans la bdd
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="dateFinAbonnement"></param>
-        /// <param name="idRevue"></param>
+        /// <param name="id">Id de l'abonnement à une revue à insérer</param>
+        /// <param name="dateFinAbonnement">Date de fin d'abonnement à une revue</param>
+        /// <param name="idRevue">Id de la revue concernée par l'abonnement</param>
         /// <returns>True si l'insertion pu se faire</returns>
         public bool CreerAbonnementRevue(string id, DateTime dateFinAbonnement, string idRevue)
         {
@@ -358,7 +363,7 @@ namespace MediaTekDocuments.controller
         /// <summary>
         /// Supprimme un abonnement de revue dans la bdd
         /// </summary>
-        /// <param name="abonnement"></param>
+        /// <param name="abonnement">>Objet de type Abonnement à supprimer</param>
         /// <returns>True si la suppression a pu se faire</returns>
         public bool SupprimerAbonnementRevue(Abonnement abonnement)
         {
@@ -368,7 +373,7 @@ namespace MediaTekDocuments.controller
         /// <summary>
         /// Modifie l'état d'un exemplaire d'un document dans la bdd
         /// </summary>
-        /// <param name="exemplaire"></param>
+        /// <param name="exemplaire">>Objet de type Exemplaire à modifier</param>
         /// <returns>True si la modification a pu se faire</returns>
         public bool ModifierEtatExemplaireDocument(Exemplaire exemplaire)
         {
@@ -378,7 +383,7 @@ namespace MediaTekDocuments.controller
         /// <summary>
         /// Supprime un exemplaire d'un document dans la bdd
         /// </summary>
-        /// <param name="exemplaire"></param>
+        /// <param name="exemplaire">>Objet de type Exemplaire à supprimer</param>
         /// <returns>True si la suppression a pu se faire</returns>
         public bool SupprimerExemplaireDocument(Exemplaire exemplaire)
         {

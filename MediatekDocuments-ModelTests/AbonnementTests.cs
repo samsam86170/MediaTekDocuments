@@ -4,6 +4,9 @@ using MediaTekDocuments.model;
 
 namespace MediaTekDocuments_Tests
 {
+    /// <summary>
+    /// Classe de test unitaire pour la classe métier Abonnement
+    /// </summary>
     [TestClass]
     public class AbonnementTests
     {
@@ -16,6 +19,9 @@ namespace MediaTekDocuments_Tests
 
         private static readonly Abonnement abonnement = new Abonnement(id, dateCommande, montant, dateFinAbonnement, idRevue, titre);
 
+        /// <summary>
+        /// Teste le constructeur de la classe Abonnement
+        /// </summary>
         [TestMethod()]
         public void AbonnementTest()
         {

@@ -4,6 +4,9 @@ using MediaTekDocuments.model;
 
 namespace MediaTekDocuments_ModelTests
 {
+    /// <summary>
+    /// Classe de tests unitaires pour la classe métier Categorie
+    /// </summary>
     [TestClass]
     public class CategorieTests
     {
@@ -12,6 +15,9 @@ namespace MediaTekDocuments_ModelTests
 
         private static readonly Categorie categorie = new Categorie(id, libelle);
 
+        /// <summary>
+        /// Teste les propriétés id et libelle 
+        /// </summary>
         [TestMethod()]
         public void CategorieTest()
         {
@@ -19,6 +25,9 @@ namespace MediaTekDocuments_ModelTests
             Assert.AreEqual(libelle, categorie.Libelle, "devrait réussir : libellé valorisé");
         }
 
+        /// <summary>
+        /// Teste la méthode ToString
+        /// </summary>
         [TestMethod()]
         public void ToStringTest()
         {

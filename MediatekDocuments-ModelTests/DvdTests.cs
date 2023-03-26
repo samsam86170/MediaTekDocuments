@@ -4,6 +4,9 @@ using MediaTekDocuments.model;
 
 namespace MediaTekDocuments_ModelTests
 {
+    /// <summary>
+    /// Classe de test unitaire pour la classe métier Dvd
+    /// </summary>
     [TestClass]
     public class DvdTests
     {
@@ -22,6 +25,9 @@ namespace MediaTekDocuments_ModelTests
 
         private static readonly Dvd dvd = new Dvd(id, titre, image, duree, realisateur, synopsis, idGenre, genre, idPublic, lePublic, idRayon, rayon);
 
+        /// <summary>
+        /// Teste le constructeur de la classe Dvd
+        /// </summary>
         [TestMethod()]
         public void DvdTest()
         {

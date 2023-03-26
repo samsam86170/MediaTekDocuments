@@ -4,6 +4,9 @@ using MediaTekDocuments.model;
 
 namespace MediaTekDocuments_ModelTests
 {
+    /// <summary>
+    /// Classe de test unitaire pour la classe métier Revue
+    /// </summary>
     [TestClass]
     public class RevueTests
     {
@@ -21,6 +24,9 @@ namespace MediaTekDocuments_ModelTests
 
         private static readonly Revue revue = new Revue(id, titre, image, idGenre, genre, idPublic, lePublic, idRayon, rayon, periodicite, delaiMiseADispo);
 
+        /// <summary>
+        /// Teste le constructeur de la classe Revue
+        /// </summary>
         [TestMethod()]
         public void RevueTest()
         {

@@ -56,7 +56,6 @@ namespace MediaTekDocuments.manager
         /// <summary>
         /// Envoi une demande à l'API et récupère la réponse
         /// </summary>
-        /// <typeparam name="T">type d'une des classes du model</typeparam>
         /// <param name="methode">verbe http (GET, POST, PUT, DELETE)</param>
         /// <param name="message">message à envoyer dans l'URL</param>
         /// <returns>liste d'objets (select) ou liste vide (ok) ou null si erreur</returns>

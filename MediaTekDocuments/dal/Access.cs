@@ -52,7 +52,7 @@ namespace MediaTekDocuments.dal
         /// <summary>
         /// Récupération de la chaîne de connexion
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name">nom de la chaîne de connexion</param>
         /// <returns></returns>
         static string GetConnectionStringByName(string name)
         {
@@ -168,7 +168,7 @@ namespace MediaTekDocuments.dal
         /// <summary>
         /// Retourne les exemplaires d'une revue
         /// </summary>
-        /// <param name="idDocument">id de la revue concernée</param>
+        /// <param name="idDocument">id du document concerné</param>
         /// <returns>Liste d'objets Exemplaire</returns>
         public List<Exemplaire> GetExemplairesRevue(string idDocument)
         {
@@ -179,7 +179,7 @@ namespace MediaTekDocuments.dal
         /// <summary>
         /// Retourne les exemplaires d'un document
         /// </summary>
-        /// <param name="idDocument"></param>
+        /// <param name="idDocument">id du document concerné</param>
         /// <returns>Liste d'objets Exemplaire</returns>
         public List<Exemplaire> GetExemplairesDocument(string idDocument)
         {
@@ -223,7 +223,7 @@ namespace MediaTekDocuments.dal
         /// <summary>
         /// Retourne les abonnements d'une revue
         /// </summary>
-        /// <param name="idDocument"></param>
+        /// <param name="idDocument">id du document concerné</param>
         /// <returns>Liste d'objets Abonnement</returns>
         public List<Abonnement> GetAbonnementRevue(string idDocument)
         {
@@ -276,12 +276,12 @@ namespace MediaTekDocuments.dal
         /// <summary>
         /// Ecriture d'un document en base de données
         /// </summary>
-        /// <param name="Id"></param>
-        /// <param name="Titre"></param>
-        /// <param name="Image"></param>
-        /// <param name="IdRayon"></param>
-        /// <param name="IdPublic"></param>
-        /// <param name="IdGenre"></param>
+        /// <param name="Id">Id du document à insérer</param>
+        /// <param name="Titre">Titre du document</param>
+        /// <param name="Image">Image du document</param>
+        /// <param name="IdGenre">Id du genre du document</param>
+        /// <param name="IdPublic">Id du public du document</param>
+        /// <param name="IdRayon">Id du rayon du document</param>
         /// <returns>true si l'insertion a pu se faire (retour != null)</returns>
         public bool CreerDocument(string Id, string Titre, string Image, string IdRayon, string IdPublic, string IdGenre)
         {
@@ -304,12 +304,12 @@ namespace MediaTekDocuments.dal
         /// <summary>
         /// Modification d'un document en base de données
         /// </summary>
-        /// <param name="Id"></param>
-        /// <param name="Titre"></param>
-        /// <param name="Image"></param>
-        /// <param name="IdGenre"></param>
-        /// <param name="IdPublic"></param>
-        /// <param name="IdRayon"></param>
+        /// <param name="Id">Id du document à modifier</param>
+        /// <param name="Titre">Titre du document</param>
+        /// <param name="Image">Image du document</param>
+        /// <param name="IdGenre">Id du genre du document</param>
+        /// <param name="IdPublic">Id du public du document</param>
+        /// <param name="IdRayon">Id du rayon du document</param>
         /// <returns>True si l'insertion a pu se faire</returns>
         public bool ModifierDocument(string Id, string Titre, string Image, string IdGenre, string IdPublic, string IdRayon)
         {
@@ -355,10 +355,10 @@ namespace MediaTekDocuments.dal
         /// <summary>
         /// Ecriture d'un livre en base de données
         /// </summary>
-        /// <param name="Id"></param>
-        /// <param name="Isbn"></param>
-        /// <param name="Auteur"></param>
-        /// <param name="Collection"></param>
+        /// <param name="Id">Id du livre à insérer</param>
+        /// <param name="Isbn">Code Isbn du livre</param>
+        /// <param name="Auteur">Auteur du livre</param>
+        /// <param name="Collection">Collection du livre</param>
         /// <returns>True si l'insertion a pu se faire</returns>
         public bool CreerLivre(string Id, string Isbn, string Auteur, string Collection)
         {
@@ -382,10 +382,10 @@ namespace MediaTekDocuments.dal
         /// <summary>
         /// Modification d'un livre en  base de données
         /// </summary>
-        /// <param name="Id"></param>
-        /// <param name="Isbn"></param>
-        /// <param name="Auteur"></param>
-        /// <param name="Collection"></param>
+        /// <param name="Id">Id du livre à modifier</param>
+        /// <param name="Isbn">Code Isbn du livre</param>
+        /// <param name="Auteur">Auteur du livre</param>
+        /// <param name="Collection">Collection du livre</param>
         /// <returns>True si l'insertion a pu se faire</returns>
         public bool ModifierLivre(string Id, string Isbn, string Auteur, string Collection)
         {
@@ -432,10 +432,10 @@ namespace MediaTekDocuments.dal
         /// <summary>
         /// Ecriture d'un dvd en base de données
         /// </summary>
-        /// <param name="Id"></param>
-        /// <param name="Synopsis"></param>
-        /// <param name="Realisateur"></param>
-        /// <param name="Duree"></param>
+        /// <param name="Id">Id du dvd à insérer</param>
+        /// <param name="Synopsis">Synopsis du dvd</param>
+        /// <param name="Realisateur">Réalisateur du dvd</param>
+        /// <param name="Duree">Durée du dvd</param>
         /// <returns>True si l'insertion a pu se faire</returns>
         public bool CreerDvd(string Id, string Synopsis, string Realisateur, int Duree)
         {
@@ -458,10 +458,10 @@ namespace MediaTekDocuments.dal
         /// <summary>
         /// Modification d'un dvd en base de données
         /// </summary>
-        /// <param name="Id"></param>
-        /// <param name="Synopsis"></param>
-        /// <param name="Realisateur"></param>
-        /// <param name="Duree"></param>
+        /// <param name="Id">Id du dvd à modifier</param>
+        /// <param name="Synopsis">Synopsis du dvd</param>
+        /// <param name="Realisateur">Réalisateur du dvd</param>
+        /// <param name="Duree">Durée du dvd</param>
         /// <returns>True si l'insertion a pu se faire</returns>
         public bool ModifierDvd(string Id, string Synopsis, string Realisateur, int Duree)
         {
@@ -484,7 +484,7 @@ namespace MediaTekDocuments.dal
         /// <summary>
         /// Suppression d'un dvd en base de données
         /// </summary>
-        /// <param name="Id"></param>
+        /// <param name="Id">Id du dvd à supprimer</param>
         /// <returns>True si l'insertion a pu se faire</returns>
         public bool SupprimerDvd(string Id)
         {
@@ -507,9 +507,9 @@ namespace MediaTekDocuments.dal
         /// <summary>
         /// Ecriture d'une revue en base de données
         /// </summary>
-        /// <param name="Id"></param>
-        /// <param name="Periodicite"></param>
-        /// <param name="DelaiMiseADispo"></param>
+        /// <param name="Id">Id de la revue à insérer</param>
+        /// <param name="Periodicite">Périodicité de la revue</param>
+        /// <param name="DelaiMiseADispo">Délai de mise à disposition de la revue</param>
         /// <returns>True si l'insertion a pu se faire</returns>
         public bool CreerRevue(string Id, string Periodicite, int DelaiMiseADispo)
         {
@@ -532,9 +532,9 @@ namespace MediaTekDocuments.dal
         /// <summary>
         /// Modification d'une revue en base de données
         /// </summary>
-        /// <param name="Id"></param>
-        /// <param name="Periodicite"></param>
-        /// <param name="DelaiMiseADispo"></param>
+        /// <param name="Id">Id de la revue à modifier</param>
+        /// <param name="Periodicite">Périodicité de la revue</param>
+        /// <param name="DelaiMiseADispo">Délai de mise à disposition de la revue</param>
         /// <returns>True si l'insertion a pu se faire</returns>
         public bool ModifierRevue(string Id, string Periodicite, int DelaiMiseADispo)
         {
@@ -557,7 +557,7 @@ namespace MediaTekDocuments.dal
         /// <summary>
         /// Suppression d'une revue en base de données
         /// </summary>
-        /// <param name="Id"></param>
+        /// <param name="Id">Id de la revue à supprimer</param>
         /// <returns>True si la suppression a pu se faire</returns>
         public bool SupprimerRevue(string Id)
         {
@@ -580,7 +580,7 @@ namespace MediaTekDocuments.dal
         /// <summary>
         /// Ecriture d'une commande en base de données
         /// </summary>
-        /// <param name="commande"></param>
+        /// <param name="commande">Objet de type Commande à insérer</param>
         /// <returns>True si l'insertion a pu se faire</returns>
         public bool CreerCommande(Commande commande)
         {
@@ -603,10 +603,10 @@ namespace MediaTekDocuments.dal
         /// <summary>
         /// Ecriture d'une commande de document en base de données
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="nbExemplaire"></param>
-        /// <param name="idLivreDvd"></param>
-        /// <param name="idSuivi"></param>
+        /// <param name="id">Id de la commande de document à insérer</param>
+        /// <param name="nbExemplaire">Nombre d'exemplaires de la commande de document</param>
+        /// <param name="idLivreDvd">Id du livreDvd correspondant à la commande de document</param>
+        /// <param name="idSuivi">Id de l'étape de suivi de la commande de document</param>
         /// <returns>True si l'insertion a pu se faire</returns>
         public bool CreerCommandeDocument(string id, int nbExemplaire, string idLivreDvd, string idSuivi)
         {
@@ -629,10 +629,8 @@ namespace MediaTekDocuments.dal
         /// <summary>
         /// Modification de l'étape de suivi d'une commande de document en base de données
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="nbExemplaire"></param>
-        /// <param name="idLivreDvd"></param>
-        /// <param name="idSuivi"></param>
+        /// <param name="id">Id de la commande de document à modifier</param>
+        /// <param name="idSuivi">Id de l'étape de suivi</param>
         /// <returns>True si la modification a pu se faire</returns>
         public bool ModifierSuiviCommandeDocument(string id, string idSuivi)
         {
@@ -656,7 +654,7 @@ namespace MediaTekDocuments.dal
         /// <summary>
         /// Suppression d'une commande de document en base de données
         /// </summary>
-        /// <param name="commandesDocument"></param>
+        /// <param name="commandesDocument">Objet de type CommandeDocument à supprimer</param>
         /// <returns>True si la suppression a pu se faire</returns>
         public bool SupprimerCommandeDocument(CommandeDocument commandesDocument)
         {
@@ -679,9 +677,9 @@ namespace MediaTekDocuments.dal
         /// <summary>
         /// Ecriture d'un abonnement à une revue en base de données
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="dateFinAbonnement"></param>
-        /// <param name="idRevue"></param>
+        /// <param name="id">Id de l'abonnement à une revue à insérer</param>
+        /// <param name="dateFinAbonnement">Date de fin d'abonnement à une revue</param>
+        /// <param name="idRevue">Id de la revue concernée par l'abonnement</param>
         /// <returns>True si l'insertion a pu se faire</returns>
         public bool CreerAbonnementRevue(string id, DateTime dateFinAbonnement, string idRevue)
         {
@@ -705,7 +703,7 @@ namespace MediaTekDocuments.dal
         /// <summary>
         /// Suppression d'un abonnement de revue en base de données
         /// </summary>
-        /// <param name="abonnement"></param>
+        /// <param name="abonnement">Objet de type Abonnement à supprimer</param>
         /// <returns>True si la suppression a pu se faire</returns>
         public bool SupprimerAbonnementRevue(Abonnement abonnement)
         {
@@ -728,7 +726,7 @@ namespace MediaTekDocuments.dal
         /// <summary>
         /// modification de l'état d'un exemplaire en base de données
         /// </summary>
-        /// <param name="exemplaire"></param>
+        /// <param name="exemplaire">Objet de type Exemplaire à modifier</param>
         /// <returns>true si la modification a pu se faire </returns>
         public bool ModifierEtatExemplaireDocument(Exemplaire exemplaire)
         {
@@ -751,7 +749,7 @@ namespace MediaTekDocuments.dal
         /// <summary>
         /// suppression d'un exemplaire de document en base de données
         /// </summary>
-        /// <param name="exemplaire"></param>
+        /// <param name="exemplaire">Objet de type Exemplaire à supprimer</param>
         /// <returns>True si la suppression a pu se faire</returns>
         public bool SupprimerExemplaireDocument(Exemplaire exemplaire)
         {
@@ -774,11 +772,11 @@ namespace MediaTekDocuments.dal
         /// <summary>
         /// Ecriture d'un exemplaire de revue en base de données
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="numero"></param>
-        /// <param name="dateAchat"></param>
-        /// <param name="photo"></param>
-        /// <param name="idEtat"></param>
+        /// <param name="id">Id du document correspondant à l'exemplaire d'une revue à insérer</param>
+        /// <param name="numero">Numéro de l'exemplaire d'une revue à insérer</param>
+        /// <param name="dateAchat">Date d'achat de l'exemplaire d'une revue</param>
+        /// <param name="photo">Photo de l'exemplaire de la revue</param>
+        /// <param name="idEtat">Id de l'état d'usure de l'exemplaire d'une revue</param>
         /// <returns>True si l'insertion a pu se faire</returns>
         public bool CreerExemplaireRevue(string id, int numero, DateTime dateAchat, string photo, string idEtat)
         {
@@ -800,11 +798,12 @@ namespace MediaTekDocuments.dal
         }
 
         /// <summary>
-        /// Récupère l'utilisateur selon son login
+        /// Récupère les informations d'identification de l'utilisateur
         /// </summary>
-        /// <param name="login"></param>
+        /// <param name="login">Identifiant de l'utilisateur</param>
+        /// <param name="password">Mot de passe de l'utilisateur</param>
         /// <returns>True si l'utilisateur est trouvé</returns>
-        public Utilisateur GetUtilisateur(string login)
+        public Utilisateur GetUtilisateur(string login, string password)
         {
             try
             {
@@ -813,7 +812,12 @@ namespace MediaTekDocuments.dal
                 {
                     return null;
                 }
-                return (liste[0]);
+                Utilisateur utilisateur = liste[0];
+                if (utilisateur.Password != password)
+                {
+                    return null;
+                }
+                return utilisateur;
             }
             catch (Exception ex)
             {
@@ -822,7 +826,6 @@ namespace MediaTekDocuments.dal
             }
             return null;
         }
-
 
         /// <summary>
         /// Traitement de la récupération du retour de l'api, avec conversion du json en liste pour les select (GET)

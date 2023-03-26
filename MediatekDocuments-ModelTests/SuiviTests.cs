@@ -4,6 +4,9 @@ using MediaTekDocuments.model;
 
 namespace MediaTekDocuments_ModelTests
 {
+    /// <summary>
+    /// Classe de test unitaire pour la classe métier Suivi
+    /// </summary>
     [TestClass]
     public class SuiviTests
     {
@@ -12,6 +15,9 @@ namespace MediaTekDocuments_ModelTests
 
         private static readonly Suivi suivi = new Suivi(id, libelle);
 
+        /// <summary>
+        /// Teste le constructeur de la classe Suivi
+        /// </summary>
         [TestMethod()]
         public void SuiviTest()
         {

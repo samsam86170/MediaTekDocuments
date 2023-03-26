@@ -6,6 +6,11 @@
 		<UseWindowsForms>true</UseWindowsForms>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	  <DocumentationFile>C:\Users\samsam\Documents\projetexam\MediaTekDocuments\MediaTekDocuments\SpecFlowMediatekDocuments\SpecFlowMediatekDocuments.xml</DocumentationFile>
+	  <OutputPath>C:\Users\samsam\Documents\projetexam\MediaTekDocuments\MediaTekDocuments\MediaTekDocuments\bin\Debug\</OutputPath>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
 		<PackageReference Include="NUnit" Version="3.13.3" />

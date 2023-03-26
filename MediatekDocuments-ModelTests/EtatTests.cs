@@ -4,6 +4,9 @@ using MediaTekDocuments.model;
 
 namespace MediaTekDocuments_ModelTests
 {
+    /// <summary>
+    /// Classe de test unitaire pour la classe métier Etat
+    /// </summary>
     [TestClass]
     public class EtatTests
     {
@@ -12,6 +15,9 @@ namespace MediaTekDocuments_ModelTests
 
         private static readonly Etat etat = new Etat(id, libelle);
 
+        /// <summary>
+        /// Teste le constructeur de la classe Etat
+        /// </summary>
         [TestMethod()]
         public void EtatTest()
         {

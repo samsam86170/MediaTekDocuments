@@ -4,6 +4,9 @@ using MediaTekDocuments.model;
 
 namespace MediaTekDocuments_ModelTests
 {
+    /// <summary>
+    /// Classe de test unitaire pour la classe métier Exemplaire
+    /// </summary>
     [TestClass]
     public class ExemplaireTests
     {
@@ -16,6 +19,9 @@ namespace MediaTekDocuments_ModelTests
 
         private static readonly Exemplaire exemplaire = new Exemplaire(numero, dateAchat, photo, idEtat, id, libelle);
 
+        /// <summary>
+        /// Teste le constructeur de la classe Exemplaire
+        /// </summary>
         [TestMethod()]
         public void ExemplaireTest()
         {

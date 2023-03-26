@@ -4,6 +4,9 @@ using MediaTekDocuments.model;
 
 namespace MediaTekDocuments_ModelTests
 {
+    /// <summary>
+    /// Classe de test unitaire pour la classe métier CommandeDocument
+    /// </summary>
     [TestClass]
     public class CommandeDocumentTests
     {
@@ -17,6 +20,9 @@ namespace MediaTekDocuments_ModelTests
 
         private static readonly CommandeDocument commandeDocument = new CommandeDocument(id, dateCommande, montant, nbExemplaire, idLivreDvd, idSuivi, libelle);
 
+        /// <summary>
+        /// Teste le constructeur de la classe CommandeDocument
+        /// </summary>
         [TestMethod()]
         public void CommandeDocumentTest()
         {
