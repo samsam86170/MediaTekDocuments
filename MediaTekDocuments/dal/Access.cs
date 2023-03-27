@@ -198,6 +198,18 @@ namespace MediaTekDocuments.dal
         }
 
         /// <summary>
+        /// Retourne les commandes
+        /// </summary>
+        /// <param name="idDocument">id du document concerné</param>
+        /// <returns>Liste d'objets CommandeDocument</returns>
+
+        public List<Commande> GetCommandes(string idDocument)
+        {
+            List<Commande> lesCommandes = TraitementRecup<Commande>(GET, "commande/" + idDocument);
+            return lesCommandes;
+        }
+
+        /// <summary>
         /// Retourne les commandes des documents
         /// </summary>
         /// <param name="idDocument">id du document concerné</param>

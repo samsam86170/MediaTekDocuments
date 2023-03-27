@@ -34,19 +34,11 @@ namespace MediaTekDocuments.controller
         {
             Utilisateur utilisateur = access.GetUtilisateur(login, password);
 
-            if (utilisateur == null)
+            if (utilisateur != null && utilisateur.Password.Equals(password))
             {
-                return null;
-            }
-            if (utilisateur.Password.Equals(utilisateur.Password))
-            {
-                Service service = new Service(utilisateur.IdService, utilisateur.Libelle);
-                service.Id = utilisateur.IdService;
-                service.Libelle = utilisateur.Libelle;
-                return service;
+                return new Service(utilisateur.IdService, utilisateur.Libelle);
             }
             return null;
         }
-
     }
 }

@@ -98,6 +98,17 @@ namespace MediaTekDocuments.controller
         }
 
         /// <summary>
+        /// récèpère toutes les commandes d'un document
+        /// </summary>
+        /// <param name="idDocument"></param>
+        /// <returns></returns>
+
+        public List<Commande> GetCommandes(string idDocument)
+        {
+            return access.GetCommandes(idDocument);
+        }
+
+        /// <summary>
         /// récupère les commandes d'un document
         /// </summary>
         /// <param name="idDocument">id du document concerné</param>
@@ -142,6 +153,16 @@ namespace MediaTekDocuments.controller
         public List<Etat> GetAllEtatsDocument()
         {
             return access.GetAllEtatsDocument();
+        }
+
+        /// <summary>
+        /// récupère les documents
+        /// </summary>
+        /// <param name="idDocument">id du document concerné</param>
+        /// <returns>Liste d'objets Document</returns>
+        public List<Document> GetAllDocuments(string idDocument)
+        {
+            return access.GetAllDocuments(idDocument);
         }
 
         /// <summary>

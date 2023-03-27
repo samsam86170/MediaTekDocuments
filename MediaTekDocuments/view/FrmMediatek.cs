@@ -103,6 +103,7 @@ namespace MediaTekDocuments.view
                 cbx.SelectedIndex = -1;
             }
         }
+
         #endregion
 
         #region Onglet Livres
@@ -121,6 +122,9 @@ namespace MediaTekDocuments.view
             RemplirComboCategorie(controller.GetAllGenres(), bdgGenres, cbxLivresGenres);
             RemplirComboCategorie(controller.GetAllPublics(), bdgPublics, cbxLivresPublics);
             RemplirComboCategorie(controller.GetAllRayons(), bdgRayons, cbxLivresRayons);
+            RemplirCbxAjoutModifGenreLivre();
+            RemplirCbxAjoutModifPublicLivre();
+            RemplirCbxAjoutModifRayonLivre();
             RemplirLivresListeComplete();
             gbxExemplairesLivre.Enabled = false;
             gbxEtatExemplaireLivre.Enabled = false;
@@ -158,13 +162,14 @@ namespace MediaTekDocuments.view
                 cbxLivresGenres.SelectedIndex = -1;
                 cbxLivresRayons.SelectedIndex = -1;
                 cbxLivresPublics.SelectedIndex = -1;
+                VideExemplaireLivre();
                 Livre livre = lesLivres.Find(x => x.Id.Equals(txbLivresNumRecherche.Text));
                 if (livre != null)
                 {
                     List<Livre> livres = new List<Livre>() { livre };
                     RemplirLivresListe(livres);
                     gbxExemplairesLivre.Enabled = true;
-                    AfficheExemplairesLivres();
+                    AfficheExemplairesLivres(); 
                 }
                 else
                 {
@@ -223,9 +228,6 @@ namespace MediaTekDocuments.view
             txbLivresGenre.Text = livre.Genre;
             txbLivresPublic.Text = livre.Public;
             txbLivresRayon.Text = livre.Rayon;
-            txbIdGenreLivre.Text = livre.IdGenre;
-            txbIdPublicLivre.Text = livre.IdPublic;
-            txbIdRayonLivre.Text = livre.IdRayon;
             string image = livre.Image;
             try
             {
@@ -251,10 +253,10 @@ namespace MediaTekDocuments.view
             txbLivresPublic.Text = "";
             txbLivresRayon.Text = "";
             txbLivresTitre.Text = "";
-            txbIdGenreLivre.Text = "";
-            txbIdPublicLivre.Text = "";
-            txbIdRayonLivre.Text = "";
             pcbLivresImage.Image = null;
+            cbxAjoutModifGenreLivre.Text = "";
+            cbxAjoutModifPublicLivre.Text = "";
+            cbxAjoutModifRayonLivre.Text = "";
         }
 
         private void btnInfosLivreVider_Click(object sender, EventArgs e)
@@ -334,6 +336,7 @@ namespace MediaTekDocuments.view
                 {
                     Livre livre = (Livre)bdgLivresListe.List[bdgLivresListe.Position];
                     AfficheLivresInfos(livre);
+                    VideComboAjoutModifLivres();
                 }
                 catch
                 {
@@ -435,7 +438,127 @@ namespace MediaTekDocuments.view
             RemplirLivresListe(sortedList);
         }
 
-      
+        /// <summary>
+        /// Remplissage de la combobox du genre du livre à ajouter ou à modifier
+        /// </summary>
+        /// <returns>La liste des genres</returns>
+        private string RemplirCbxAjoutModifGenreLivre()
+        {
+            List<Categorie> lesGenresLivres = controller.GetAllGenres();
+            foreach (Categorie genre in lesGenresLivres)
+            {
+                cbxAjoutModifGenreLivre.Items.Add(genre.Libelle);
+            }
+
+            if (cbxAjoutModifGenreLivre.Items.Count > 0)
+            {
+                cbxAjoutModifGenreLivre.SelectedIndex = 0;
+            }
+            return cbxAjoutModifGenreLivre.SelectedItem?.ToString();
+        }
+
+        /// <summary>
+        /// Remplissage de la combobox du public du livre à ajouter ou à modifier
+        /// </summary>
+        /// <returns>La liste des publics</returns>
+        private string RemplirCbxAjoutModifPublicLivre()
+        {
+            List<Categorie> lesPublicsLivres = controller.GetAllPublics();
+            foreach (Categorie lePublic in lesPublicsLivres)
+            {
+                cbxAjoutModifPublicLivre.Items.Add(lePublic.Libelle);
+            }
+
+            if (cbxAjoutModifPublicLivre.Items.Count > 0)
+            {
+                cbxAjoutModifPublicLivre.SelectedIndex = 0;
+            }
+            return cbxAjoutModifPublicLivre.SelectedItem?.ToString();
+        }
+
+        /// <summary>
+        /// Remplissage de la combobox du rayon du livre à ajouter ou à modifier
+        /// </summary>
+        /// <returns>La liste des rayons</returns>
+        private string RemplirCbxAjoutModifRayonLivre()
+        {
+            List<Categorie> lesRayonsLivres = controller.GetAllRayons();
+            foreach (Categorie rayon in lesRayonsLivres)
+            {
+                cbxAjoutModifRayonLivre.Items.Add(rayon.Libelle);
+            }
+
+            if (cbxAjoutModifRayonLivre.Items.Count > 0)
+            {
+                cbxAjoutModifRayonLivre.SelectedIndex = 0;
+            }
+            return cbxAjoutModifRayonLivre.SelectedItem?.ToString();
+        }
+
+        /// <summary>
+        /// Récupération de l'id du genre correspondant au genre de document 
+        /// </summary>
+        /// <param name="genre">Genre du document sélectionné</param>
+        /// <returns>L'id du genre sélectionné</returns>
+        private string GetIdGenreDocument(string genre)
+        {
+            List<Categorie> lesGenresDocument = controller.GetAllGenres();
+            foreach (Categorie c in lesGenresDocument)
+            {
+                if (c.Libelle == genre)
+                {
+                    return c.Id;
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Récupération de l'id du public correspondant au public du document
+        /// </summary>
+        /// <param name="lePublic">Public du document sélectionné</param>
+        /// <returns>L'id du public sélectionné</returns>
+        private string GetIdPublicDocument(string lePublic)
+        {
+            List<Categorie> lesPublicsDocument = controller.GetAllPublics();
+            foreach (Categorie c in lesPublicsDocument)
+            {
+                if (c.Libelle == lePublic)
+                {
+                    return c.Id;
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Récupération de l'id du rayon correspondant au rayon du document
+        /// </summary>
+        /// <param name="rayon">Rayon du document sélectionné</param>
+        /// <returns>L'id du rayon sélectionné</returns>
+        private string GetIdRayonDocument(string rayon)
+        {
+            List<Categorie> lesRayonsDocument = controller.GetAllRayons();
+            foreach (Categorie c in lesRayonsDocument)
+            {
+                if (c.Libelle == rayon)
+                {
+                    return c.Id;
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Vide les combobox de gestion du genre, du public et du rayon d'un livre
+        /// </summary>
+        private void VideComboAjoutModifLivres()
+        {
+            cbxAjoutModifGenreLivre.Text = "";
+            cbxAjoutModifPublicLivre.Text = "";
+            cbxAjoutModifRayonLivre.Text = "";
+        }
+
         /// <summary>
         /// Enregistrement d'un document de type "livre" dans la base de données
         /// </summary>
@@ -443,7 +566,7 @@ namespace MediaTekDocuments.view
         /// <param name="e"></param>
         private void btnReceptionLivreAjouter_Click(object sender, EventArgs e)
         {
-            if (!txbLivresNumero.Text.Equals(""))
+            if (!txbLivresNumero.Text.Equals("") && !txbLivresTitre.Text.Equals("") && !txbLivresCollection.Text.Equals("") && !cbxAjoutModifGenreLivre.Text.Equals("") && !cbxAjoutModifPublicLivre.Text.Equals("") && !cbxAjoutModifRayonLivre.Text.Equals(""))
             {
                 try
                 {
@@ -453,27 +576,34 @@ namespace MediaTekDocuments.view
                     string isbn = txbLivresIsbn.Text;
                     string auteur = txbLivresAuteur.Text;
                     string collection = txbLivresCollection.Text;
-                    string idGenre = txbIdGenreLivre.Text;
+                    string idGenre = GetIdGenreDocument(cbxAjoutModifGenreLivre.Text);
                     string genre = txbLivresGenre.Text;
-                    string idPublic = txbIdPublicLivre.Text;
                     string Public = txbLivresPublic.Text;
-                    string idRayon = txbIdRayonLivre.Text;
+                    string idPublic = GetIdPublicDocument(cbxAjoutModifPublicLivre.Text);
                     string rayon = txbLivresRayon.Text;
-
+                    string idRayon = GetIdRayonDocument(cbxAjoutModifRayonLivre.Text);
+                    
                     Document document = new Document(id, titre, image, idGenre, genre, idPublic, Public, idRayon, rayon);
                     Livre livre = new Livre(id, titre, image, isbn, auteur, collection, idGenre, genre, idPublic, Public, idRayon, rayon);
-                    if (controller.CreerDocument(document.Id, document.Titre, document.Image, document.IdRayon, document.IdPublic, document.IdGenre) && controller.CreerLivre(livre.Id, livre.Isbn, livre.Auteur, livre.Collection))
+
+                    var idLivreExistant = controller.GetAllDocuments(id);
+                    var idLivreNonExistant = !idLivreExistant.Any();
+
+                    if (idLivreNonExistant)
                     {
-                        lesLivres = controller.GetAllLivres();
-                        RemplirComboCategorie(controller.GetAllGenres(), bdgGenres, cbxLivresGenres);
-                        RemplirComboCategorie(controller.GetAllPublics(), bdgPublics, cbxLivresPublics);
-                        RemplirComboCategorie(controller.GetAllRayons(), bdgRayons, cbxLivresRayons);
-                        RemplirLivresListeComplete();
-                        MessageBox.Show("Le livre " + titre + " a correctement été ajouté.");
+                        if (controller.CreerDocument(document.Id, document.Titre, document.Image, document.IdRayon, document.IdPublic, document.IdGenre) && controller.CreerLivre(livre.Id, livre.Isbn, livre.Auteur, livre.Collection))
+                        {
+                            lesLivres = controller.GetAllLivres();
+                            RemplirComboCategorie(controller.GetAllGenres(), bdgGenres, cbxLivresGenres);
+                            RemplirComboCategorie(controller.GetAllPublics(), bdgPublics, cbxLivresPublics);
+                            RemplirComboCategorie(controller.GetAllRayons(), bdgRayons, cbxLivresRayons);
+                            RemplirLivresListeComplete();
+                            MessageBox.Show("Le livre " + titre + " a correctement été ajouté.");
+                        }
                     }
                     else
                     {
-                        MessageBox.Show("numéro de document déjà existant", "Erreur");
+                        MessageBox.Show("Le numéro de document existe déjà, veuillez saisir un autre numéro.", "Erreur");
                     }
                 }
                 catch
@@ -483,9 +613,11 @@ namespace MediaTekDocuments.view
             }
             else
             {
-                MessageBox.Show("Le numéro de document est obligatoire.", "Information");
+                MessageBox.Show("Tous les champs sont obligatoires.", "Information");
             }
         }
+
+
         /// <summary>
         /// Modification d'un document de type "livre", dans la bdd
         /// </summary>
@@ -503,10 +635,11 @@ namespace MediaTekDocuments.view
                 string isbn = txbLivresIsbn.Text;
                 string auteur = txbLivresAuteur.Text;
                 string collection = txbLivresCollection.Text;
-                string idGenre = txbIdGenreLivre.Text;
-                string idPublic = txbIdPublicLivre.Text;
-                string idRayon = txbIdRayonLivre.Text;
-                if (!txbLivresNumero.Equals("") && !txbLivresTitre.Equals("") && !txbIdGenreLivre.Equals("") && !txbIdPublicLivre.Equals("") && !txbIdRayonLivre.Equals(""))
+                string idGenre = GetIdGenreDocument(cbxAjoutModifGenreLivre.Text);
+                string idPublic = GetIdPublicDocument(cbxAjoutModifPublicLivre.Text);
+                string idRayon = GetIdRayonDocument(cbxAjoutModifRayonLivre.Text);
+
+                if (!txbLivresNumero.Text.Equals("") && !txbLivresTitre.Text.Equals("") && !txbLivresCollection.Text.Equals("") && !cbxAjoutModifGenreLivre.Text.Equals("") && !cbxAjoutModifPublicLivre.Text.Equals("") && !cbxAjoutModifRayonLivre.Text.Equals(""))
                 {
                     if (controller.ModifierLivre(id, isbn, auteur, collection) && controller.ModifierDocument(id, titre, image, idGenre, idPublic, idRayon))
                     {
@@ -519,17 +652,17 @@ namespace MediaTekDocuments.view
                     }
                     else
                     {
-                        MessageBox.Show("Erreur lors de la modification du LIVRE", "Erreur");
+                        MessageBox.Show("Erreur lors de la modification du livre", "Erreur");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Veuillez sélectionner un livre à modifier", "Information");
+                    MessageBox.Show("Tous les champs sont obligatoires.", "Information");
                 }
             }
             else
             {
-                MessageBox.Show("Le numéro de document est obligatoire.", "Information");
+                MessageBox.Show("Une ligne doit être sélectionnée.", "Information");
             }
         }
 
@@ -701,6 +834,17 @@ namespace MediaTekDocuments.view
         }
 
         /// <summary>
+        /// Vide la zone de gestion des exemplaires de livre
+        /// </summary>
+        private void VideExemplaireLivre()
+        {
+            txbExemplaireLivresNumero.Text = "";
+            dtpDateAchatExemplaireLivre.Value = DateTime.Now;
+            lblEtatExemplaireLivre.Text = "";
+            gbxEtatExemplaireLivre.Enabled = false;
+        }
+
+        /// <summary>
         /// Affichage des informations d'un exemplaire sélectionné
         /// </summary>
         /// <param name="sender"></param>
@@ -790,6 +934,9 @@ namespace MediaTekDocuments.view
             RemplirComboCategorie(controller.GetAllGenres(), bdgGenres, cbxDvdGenres);
             RemplirComboCategorie(controller.GetAllPublics(), bdgPublics, cbxDvdPublics);
             RemplirComboCategorie(controller.GetAllRayons(), bdgRayons, cbxDvdRayons);
+            RemplirCbxAjoutModifGenreDvd();
+            RemplirCbxAjoutModifPublicDvd();
+            RemplirCbxAjoutModifRayonDvd();
             RemplirDvdListeComplete();
         }
 
@@ -825,13 +972,13 @@ namespace MediaTekDocuments.view
                 cbxDvdGenres.SelectedIndex = -1;
                 cbxDvdRayons.SelectedIndex = -1;
                 cbxDvdPublics.SelectedIndex = -1;
+                VideExemplaireDvd();
                 Dvd dvd = lesDvd.Find(x => x.Id.Equals(txbDvdNumRecherche.Text));
                 if (dvd != null)
                 {
                     List<Dvd> Dvd = new List<Dvd>() { dvd };
                     RemplirDvdListe(Dvd);
                     AfficheExemplairesDvd();
-                    gbxEtatExemplaireDvd.Enabled = true;
                 }
                 else
                 {
@@ -890,9 +1037,6 @@ namespace MediaTekDocuments.view
             txbDvdPublic.Text = dvd.Public;
             txbDvdRayon.Text = dvd.Rayon;
             txbDvdTitre.Text = dvd.Titre;
-            txbIdGenreDvd.Text = dvd.IdGenre;
-            txbIdPublicDvd.Text = dvd.IdPublic;
-            txbIdRayonDvd.Text = dvd.IdRayon;
             string image = dvd.Image;
             try
             {
@@ -902,6 +1046,7 @@ namespace MediaTekDocuments.view
             {
                 pcbDvdImage.Image = null;
             }
+
         }
 
         /// <summary>
@@ -918,10 +1063,10 @@ namespace MediaTekDocuments.view
             txbDvdPublic.Text = "";
             txbDvdRayon.Text = "";
             txbDvdTitre.Text = "";
-            txbIdGenreDvd.Text = "";
-            txbIdPublicDvd.Text = "";
-            txbIdRayonDvd.Text = "";
             pcbDvdImage.Image = null;
+            cbxAjoutModifGenreDvd.Text = "";
+            cbxAjoutModifPublicDvd.Text = "";
+            cbxAjoutModifRayonDvd.Text = "";
         }
 
         private void btnInfosDvdVider_Click(object sender, EventArgs e)
@@ -1000,6 +1145,7 @@ namespace MediaTekDocuments.view
                 {
                     Dvd dvd = (Dvd)bdgDvdListe.List[bdgDvdListe.Position];
                     AfficheDvdInfos(dvd);
+                    VideComboAjoutModifDvd();
                 }
                 catch
                 {
@@ -1102,13 +1248,83 @@ namespace MediaTekDocuments.view
         }
 
         /// <summary>
+        /// Remplissage de la combobox du genre du dvd à ajouter ou à modifier
+        /// </summary>
+        /// <returns>La liste des genres</returns>
+        private string RemplirCbxAjoutModifGenreDvd()
+        {
+            List<Categorie> lesGenresDvd = controller.GetAllGenres();
+            foreach (Categorie genre in lesGenresDvd)
+            {
+                cbxAjoutModifGenreDvd.Items.Add(genre.Libelle);
+            }
+
+            if (cbxAjoutModifGenreDvd.Items.Count > 0)
+            {
+                cbxAjoutModifGenreDvd.SelectedIndex = 0;
+            }
+            return cbxAjoutModifGenreDvd.SelectedItem?.ToString();
+        }
+
+        /// <summary>
+        /// Remplissage de la combobox du public du dvd à ajouter ou à modifier
+        /// </summary>
+        /// <returns>La liste des publics</returns>
+        private string RemplirCbxAjoutModifPublicDvd()
+        {
+            List<Categorie> lesPublicsDvd = controller.GetAllPublics();
+            foreach (Categorie lePublic in lesPublicsDvd)
+            {
+                cbxAjoutModifPublicDvd.Items.Add(lePublic.Libelle);
+            }
+
+            if (cbxAjoutModifPublicDvd.Items.Count > 0)
+            {
+                cbxAjoutModifPublicDvd.SelectedIndex = 0;
+            }
+            return cbxAjoutModifPublicDvd.SelectedItem?.ToString();
+        }
+
+        /// <summary>
+        /// Remplissage de la combobox du rayon du dvd à ajouter ou à modifier
+        /// </summary>
+        /// <returns>La liste des rayons</returns>
+        private string RemplirCbxAjoutModifRayonDvd()
+        {
+            List<Categorie> lesRayonsDvd = controller.GetAllRayons();
+            foreach (Categorie rayon in lesRayonsDvd)
+            {
+                if (rayon.Libelle == "DVD films")
+                {
+                    cbxAjoutModifRayonDvd.Items.Add(rayon.Libelle);
+                }
+            }
+
+            if (cbxAjoutModifRayonDvd.Items.Count > 0)
+            {
+                cbxAjoutModifRayonDvd.SelectedIndex = 0;
+            }
+            return cbxAjoutModifRayonDvd.SelectedItem?.ToString();
+        }
+
+        /// <summary>
+        /// Vide les comboBox de gestion du genre, du public et du rayon d'un dvd
+        /// </summary>
+        private void VideComboAjoutModifDvd()
+        {
+            cbxAjoutModifGenreDvd.Text = "";
+            cbxAjoutModifPublicDvd.Text = "";
+            cbxAjoutModifRayonDvd.Text = "";
+        }
+
+        /// <summary>
         /// Enregistrement d'un document de type "dvd" dans la base de données
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnReceptionDvdValider_Click(object sender, EventArgs e)
         {
-            if (!txbDvdNumero.Text.Equals(""))
+            if (!txbDvdNumero.Text.Equals("") && !txbDvdTitre.Text.Equals("") && !txbDvdRealisateur.Text.Equals("") && !cbxAjoutModifGenreDvd.Text.Equals("") && !cbxAjoutModifPublicDvd.Text.Equals("") && !cbxAjoutModifRayonDvd.Text.Equals(""))
             {
                 try
                 {
@@ -1118,27 +1334,35 @@ namespace MediaTekDocuments.view
                     int duree = int.Parse(txbDvdDuree.Text);
                     string realisateur = txbDvdRealisateur.Text;
                     string synopsis = txbDvdSynopsis.Text;
-                    string idGenre = txbIdGenreDvd.Text;
+                    string idGenre = GetIdGenreDocument(cbxAjoutModifGenreDvd.Text);
                     string genre = txbDvdGenre.Text;
-                    string idPublic = txbIdPublicDvd.Text;
+                    string idPublic = GetIdPublicDocument(cbxAjoutModifPublicDvd.Text);
                     string lePublic = txbDvdPublic.Text;
-                    string idRayon = txbIdRayonDvd.Text;
+                    string idRayon = GetIdRayonDocument(cbxAjoutModifRayonDvd.Text);
                     string rayon = txbDvdRayon.Text;
 
                     Document document = new Document(id, titre, image, idGenre, genre, idPublic, lePublic, idRayon, rayon);
                     Dvd dvd = new Dvd(id, titre, image, duree, realisateur, synopsis, idGenre, genre, idPublic, lePublic, idRayon, rayon);
-                    if (controller.CreerDocument(document.Id, document.Titre, document.Image, document.IdRayon, document.IdPublic, document.IdGenre) && controller.CreerDvd(dvd.Id, dvd.Synopsis, dvd.Realisateur, dvd.Duree))
+
+                    var idDvdExistant = controller.GetAllDocuments(id);
+                    var idDvdNonExistant = !idDvdExistant.Any();
+
+                    if (idDvdNonExistant)
                     {
-                        lesDvd = controller.GetAllDvd();
-                        RemplirComboCategorie(controller.GetAllGenres(), bdgGenres, cbxDvdGenres);
-                        RemplirComboCategorie(controller.GetAllPublics(), bdgPublics, cbxDvdPublics);
-                        RemplirComboCategorie(controller.GetAllRayons(), bdgRayons, cbxDvdRayons);
-                        RemplirDvdListeComplete();
-                        MessageBox.Show("Le dvd " + titre + " a correctement été ajouté.");
+
+                        if (controller.CreerDocument(document.Id, document.Titre, document.Image, document.IdRayon, document.IdPublic, document.IdGenre) && controller.CreerDvd(dvd.Id, dvd.Synopsis, dvd.Realisateur, dvd.Duree))
+                        {
+                            lesDvd = controller.GetAllDvd();
+                            RemplirComboCategorie(controller.GetAllGenres(), bdgGenres, cbxDvdGenres);
+                            RemplirComboCategorie(controller.GetAllPublics(), bdgPublics, cbxDvdPublics);
+                            RemplirComboCategorie(controller.GetAllRayons(), bdgRayons, cbxDvdRayons);
+                            RemplirDvdListeComplete();
+                            MessageBox.Show("Le dvd " + titre + " a correctement été ajouté.");
+                        }
                     }
                     else
                     {
-                        MessageBox.Show("numéro de document déjà existant", "Erreur");
+                        MessageBox.Show("Le numéro de document existe déjà.", "Erreur");
                     }
                 }
                 catch
@@ -1148,7 +1372,7 @@ namespace MediaTekDocuments.view
             }
             else
             {
-                MessageBox.Show("numéro de document obligatoire", "Information");
+                MessageBox.Show("Tous les champs sont obligatoires.", "Information");
             }
         }
 
@@ -1159,7 +1383,7 @@ namespace MediaTekDocuments.view
         /// <param name="e"></param>
         private void btnReceptionDvdModifier_Click(object sender, EventArgs e)
         {
-            if (!txbDvdNumero.Text.Equals(""))
+            if (!txbDvdNumero.Text.Equals("") && !txbDvdTitre.Text.Equals("") && !txbDvdRealisateur.Text.Equals("") && !cbxAjoutModifGenreDvd.Text.Equals("") && !cbxAjoutModifPublicDvd.Text.Equals("") && !cbxAjoutModifRayonDvd.Text.Equals(""))
             {
 
                 if (dgvDvdListe.SelectedRows.Count > 0)
@@ -1172,10 +1396,10 @@ namespace MediaTekDocuments.view
                     int duree = int.Parse(txbDvdDuree.Text);
                     string titre = txbDvdTitre.Text;
                     string image = txbDvdImage.Text;
-                    string idGenre = txbIdGenreDvd.Text;
-                    string idPublic = txbIdPublicDvd.Text;
-                    string idRayon = txbIdRayonDvd.Text;
-                    
+                    string idGenre = GetIdGenreDocument(cbxAjoutModifGenreDvd.Text);
+                    string idPublic = GetIdPublicDocument(cbxAjoutModifPublicDvd.Text);
+                    string idRayon = GetIdRayonDocument(cbxAjoutModifRayonDvd.Text);
+
                     if (controller.ModifierDvd(id, synopsis, realisateur, duree) && controller.ModifierDocument(id, titre, image, idGenre, idPublic, idRayon))
                     {
                         lesDvd = controller.GetAllDvd();
@@ -1192,8 +1416,12 @@ namespace MediaTekDocuments.view
                 }
                 else
                 {
-                    MessageBox.Show("Veuillez sélectionner un DVD à modifier", "Information");
+                    MessageBox.Show("Une ligne doit être selectionnée", "Information");
                 }
+            }
+            else
+            {
+                MessageBox.Show("Tous les champs sont obligatoires.", "Information");
             }
         }
 
@@ -1365,6 +1593,17 @@ namespace MediaTekDocuments.view
         }
 
         /// <summary>
+        /// Vide la zone de gestion des exemplaires
+        /// </summary>
+        private void VideExemplaireDvd()
+        {
+            txbExemplaireDvdNumero.Text = "";
+            dtpDateAchatExemplaireDvd.Value = DateTime.Now;
+            lblEtatExemplaireDvd.Text = "";
+            gbxEtatExemplaireDvd.Enabled = false;
+        }
+
+        /// <summary>
         /// Modification de l'état d'un exemplaire de dvd dans la bdd
         /// </summary>
         /// <param name="sender"></param>
@@ -1434,6 +1673,9 @@ namespace MediaTekDocuments.view
             RemplirComboCategorie(controller.GetAllGenres(), bdgGenres, cbxRevuesGenres);
             RemplirComboCategorie(controller.GetAllPublics(), bdgPublics, cbxRevuesPublics);
             RemplirComboCategorie(controller.GetAllRayons(), bdgRayons, cbxRevuesRayons);
+            RemplirCbxAjoutModifGenreRevue();
+            RemplirCbxAjoutModifPublicRevue();
+            RemplirCbxAjoutModifRayonRevue();
             RemplirRevuesListeComplete();
         }
 
@@ -1530,9 +1772,6 @@ namespace MediaTekDocuments.view
             txbRevuesPublic.Text = revue.Public;
             txbRevuesRayon.Text = revue.Rayon;
             txbRevuesTitre.Text = revue.Titre;
-            txbIdGenreRevue.Text = revue.IdGenre;
-            txbIdPublicRevue.Text = revue.IdPublic;
-            txbIdRayonRevue.Text = revue.IdRayon;
             string image = revue.Image;
             try
             {
@@ -1557,9 +1796,6 @@ namespace MediaTekDocuments.view
             txbRevuesPublic.Text = "";
             txbRevuesRayon.Text = "";
             txbRevuesTitre.Text = "";
-            txbIdGenreRevue.Text = "";
-            txbIdPublicRevue.Text = "";
-            txbIdRayonRevue.Text = "";
             pcbRevuesImage.Image = null;
         }
 
@@ -1639,6 +1875,7 @@ namespace MediaTekDocuments.view
                 {
                     Revue revue = (Revue)bdgRevuesListe.List[bdgRevuesListe.Position];
                     AfficheRevuesInfos(revue);
+                    VideComboAjoutModifRevue();
                 }
                 catch
                 {
@@ -1741,22 +1978,89 @@ namespace MediaTekDocuments.view
         }
 
         /// <summary>
+        /// Remplissage de la combobox du genre de la revue à ajouter ou à modifier
+        /// </summary>
+        /// <returns>La liste des genres</returns>
+        private string RemplirCbxAjoutModifGenreRevue()
+        {
+            List<Categorie> lesGenresRevue = controller.GetAllGenres();
+            foreach (Categorie genre in lesGenresRevue)
+            {
+                cbxAjoutModifGenreRevue.Items.Add(genre.Libelle);
+            }
+
+            if (cbxAjoutModifGenreRevue.Items.Count > 0)
+            {
+                cbxAjoutModifGenreRevue.SelectedIndex = 0;
+            }
+            return cbxAjoutModifGenreRevue.SelectedItem?.ToString();
+        }
+
+        /// <summary>
+        /// Remplissage de la combobox du public de la revue à ajouter ou à modifier
+        /// </summary>
+        /// <returns>La liste des publics</returns>
+        private string RemplirCbxAjoutModifPublicRevue()
+        {
+            List<Categorie> lesPublicsRevue = controller.GetAllPublics();
+            foreach (Categorie lePublic in lesPublicsRevue)
+            {
+                cbxAjoutModifPublicRevue.Items.Add(lePublic.Libelle);
+            }
+
+            if (cbxAjoutModifPublicRevue.Items.Count > 0)
+            {
+                cbxAjoutModifPublicRevue.SelectedIndex = 0;
+            }
+            return cbxAjoutModifPublicRevue.SelectedItem?.ToString();
+        }
+
+        /// <summary>
+        /// Remplissage de la combobox du rayon de la revue à ajouter ou à modifier
+        /// </summary>
+        /// <returns>La liste des rayons</returns>
+        private string RemplirCbxAjoutModifRayonRevue()
+        {
+            List<Categorie> lesRayonsRevue = controller.GetAllRayons();
+            foreach (Categorie rayon in lesRayonsRevue)
+            {
+                cbxAjoutModifRayonRevue.Items.Add(rayon.Libelle);
+            }
+
+            if (cbxAjoutModifRayonRevue.Items.Count > 0)
+            {
+                cbxAjoutModifRayonRevue.SelectedIndex = 0;
+            }
+            return cbxAjoutModifRayonRevue.SelectedItem?.ToString();
+        }
+
+        /// <summary>
+        /// Vide les comboBox de gestion du genre, du public et du rayon d'une revue
+        /// </summary>
+        private void VideComboAjoutModifRevue()
+        {
+            cbxAjoutModifGenreRevue.Text = "";
+            cbxAjoutModifPublicRevue.Text = "";
+            cbxAjoutModifRayonRevue.Text = "";
+        }
+
+        /// <summary>
         /// Enregistrement d'un document de type "revue" en bdd
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnReceptionRevueValider_Click(object sender, EventArgs e)
         {
-            if (!txbRevuesNumero.Text.Equals("") && !txbRevuesTitre.Equals("") && !txbIdGenreRevue.Equals("") && !txbIdPublicRevue.Equals("") && !txbIdRayonRevue.Equals(""))
+            if (!txbRevuesNumero.Text.Equals("") && !txbRevuesTitre.Text.Equals("") && !txbRevuesPeriodicite.Text.Equals("") && !txbRevuesDateMiseADispo.Text.Equals("") && !cbxAjoutModifGenreRevue.Text.Equals("") && !cbxAjoutModifPublicRevue.Text.Equals("") && !cbxAjoutModifRayonRevue.Text.Equals(""))
             {
                 string id = txbRevuesNumero.Text;
                 string titre = txbRevuesTitre.Text;
                 string image = txbRevuesImage.Text;
-                string idGenre = txbIdGenreRevue.Text;
+                string idGenre = GetIdGenreDocument(cbxAjoutModifGenreRevue.Text);
                 string genre = txbRevuesGenre.Text;
-                string idPublic = txbIdPublicRevue.Text;
+                string idPublic = GetIdPublicDocument(cbxAjoutModifPublicRevue.Text);
                 string lePublic = txbRevuesPublic.Text;
-                string idRayon = txbIdRayonRevue.Text;
+                string idRayon = GetIdRayonDocument(cbxAjoutModifRayonRevue.Text);
                 string rayon = txbRevuesRayon.Text;
                 string periodicite = txbRevuesPeriodicite.Text;
                 int delaiMiseADispo = int.Parse(txbRevuesDateMiseADispo.Text);
@@ -1764,23 +2068,29 @@ namespace MediaTekDocuments.view
                 Document document = new Document(id, titre, image, idGenre, genre, idPublic, lePublic, idRayon, rayon);
                 Revue revue = new Revue(id, titre, image, idGenre, genre, idPublic, lePublic, idRayon, rayon, periodicite, delaiMiseADispo);
 
-                if (controller.CreerDocument(document.Id, document.Titre, document.Image, document.IdRayon, document.IdPublic, document.IdGenre) && controller.CreerRevue(revue.Id, revue.Periodicite, revue.DelaiMiseADispo))
+                var idRevueExistante = controller.GetAllDocuments(id);
+                var idRevueNonExistante = !idRevueExistante.Any();
+
+                if (idRevueNonExistante)
                 {
-                    lesRevues = controller.GetAllRevues();
-                    RemplirComboCategorie(controller.GetAllGenres(), bdgGenres, cbxRevuesGenres);
-                    RemplirComboCategorie(controller.GetAllPublics(), bdgPublics, cbxRevuesPublics);
-                    RemplirComboCategorie(controller.GetAllRayons(), bdgRayons, cbxRevuesRayons);
-                    RemplirRevuesListeComplete();
-                    MessageBox.Show("La revue " + titre + " a correctement été ajoutée.");
+                    if (controller.CreerDocument(document.Id, document.Titre, document.Image, document.IdRayon, document.IdPublic, document.IdGenre) && controller.CreerRevue(revue.Id, revue.Periodicite, revue.DelaiMiseADispo))
+                    {
+                        lesRevues = controller.GetAllRevues();
+                        RemplirComboCategorie(controller.GetAllGenres(), bdgGenres, cbxRevuesGenres);
+                        RemplirComboCategorie(controller.GetAllPublics(), bdgPublics, cbxRevuesPublics);
+                        RemplirComboCategorie(controller.GetAllRayons(), bdgRayons, cbxRevuesRayons);
+                        RemplirRevuesListeComplete();
+                        MessageBox.Show("La revue " + titre + " a correctement été ajoutée.");
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Une erreur s'est produite", "Erreur");
+                    MessageBox.Show("Le numéro de document existe déjà.", "Erreur");
                 }
             }
             else
             {
-                MessageBox.Show("Le champ : numéro de document est obligatoire.", "Information");
+                MessageBox.Show("Tous les champs sont obligatoires.", "Information");
             }
         }
 
@@ -1798,12 +2108,13 @@ namespace MediaTekDocuments.view
                 string id = selectedRevue.Id;
                 string titre = txbRevuesTitre.Text;
                 string image = txbRevuesImage.Text;
-                string idGenre = txbIdGenreRevue.Text;
-                string idPublic = txbIdPublicRevue.Text;
-                string idRayon = txbIdRayonRevue.Text;
+                string idGenre = GetIdGenreDocument(cbxAjoutModifGenreRevue.Text);
+                string idPublic = GetIdPublicDocument(cbxAjoutModifPublicRevue.Text);
+                string idRayon = GetIdRayonDocument(cbxAjoutModifRayonRevue.Text);
                 string periodicite = txbRevuesPeriodicite.Text;
                 int delaiMiseADispo = int.Parse(txbRevuesDateMiseADispo.Text);
-                if (!txbRevuesNumero.Equals("") && !txbRevuesTitre.Equals("") && !txbIdGenreRevue.Equals("") && !txbIdPublicRevue.Equals("") && !txbIdRayonRevue.Equals(""))
+
+                if (!txbRevuesNumero.Text.Equals("") && !txbRevuesTitre.Text.Equals("") && !txbRevuesPeriodicite.Text.Equals("") && !txbRevuesDateMiseADispo.Text.Equals("") && !cbxAjoutModifGenreRevue.Text.Equals("") && !cbxAjoutModifPublicRevue.Text.Equals("") && !cbxAjoutModifRayonRevue.Text.Equals(""))
                 {
                     if (controller.ModifierRevue(id, periodicite, delaiMiseADispo) && controller.ModifierDocument(id, titre, image, idGenre, idPublic, idRayon))
                     {
@@ -1816,17 +2127,17 @@ namespace MediaTekDocuments.view
                     }
                     else
                     {
-                        MessageBox.Show("Erreur lors de la modification de la REVUE", "Erreur");
+                        MessageBox.Show("Erreur lors de la modification de la revue", "Erreur");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Veuillez sélectionner une REVUE à modifier", "Information");
+                    MessageBox.Show("Tous les champs sont obligatoires.", "Information");
                 }
             }
             else
             {
-                MessageBox.Show("Le champ : numéro de document est obligatoire.", "Information");
+                MessageBox.Show("Une ligne doit être sélectionnée", "Information");
             }
         }
 
@@ -2541,20 +2852,26 @@ namespace MediaTekDocuments.view
 
                 Commande commande = new Commande(id, dateCommande, montant);
 
-                if (controller.CreerCommande(commande))
+                var idCommandeLivreExistante = controller.GetCommandes(id);
+                var idCommandeLivreNonExistante = !idCommandeLivreExistante.Any();
+
+                if (idCommandeLivreNonExistante)
                 {
-                    controller.CreerCommandeDocument(id, nbExemplaire, idLivreDvd, idSuivi);
-                    MessageBox.Show("La commande "+ id + " a bien été enregistrée.", "Information");
-                    AfficheReceptionCommandesLivre();
+                    if (controller.CreerCommande(commande))
+                    {
+                        controller.CreerCommandeDocument(id, nbExemplaire, idLivreDvd, idSuivi);
+                        MessageBox.Show("La commande " + id + " a bien été enregistrée.", "Information");
+                        AfficheReceptionCommandesLivre();
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("numéro de commande déjà existant", "Erreur");
+                    MessageBox.Show("Le numéro de la commande existe déjà, veuillez saisir un nouveau numéro.", "Erreur");
                 }
             }
             else
             {
-                MessageBox.Show("Tout les champs sont obligatoires.", "Information");
+                MessageBox.Show("Tous les champs sont obligatoires.", "Information");
             }
         }
 
@@ -2883,28 +3200,33 @@ namespace MediaTekDocuments.view
             {
                 string idLivreDvd = txbCommandesDvdNumRecherche.Text;
                 string idSuivi = lesSuivis[0].Id;
-                string libelle = lesSuivis[0].Libelle;
                 string id = txbCommandeDvdNumero.Text;
                 int nbExemplaire = int.Parse(txbCommandeDvdNbExemplaires.Text);
                 double montant = double.Parse(txbCommandeDvdMontant.Text);
                 DateTime dateCommande = dtpCommandeDvd.Value;
 
                 Commande commande = new Commande(id, dateCommande, montant);
-                CommandeDocument commandedocument = new CommandeDocument(id, dateCommande, montant, nbExemplaire, idLivreDvd, idSuivi, libelle);
-                if (controller.CreerCommande(commande))
+
+                var idCommandeExistante = controller.GetCommandes(id);
+                var idCommandeNonExistante = !idCommandeExistante.Any();
+
+                if (idCommandeNonExistante)
                 {
-                    controller.CreerCommandeDocument(commandedocument.Id, commandedocument.NbExemplaire, commandedocument.IdLivreDvd, commandedocument.IdSuivi);
-                    MessageBox.Show("La commande " + id + " a bien été enregistrée.", "Information");
-                    AfficheReceptionCommandesDvd();
+                    if (controller.CreerCommande(commande))
+                    {
+                        controller.CreerCommandeDocument(id, nbExemplaire, idLivreDvd, idSuivi);
+                        MessageBox.Show("La commande " + id + " a bien été enregistrée.", "Information");
+                        AfficheReceptionCommandesDvd();
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("numéro de commande déjà existant", "Erreur");
+                    MessageBox.Show("Le numéro de la commande existe déjà, veuillez saisir un nouveau numéro.", "Erreur");
                 }
             }
             else
             {
-                MessageBox.Show("Toutes les informations de commande doivent être saisies.", "Information");
+                MessageBox.Show("Tous les champs sont obligatoires.", "Information");
             }
         }
 
@@ -3136,15 +3458,21 @@ namespace MediaTekDocuments.view
                 
                 Commande commande = new Commande(id, dateCommande, montant);
 
-                if (controller.CreerCommande(commande))
+                var idCommandeRevueExistante = controller.GetCommandes(id);
+                var idCommandeRevueNonExistante = !idCommandeRevueExistante.Any();
+
+                if (idCommandeRevueNonExistante)
                 {
-                    controller.CreerAbonnementRevue(id, dateFinAbonnement, idRevue);
-                    MessageBox.Show("La commande " + id + " a bien été enregistrée.", "Information");
-                    AfficheReceptionAbonnementsRevue();
+                    if (controller.CreerCommande(commande))
+                    {
+                        controller.CreerAbonnementRevue(id, dateFinAbonnement, idRevue);
+                        MessageBox.Show("La commande " + id + " a bien été enregistrée.", "Information");
+                        AfficheReceptionAbonnementsRevue();
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("numéro de commande déjà existant", "Erreur");
+                    MessageBox.Show("Le numéro de la commande existe déjà, veuillez saisir un nouveau numéro.", "Erreur");
                 }
             }
             else
@@ -3220,5 +3548,6 @@ namespace MediaTekDocuments.view
 
 
         #endregion
+
     }
 }
