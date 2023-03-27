@@ -29,6 +29,7 @@ namespace MediaTekDocuments.view
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMediatek));
             this.tabOngletsApplication = new System.Windows.Forms.TabControl();
             this.tabLivres = new System.Windows.Forms.TabPage();
             this.gbxEtatExemplaireLivre = new System.Windows.Forms.GroupBox();
@@ -152,6 +153,9 @@ namespace MediaTekDocuments.view
             this.txbDvdTitreRecherche = new System.Windows.Forms.TextBox();
             this.tabRevues = new System.Windows.Forms.TabPage();
             this.grpRevuesInfos = new System.Windows.Forms.GroupBox();
+            this.cbxAjoutModifRayonRevue = new System.Windows.Forms.ComboBox();
+            this.cbxAjoutModifPublicRevue = new System.Windows.Forms.ComboBox();
+            this.cbxAjoutModifGenreRevue = new System.Windows.Forms.ComboBox();
             this.label65 = new System.Windows.Forms.Label();
             this.label64 = new System.Windows.Forms.Label();
             this.label63 = new System.Windows.Forms.Label();
@@ -358,9 +362,6 @@ namespace MediaTekDocuments.view
             this.label101 = new System.Windows.Forms.Label();
             this.label102 = new System.Windows.Forms.Label();
             this.label103 = new System.Windows.Forms.Label();
-            this.cbxAjoutModifGenreRevue = new System.Windows.Forms.ComboBox();
-            this.cbxAjoutModifPublicRevue = new System.Windows.Forms.ComboBox();
-            this.cbxAjoutModifRayonRevue = new System.Windows.Forms.ComboBox();
             this.tabOngletsApplication.SuspendLayout();
             this.tabLivres.SuspendLayout();
             this.gbxEtatExemplaireLivre.SuspendLayout();
@@ -1754,6 +1755,30 @@ namespace MediaTekDocuments.view
             this.grpRevuesInfos.TabIndex = 20;
             this.grpRevuesInfos.TabStop = false;
             this.grpRevuesInfos.Text = "Informations détaillées";
+            // 
+            // cbxAjoutModifRayonRevue
+            // 
+            this.cbxAjoutModifRayonRevue.FormattingEnabled = true;
+            this.cbxAjoutModifRayonRevue.Location = new System.Drawing.Point(471, 170);
+            this.cbxAjoutModifRayonRevue.Name = "cbxAjoutModifRayonRevue";
+            this.cbxAjoutModifRayonRevue.Size = new System.Drawing.Size(114, 21);
+            this.cbxAjoutModifRayonRevue.TabIndex = 58;
+            // 
+            // cbxAjoutModifPublicRevue
+            // 
+            this.cbxAjoutModifPublicRevue.FormattingEnabled = true;
+            this.cbxAjoutModifPublicRevue.Location = new System.Drawing.Point(471, 145);
+            this.cbxAjoutModifPublicRevue.Name = "cbxAjoutModifPublicRevue";
+            this.cbxAjoutModifPublicRevue.Size = new System.Drawing.Size(114, 21);
+            this.cbxAjoutModifPublicRevue.TabIndex = 57;
+            // 
+            // cbxAjoutModifGenreRevue
+            // 
+            this.cbxAjoutModifGenreRevue.FormattingEnabled = true;
+            this.cbxAjoutModifGenreRevue.Location = new System.Drawing.Point(471, 120);
+            this.cbxAjoutModifGenreRevue.Name = "cbxAjoutModifGenreRevue";
+            this.cbxAjoutModifGenreRevue.Size = new System.Drawing.Size(114, 21);
+            this.cbxAjoutModifGenreRevue.TabIndex = 56;
             // 
             // label65
             // 
@@ -3913,40 +3938,16 @@ namespace MediaTekDocuments.view
             this.label103.TabIndex = 10;
             this.label103.Text = "Délai mise à dispo :";
             // 
-            // cbxAjoutModifGenreRevue
-            // 
-            this.cbxAjoutModifGenreRevue.FormattingEnabled = true;
-            this.cbxAjoutModifGenreRevue.Location = new System.Drawing.Point(471, 120);
-            this.cbxAjoutModifGenreRevue.Name = "cbxAjoutModifGenreRevue";
-            this.cbxAjoutModifGenreRevue.Size = new System.Drawing.Size(114, 21);
-            this.cbxAjoutModifGenreRevue.TabIndex = 56;
-            // 
-            // cbxAjoutModifPublicRevue
-            // 
-            this.cbxAjoutModifPublicRevue.FormattingEnabled = true;
-            this.cbxAjoutModifPublicRevue.Location = new System.Drawing.Point(471, 145);
-            this.cbxAjoutModifPublicRevue.Name = "cbxAjoutModifPublicRevue";
-            this.cbxAjoutModifPublicRevue.Size = new System.Drawing.Size(114, 21);
-            this.cbxAjoutModifPublicRevue.TabIndex = 57;
-            // 
-            // cbxAjoutModifRayonRevue
-            // 
-            this.cbxAjoutModifRayonRevue.FormattingEnabled = true;
-            this.cbxAjoutModifRayonRevue.Location = new System.Drawing.Point(471, 170);
-            this.cbxAjoutModifRayonRevue.Name = "cbxAjoutModifRayonRevue";
-            this.cbxAjoutModifRayonRevue.Size = new System.Drawing.Size(114, 21);
-            this.cbxAjoutModifRayonRevue.TabIndex = 58;
-            // 
             // FrmMediatek
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(883, 861);
             this.Controls.Add(this.tabOngletsApplication);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FrmMediatek";
-            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Gestion des documents de la médiathèque";
             this.Shown += new System.EventHandler(this.FrmAlerteFinAbonnement_Shown);
