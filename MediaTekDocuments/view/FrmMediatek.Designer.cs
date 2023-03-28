@@ -575,6 +575,7 @@ namespace MediaTekDocuments.view
             this.dgvExemplairesLivre.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvExemplairesLivre.Size = new System.Drawing.Size(313, 164);
             this.dgvExemplairesLivre.TabIndex = 5;
+            this.dgvExemplairesLivre.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvExemplairesLivre_ColumnHeaderMouseClick);
             this.dgvExemplairesLivre.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvExemplairesLivre_RowEnter);
             this.dgvExemplairesLivre.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvExemplairesLivre_ColumnHeaderMouseClick);
             // 

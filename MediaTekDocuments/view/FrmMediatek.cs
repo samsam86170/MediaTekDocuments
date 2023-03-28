@@ -2898,8 +2898,7 @@ namespace MediaTekDocuments.view
                 {
                     controller.ModifierSuiviCommandeDocument(commandedocument.Id, commandedocument.IdSuivi);
                     MessageBox.Show("L'étape de suivi de la commande " + id + " a bien été modifiée.", "Information");
-                    AfficheReceptionCommandesLivre();
-                    cbxCommandeLivresLibelleSuivi.Items.Clear();
+                    AfficheReceptionCommandesLivre();     
                 }
             }
             catch (NullReferenceException)
@@ -3252,7 +3251,6 @@ namespace MediaTekDocuments.view
                 {
                     controller.ModifierSuiviCommandeDocument(commandedocument.Id, commandedocument.IdSuivi);
                     AfficheReceptionCommandesDvd();
-                    cbxCommandeDvdLibelleSuivi.Items.Clear();
                 }
             }
             catch (NullReferenceException)
