@@ -431,6 +431,7 @@ namespace MediaTekDocuments.view
             // 
             // tabLivres
             // 
+            this.tabLivres.AutoScroll = true;
             this.tabLivres.Controls.Add(this.gbxEtatExemplaireLivre);
             this.tabLivres.Controls.Add(this.gbxExemplairesLivre);
             this.tabLivres.Controls.Add(this.grpLivresInfos);
@@ -1069,6 +1070,7 @@ namespace MediaTekDocuments.view
             // 
             // tabDvd
             // 
+            this.tabDvd.AutoScroll = true;
             this.tabDvd.Controls.Add(this.gbxEtatExemplaireDvd);
             this.tabDvd.Controls.Add(this.gbxExemplairesDvd);
             this.tabDvd.Controls.Add(this.grpDvdInfos);
@@ -1709,6 +1711,7 @@ namespace MediaTekDocuments.view
             // 
             // tabRevues
             // 
+            this.tabRevues.AutoScroll = true;
             this.tabRevues.Controls.Add(this.grpRevuesInfos);
             this.tabRevues.Controls.Add(this.grpRevuesRecherche);
             this.tabRevues.Location = new System.Drawing.Point(4, 22);
@@ -2191,6 +2194,7 @@ namespace MediaTekDocuments.view
             // 
             // tabReceptionRevue
             // 
+            this.tabReceptionRevue.AutoScroll = true;
             this.tabReceptionRevue.Controls.Add(this.gbxEtatExemplaireRevue);
             this.tabReceptionRevue.Controls.Add(this.label55);
             this.tabReceptionRevue.Controls.Add(this.grpReceptionExemplaire);
@@ -2682,6 +2686,7 @@ namespace MediaTekDocuments.view
             // 
             // tabCommandesLivres
             // 
+            this.tabCommandesLivres.AutoScroll = true;
             this.tabCommandesLivres.Controls.Add(this.gbxEtapeSuivi);
             this.tabCommandesLivres.Controls.Add(this.gbxInfosCommandeLivre);
             this.tabCommandesLivres.Controls.Add(this.dgvCommandesLivre);
@@ -3126,6 +3131,7 @@ namespace MediaTekDocuments.view
             // 
             // tabCommandesDvd
             // 
+            this.tabCommandesDvd.AutoScroll = true;
             this.tabCommandesDvd.Controls.Add(this.gbxEtapeSuiviDvd);
             this.tabCommandesDvd.Controls.Add(this.gbxInfosCommandeDvd);
             this.tabCommandesDvd.Controls.Add(this.dgvCommandesDvd);
@@ -3573,6 +3579,7 @@ namespace MediaTekDocuments.view
             // 
             // tabCommandesRevues
             // 
+            this.tabCommandesRevues.AutoScroll = true;
             this.tabCommandesRevues.Controls.Add(this.gbxInfosCommandeRevue);
             this.tabCommandesRevues.Controls.Add(this.pictureBox4);
             this.tabCommandesRevues.Controls.Add(this.label106);
@@ -3943,11 +3950,11 @@ namespace MediaTekDocuments.view
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(883, 861);
             this.Controls.Add(this.tabOngletsApplication);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(899, 900);
             this.Name = "FrmMediatek";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Gestion des documents de la médiathèque";

@@ -117,7 +117,7 @@ namespace SpecFlowMediatekDocuments.Steps
         [Then(@"Le résultat est (.*) livre")]
         public void ThenLeResultatEstLivre(int listeAttendue)
         {
-            DataGridView liste = (DataGridView)frmMediatek.Controls["tabOngletsApplication"].Controls["tabLivres"].Controls["grpLivresRecherche"].Controls["cbxLivresRayons"];
+            DataGridView dgvLivresListe = (DataGridView)frmMediatek.Controls["tabOngletsApplication"].Controls["tabLivres"].Controls["grpLivresRecherche"].Controls["cbxLivresRayons"];
             int listeObtenue = dgvLivresListe.Rows.Count;
             Assert.AreEqual(listeAttendue, listeObtenue);
         }
