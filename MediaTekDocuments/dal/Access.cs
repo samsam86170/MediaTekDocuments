@@ -20,6 +20,7 @@ namespace MediaTekDocuments.dal
         /// adresse de l'API
         /// </summary>
         private static readonly string uriApi = "https://mediatek-documents-dhaussy.com";
+      //private static readonly string uriApi = "http://localhost/rest_mediatekdocuments/";
         /// <summary>
         /// nom de connexion à la bdd
         /// </summary>
